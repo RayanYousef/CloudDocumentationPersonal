@@ -1,0 +1,64 @@
+name: Discord Notification Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_message:
+        description: 'Custom test message'
+        required: false
+        default: 'This is a test notification from GitHub Actions! Skrew-Github channel'
+        type: string
+      test_status:
+        description: 'Test status to simulate'
+        required: false
+        default: 'success'
+        type: choice
+        options:
+        - success
+        - failure
+        - cancelled
+  workflow_call:
+    inputs:
+      test_message:
+        required: false
+        type: string
+        default: 'This is a test notification from GitHub Actions! Skrew-Github channel'
+      test_status:
+        required: false
+        type: string
+        default: 'success'
+
+jobs:
+  discord_test:
+    permissions: read-all
+    name: Discord Notification Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # https://github.com/actions/checkout
+
+      - name: Simulate build step
+        run: |
+          echo "Simulating a build process..."
+          echo "Test message: ${{ github.event.inputs.test_message || inputs.test_message }}"
+          echo "Test status: ${{ github.event.inputs.test_status || inputs.test_status }}"
+          sleep 5
+          echo "Build simulation completed!"
+
+      - name: Force status based on input
+        if: ${{ (github.event.inputs.test_status || inputs.test_status) == 'failure' }}
+        run: |
+          echo "Simulating failure..."
+          exit 1
+
+      - name: Discord Notification
+        if: always()
+        uses: nobrayner/discord-webhook@v1 # https://github.com/nobrayner/discord-webhook
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK_SKREW }}
+          username: 'Build Automator Test'
+          include-details: true
+          title: 'Discord Test Notification'
+          description: '${{ github.event.inputs.test_message || inputs.test_message }}'
