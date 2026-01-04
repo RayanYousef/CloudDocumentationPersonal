@@ -1,0 +1,134 @@
+name: ToStore - Automated Build - Android
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  buildAndroid:
+    name: Build for Android 🖥️
+    runs-on: ubuntu-22.04
+    timeout-minutes: 220
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main # https://github.com/jlumbroso/free-disk-space
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: false
+          dotnet: false
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+
+      - name: Checkout code
+        uses: actions/checkout@v4 # https://github.com/actions/checkout
+        with:
+         # ref: main
+         lfs: true
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4 # https://github.com/actions/cache
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+      - name: Restore Library cache
+        uses: actions/cache@v4 # https://github.com/actions/cache
+        with:
+          path: SkrewClient/Library
+          key: Library-build-Android
+          restore-keys: |
+            Library-build-Android
+            Library-build-
+            Library-
+
+      - uses: game-ci/unity-builder@v4.3.0 # https://github.com/game-ci/unity-builder
+        id: myBuildStep
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: ./SkrewClient
+          targetPlatform: Android
+          androidExportType: 'androidAppBundle'
+          buildName: Build_Android_auto
+          versioning : None
+          androidVersionCode : 4
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+
+      - name: check folders (can be removed)
+        run: |
+          ls -a
+          cd build
+          ls -a
+          cd Android
+          ls -a
+
+      - name: JSON to variables
+        uses: rgarcia-phi/json-to-variables@v1.1.0 # https://github.com/rgarcia-phi/json-to-variables
+        with:
+          filename: 'CloudBuild/VersioningSettings.json'
+          prefix: setting
+
+      - uses: r0adkll/upload-google-play@v1.1.3 # https://github.com/r0adkll/upload-google-play
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.yamp.skrew                                 #Change package name when changing project
+          releaseFiles: build/Android/Build_Android_auto.aab
+          whatsNewDirectory: CloudBuild/WhatsNew
+          track: internal
+          status: draft
+          releaseName: v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }}
+
+  notifyAAB:
+    permissions: read-all
+    name: Discord Notification for AAB Build
+    runs-on: ubuntu-latest
+    needs:
+      - buildAndroid
+    if: ${{ success() || failure() }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: JSON to variables (for release name)
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'CloudBuild/VersioningSettings.json'
+          prefix: setting
+
+      - name: Notify AAB Build
+        uses: nobrayner/discord-webhook@v1 # https://github.com/nobrayner/discord-webhook
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK_SKREW }}
+          username: 'Build Notifier'
+          include-details: true
+          title: 'AAB Build and Upload to Google Play'
+          description: 'The AAB has been uploaded to Google Play. Release: v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }} | File: Build_Android_auto.aab'
