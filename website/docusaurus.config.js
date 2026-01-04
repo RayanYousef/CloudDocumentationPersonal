@@ -1,5 +1,5 @@
 // @ts-check
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -8,10 +8,10 @@ const config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://github.com',
-  baseUrl: '/Unity-Cloud-Build-Pipeline/', // Assuming the repo name, user can change later if needed
+  baseUrl: '/CloudDocumentationPersonal/',
 
-  organizationName: 'unknown',
-  projectName: 'Unity-Cloud-Build-Pipeline',
+  organizationName: 'RayanYousef',
+  projectName: 'CloudDocumentationPersonal',
 
   onBrokenLinks: 'warn', // Changing to warn to avoid build failures during initial setup if links are tricky
   onBrokenMarkdownLinks: 'warn',
