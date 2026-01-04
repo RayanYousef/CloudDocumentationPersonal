@@ -1,0 +1,9 @@
+{
+    "AppVersion": "1.65",
+    "BuildVersionAndroid": 58,
+    "BuildNumberIOS": 58,
+    "AutoIncremeantVersionNumber": false,
+    "AutoIncremeantAndroid": false,
+    "AutoIncremeantIOS": false,
+    "BuildBranch": "main"
+}

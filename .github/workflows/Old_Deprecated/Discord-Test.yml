@@ -1,0 +1,55 @@
+name: Discord Notification Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_message:
+        description: 'Custom test message'
+        required: false
+        default: 'This is a test notification from GitHub Actions! Skrew-Github channel'
+        type: string
+      test_status:
+        description: 'Test status to simulate'
+        required: false
+        default: 'success'
+        type: choice
+        options:
+        - success
+        - failure
+        - cancelled
+
+jobs:
+  discord_test:
+    permissions: read-all
+    name: Discord Notification Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Simulate build step
+        run: |
+          echo "Simulating a build process..."
+          echo "Test message: ${{ github.event.inputs.test_message }}"
+          echo "Test status: ${{ github.event.inputs.test_status }}"
+          sleep 5
+          echo "Build simulation completed!"
+          
+      - name: Force status based on input
+        if: github.event.inputs.test_status == 'failure'
+        run: |
+          echo "Simulating failure..."
+          exit 1
+          
+      - name: Discord Notification
+        if: always()  # This ensures notification runs regardless of previous step status
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK_SKREW }}
+          username: 'Build Automator Test'
+          include-details: true
+          title: 'Discord Test Notification'
+          description: '${{ github.event.inputs.test_message }}'
+          color: ${{ github.event.inputs.test_status == 'success' && '65280' || github.event.inputs.test_status == 'failure' && '16711680' || '16776960' }}

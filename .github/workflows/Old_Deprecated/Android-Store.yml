@@ -1,0 +1,260 @@
+name: ToStore - Automated Build - Android
+
+on:
+  workflow_dispatch:
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  buildAndroid:
+    name: Build for Android 🖥️
+    runs-on: ubuntu-22.04
+    timeout-minutes: 220
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: false
+          dotnet: false
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+        
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+         # ref: main
+         lfs: true
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+      - name: Restore Library cache
+        uses: actions/cache@v4
+        with:
+          path: SkrewClient/Library
+          key: Library-build-Android
+          restore-keys: |
+            Library-build-Android
+            Library-build-
+            Library-
+              
+      - uses: game-ci/unity-builder@v4.3.0
+        id: myBuildStep
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: ./SkrewClient 
+          targetPlatform: Android
+          androidExportType: 'androidAppBundle'
+          buildName: Build_Android_auto
+          versioning : None
+          androidVersionCode : 4
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+
+      - name: check folders (can be removed)
+        run: |
+          ls -a
+          cd build
+          ls -a
+          cd Android
+          ls -a
+
+      - name: JSON to variables
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'CloudBuild/VersioningSettings.json'
+          prefix: setting
+
+      - uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.yamp.skrew                                 #Change package name when changing project
+          releaseFiles: build/Android/Build_Android_auto.aab
+          whatsNewDirectory: CloudBuild/WhatsNew
+          track: internal 
+          status: draft
+          releaseName: v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }}
+
+  buildAPK:
+    name: Build APK for Android 🖥️
+    runs-on: ubuntu-22.04
+    timeout-minutes: 220
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          
+          android: false
+          dotnet: false
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+        
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+         # ref: main
+         lfs: true
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+      - name: Restore Library cache
+        uses: actions/cache@v4
+        with:
+          path: SkrewClient/Library
+          key: Library-build-Android-APK
+          restore-keys: |
+            Library-build-Android-APK
+            Library-build-
+            Library-
+              
+      - name: JSON to variables
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'CloudBuild/VersioningSettings.json'
+          prefix: setting
+
+      - uses: game-ci/unity-builder@v4.3.0
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: ./SkrewClient 
+          targetPlatform: Android
+          androidExportType: 'androidPackage'
+          buildName: v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }}
+          versioning : None
+          androidVersionCode : 4
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-APK
+          path: build/Android/v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }}.apk
+
+  uploadToDrive:
+    name: Upload to Google Drive
+    runs-on: ubuntu-latest
+    needs: buildAPK
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: JSON to variables
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'CloudBuild/VersioningSettings.json'
+          prefix: setting
+
+      - name: Download the Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Android-APK
+          path: ./BuildData
+
+      - name: run singleLine
+        run: |
+            ls -a
+            cd BuildData
+            ls -a
+
+      - name: Verify the artifact download
+        run: ls -l ./BuildData/v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }}.apk
+
+      - name: Upload Build to Google Drive
+        uses: Jumbo810/Upload_Github_Artifacts_TO_GDrive@v2.3.1
+        with:
+          target: ./BuildData/v${{ env.setting_AppVersion }}_bv${{ env.setting_BuildVersionAndroid }}.apk
+          credentials: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
+          parent_folder_id: ${{ vars.GOOGLE_DRIVE_PARENT_FOLDER_ID }}
+
+  notifyAAB:
+    permissions: read-all
+    name: Discord Notification for AAB Build
+    runs-on: ubuntu-latest
+    needs:
+      - buildAndroid
+    if: ${{ success() || failure() }}
+    
+    steps:
+      - name: Notify AAB Build
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK_SKREW }}
+          username: 'Build Notifier'
+          include-details: true
+          title: 'AAB Build and Upload to Google Play'
+          description: 'The AAB has been built and uploaded to Google Play Store.'
+
+  notifyAPK:
+    permissions: read-all
+    name: Discord Notification for APK Build
+    runs-on: ubuntu-latest
+    needs:
+      - uploadToDrive
+    if: ${{ success() || failure() }}
+    
+    steps:
+      - name: Notify APK Build
+        uses: nobrayner/discord-webhook@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK_SKREW }}
+          username: 'Build Notifier'
+          include-details: true
+          title: 'APK Build and Upload to Google Drive'
+          description: 'The APK has been built and uploaded to Google Drive.'
+          

@@ -1,0 +1,52 @@
+name: Google Drive Upload Test
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  testGoogleDriveUpload:
+    name: Test Google Drive Upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # https://github.com/actions/checkout
+
+      - name: Create test file
+        run: |
+          mkdir -p ./TestData
+          echo "This is a test file for Google Drive upload - $(date)" > ./TestData/test-upload.txt
+          echo "Build timestamp: $(date '+%Y-%m-%d %H:%M:%S')" >> ./TestData/test-upload.txt
+          echo "Workflow run ID: ${{ github.run_id }}" >> ./TestData/test-upload.txt
+
+      - name: Verify test file creation
+        run: |
+          ls -la ./TestData/
+          cat ./TestData/test-upload.txt
+
+      - name: Upload Test File to Google Drive
+        uses: Jumbo810/Upload_Github_Artifacts_TO_GDrive@v2.3.1 # https://github.com/Jumbo810/Upload_Github_Artifacts_TO_GDrive
+        with:
+          target: ./TestData/test-upload.txt
+          credentials: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
+          parent_folder_id: ${{ vars.GOOGLE_DRIVE_PARENT_FOLDER_ID }}
+
+  notify:
+    permissions: read-all
+    name: Discord Notification for Google Drive Test
+    runs-on: ubuntu-latest
+    needs: testGoogleDriveUpload
+    if: ${{ success() || failure() }}
+    
+    steps:
+      - name: Notify Test Result
+        uses: nobrayner/discord-webhook@v1 # https://github.com/nobrayner/discord-webhook
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK_SKREW }}
+          username: 'Google Drive Test Bot'
+          include-details: true
+          title: 'Google Drive Upload Test'
+          description: 'Test file upload to Google Drive completed.'
+
+

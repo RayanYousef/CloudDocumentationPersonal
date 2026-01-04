@@ -1,0 +1,10 @@
+v1.62_bv50
+Fixes:
+- Cards Gallery
+- New Action Cards
+- Leaderboard
+
+New/Modified:
+- Unique usernames' logic is moved to the backend
+- Added a copy username button in profile panel
+- Handling of disconnected player
