@@ -7,7 +7,7 @@ const config = {
   tagline: 'Comprehensive guides for Unity cloud build pipelines',
   favicon: 'img/favicon.ico',
 
-  url: 'https://github.com',
+  url: 'https://rayanyousef.github.io',
   baseUrl: '/CloudDocumentationPersonal/',
 
   organizationName: 'RayanYousef',
