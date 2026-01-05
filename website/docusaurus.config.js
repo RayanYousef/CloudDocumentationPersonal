@@ -1,11 +1,11 @@
 // @ts-check
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Unity Cloud Build Docs',
   tagline: 'Comprehensive guides for Unity cloud build pipelines',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/joy.png',
 
   url: 'https://RayanYousef.github.io',
   baseUrl: '/CloudDocumentationPersonal/',
@@ -49,8 +49,8 @@ const config = {
       navbar: {
         title: 'Unity Cloud Build',
         logo: {
-          alt: 'Unity Cloud Build Logo',
-          src: 'img/logo.svg',
+          alt: 'Joy Logo',
+          src: 'img/joy.png',
         },
         items: [
           {
