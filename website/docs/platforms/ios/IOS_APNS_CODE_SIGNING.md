@@ -96,4 +96,4 @@ Assets/
     └── IOSCodeSigningProcessor.cs (optional, only if you use the processor)
 ```
 
-Back to the IOS build guide: [IOS.md](../platforms/IOS.md)
+Back to the IOS build guide: [IOS.md](index.md)

@@ -8,12 +8,17 @@ All documentation lives in the `website/docs` folder. The structure of the folde
 
 ```text
 website/docs/
-├── intro.md               (Top-level page)
-├── platforms/             (Folder = "Platforms" category)
-│   ├── Android.md         (Page)
-│   ├── IOS.md             (Page)
-│   └── _category_.json    (Sidebar settings for this folder)
-└── GUIDE/                 (Folder = "User Guide" category)
+├── getting-started/       (Folder = "Getting Started")
+│   ├── intro.md
+│   └── prerequisites.md
+├── platforms/
+│   ├── android/           (Folder = "Android")
+│       └── index.md
+│   ├── ios/               (Folder = "iOS")
+│       ├── index.md
+│       └── IOS_APNS...md
+│   └── _category_.json
+└── GUIDE/                 (Folder = "User Guide")
     ├── 01-using-the-site.md
     └── 02-managing-content.md
 ```

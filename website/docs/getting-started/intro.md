@@ -21,7 +21,7 @@ If you're new to GitHub Actions, watch this beginner-friendly introduction:
 ### **Step 1: Prerequisites Setup** 📋
 **⚠️ IMPORTANT: Complete this FIRST before choosing your platform!**
 
-Complete the **[Prerequisites Setup Guide](prerequisites)** - this is required for both Android and IOS:
+Complete the **[Prerequisites Setup Guide](prerequisites.md)** - this is required for both Android and IOS:
 - Set up core configuration files (`VersioningSettings.json`)
 - Configure `WhatsNew` directory for localized release notes (located in `docs/CloudBuild/WhatsNew/`)
 - Prepare build controller for multi-platform orchestration
@@ -33,12 +33,12 @@ Complete the **[Prerequisites Setup Guide](prerequisites)** - this is required f
 #### **🤖 ANDROID BUILDS**
 > Build APK files (Google Drive) or AAB bundles (Play Store)
 >
-> **[📱 Open Android Build Guide](platforms/Android)** ← Click here for Android setup
+> **[📱 Open Android Build Guide](../platforms/android/index.md)** ← Click here for Android setup
 
 #### **🍎 IOS BUILDS**
 > Build IPA files and deploy to TestFlight
 >
-> **[📱 Open IOS Build Guide](platforms/IOS)** ← Click here for IOS setup
+> **[📱 Open IOS Build Guide](../platforms/ios/index.md)** ← Click here for IOS setup
 
 ### **Step 3: Run Your Builds** ▶️
 Choose from the workflows above:
@@ -48,8 +48,8 @@ Choose from the workflows above:
 ### **📖 Detailed Documentation**
 All setup guides and reference materials:
 - **[Prerequisites Setup](prerequisites)** - Complete setup requirements
-- **[Android Guide](platforms/Android)** - Detailed Android deployment steps
-- **[IOS Guide](platforms/IOS)** - Detailed IOS deployment steps
+- **[Android Guide](../platforms/android/index.md)** - Detailed Android deployment steps
+- **[IOS Guide](../platforms/ios/index.md)** - Detailed IOS deployment steps
 
 ## ✅ **Setup Checklist: Get Your Builds Working**
 

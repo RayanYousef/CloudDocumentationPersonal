@@ -6,25 +6,26 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #E07A5F;
-  --ifm-color-primary-dark: #DB6647;
-  --ifm-color-primary-darker: #D85C3B;
-  --ifm-color-primary-darkest: #B84526;
-  --ifm-color-primary-light: #E58E77;
-  --ifm-color-primary-lighter: #E89883;
-  --ifm-color-primary-lightest: #F0B8A9;
+  /* Joy Robot Cyan Theme */
+  --ifm-color-primary: #00C2CB;
+  --ifm-color-primary-dark: #00AEB7;
+  --ifm-color-primary-darker: #00A5AD;
+  --ifm-color-primary-darkest: #00888F;
+  --ifm-color-primary-light: #26D0D8;
+  --ifm-color-primary-lighter: #3CD6DD;
+  --ifm-color-primary-lightest: #76E6EB;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #F2A65A;
-  --ifm-color-primary-dark: #F0964A;
-  --ifm-color-primary-darker: #EF8D3D;
-  --ifm-color-primary-darkest: #E67416;
-  --ifm-color-primary-light: #F4B66A;
-  --ifm-color-primary-lighter: #F5BF77;
-  --ifm-color-primary-lightest: #F9D6A3;
+  --ifm-color-primary: #00C2CB;
+  --ifm-color-primary-dark: #00AEB7;
+  --ifm-color-primary-darker: #00A5AD;
+  --ifm-color-primary-darkest: #00888F;
+  --ifm-color-primary-light: #26D0D8;
+  --ifm-color-primary-lighter: #3CD6DD;
+  --ifm-color-primary-lightest: #76E6EB;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }

@@ -82,7 +82,7 @@ Follow these steps to set up your Unity license for CI/CD builds:
 #### Create Required Certificates and Provisioning Profiles
 
 ##### 2.1–2.3. Certificates and Profiles
-Moved to the dedicated guide: see [SignCode](../platforms/IOS_APNS_CODE_SIGNING.md) for creating the Apple Distribution certificate, APNS certificate, and provisioning profiles used for signing.
+Moved to the dedicated guide: see [SignCode](IOS_APNS_CODE_SIGNING.md) for creating the Apple Distribution certificate, APNS certificate, and provisioning profiles used for signing.
 
 ##### 2.4. Export Options Plist
 Create an export options plist file for TestFlight deployment:
@@ -127,7 +127,7 @@ Then commit and push your Unity `ProjectSettings` so CI uses them. If you prefer
 
 The `IOSCodeSigningProcessor.cs` is an optional Unity editor script that automates manual code signing for iOS builds. **If you want to use a Notification Service Extension, you must use this processor.** If you prefer configuring signing in Xcode and do not use a notification service extension, you can skip it.
 
-➡️ For setup steps, prerequisites, and troubleshooting, see: [iOS Code Signing Processor](../platforms/IOS_APNS_CODE_SIGNING.md)
+➡️ For setup steps, prerequisites, and troubleshooting, see: [iOS Code Signing Processor](IOS_APNS_CODE_SIGNING.md)
 
 ### 4. App Store Connect Setup
 
@@ -169,7 +169,7 @@ In Unity, go to **File > Build Settings > Player Settings** and set your **Bundl
 
 ## Step 3: iOS-Specific Setup
 
-> **📋 Prerequisites**: Ensure you've completed the [Prerequisites Setup](../prerequisites) first, including `VersioningSettings.json`, `WhatsNew` directory (located in `docs/CloudBuild/WhatsNew/`), and `CustomBuildProcessor.cs` script. If you opt into code signing automation, follow [SignCode](../platforms/IOS_APNS_CODE_SIGNING.md) to add `IOSCodeSigningProcessor.cs`.
+> **📋 Prerequisites**: Ensure you've completed the [Prerequisites Setup](../../getting-started/prerequisites.md) first, including `VersioningSettings.json`, `WhatsNew` directory (located in `docs/CloudBuild/WhatsNew/`), and `CustomBuildProcessor.cs` script. If you opt into code signing automation, follow [SignCode](IOS_APNS_CODE_SIGNING.md) to add `IOSCodeSigningProcessor.cs`.
 
 ## Step 4: Xcode Configuration & Workflow (OPTIONAL: Only if you need iOS 18.2 features)
 
@@ -189,9 +189,9 @@ If your project uses plugins like **AdMob**, **Firebase**, or **Facebook SDK** t
 
 These plugins require building an `.xcworkspace` (Workspace) instead of the standard `.xcodeproj`.
 
-➡️ **[Read the CocoaPods & Workspace Workflow Guide](../platforms/IOS_CocoaPods_Workflow.md)**
+➡️ **[Read the CocoaPods & Workspace Workflow Guide](IOS_CocoaPods_Workflow.md)**
 
-You can find the complete iOS TestFlight workflow [here](../reference/workflows#ios-ipa-testflight).
+You can find the complete iOS TestFlight workflow [here](../../reference/workflows#ios-ipa-testflight).
 
 
 
@@ -201,7 +201,7 @@ You can find the complete iOS TestFlight workflow [here](../reference/workflows#
 - **Certificate Expiry**: Monitor your Apple certificates and provisioning profiles expiry dates
 - **Xcode Version**: The workflow uses Xcode 16.2 - ensure compatibility with your Unity version
 - **Provisioning Profiles**: The workflow copies profiles to multiple locations for compatibility
-- **Code Signing**: If you use the optional processor, it runs in Unity's PostProcessBuild pipeline. See [SignCode](../platforms/IOS_APNS_CODE_SIGNING.md).
+- **Code Signing**: If you use the optional processor, it runs in Unity's PostProcessBuild pipeline. See [SignCode](IOS_APNS_CODE_SIGNING.md).
 - **License Security**: GameCI does not store your Unity credentials or license files - they're only used during build activation
 
 - **Build Branch**: By default, builds target the `main` branch (configurable in `VersioningSettings.json`)

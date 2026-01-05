@@ -113,7 +113,7 @@ In Unity, go to **File > Build Settings > Player Settings** and set your **Packa
 
 ## Step 3: Android-Specific Setup
 
-> **📋 Prerequisites**: Ensure you've completed the [Prerequisites Setup](../prerequisites) first, including `VersioningSettings.json`, `WhatsNew` directory (located in `docs/CloudBuild/WhatsNew/`), and `CustomBuildProcessor.cs` script.
+> **📋 Prerequisites**: Ensure you've completed the [Prerequisites Setup](../../getting-started/prerequisites.md) first, including `VersioningSettings.json`, `WhatsNew` directory (located in `docs/CloudBuild/WhatsNew/`), and `CustomBuildProcessor.cs` script.
 
 
 
