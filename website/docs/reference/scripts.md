@@ -6,7 +6,7 @@ This section contains the reference for the scripts used in the Unity Cloud Buil
 
 Handles the build process customizations.
 
-[Download CustomBuildProcessor.cs](/downloads/scripts/CustomBuildProcessor.cs)
+[Download CustomBuildProcessor.cs](/CloudDocumentationPersonal/downloads/scripts/CustomBuildProcessor.cs)
 
 ```csharp
 using System;
@@ -169,7 +169,7 @@ string plistPath = pPath + "/Info.plist";
 
 Handles iOS code signing and entitlements.
 
-[Download IOSCodeSigningProcessor.cs](/downloads/scripts/IOSCodeSigningProcessor.cs)
+[Download IOSCodeSigningProcessor.cs](/CloudDocumentationPersonal/downloads/scripts/IOSCodeSigningProcessor.cs)
 
 ```csharp
 using System;
@@ -401,7 +401,7 @@ internal class IOSCodeSigningProcessor : IPostprocessBuildWithReport
 
 Defines the structure for version information.
 
-[Download VersionInfo.cs](/downloads/scripts/VersionInfo.cs)
+[Download VersionInfo.cs](/CloudDocumentationPersonal/downloads/scripts/VersionInfo.cs)
 
 ```csharp
 /// <summary>
@@ -422,7 +422,7 @@ public struct VersionInfo
 
 Displays the version information in the UI.
 
-[Download VersionText.cs](/downloads/scripts/VersionText.cs)
+[Download VersionText.cs](/CloudDocumentationPersonal/downloads/scripts/VersionText.cs)
 
 ```csharp
 using UnityEngine;

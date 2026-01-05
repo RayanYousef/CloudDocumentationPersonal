@@ -1,5 +1,5 @@
 // @ts-check
-import { themes as prismThemes } from 'prism-react-renderer';
+import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -7,13 +7,13 @@ const config = {
   tagline: 'Comprehensive guides for Unity cloud build pipelines',
   favicon: 'img/favicon.ico',
 
-  url: 'https://rayanyousef.github.io',
+  url: 'https://RayanYousef.github.io',
   baseUrl: '/CloudDocumentationPersonal/',
 
   organizationName: 'RayanYousef',
   projectName: 'CloudDocumentationPersonal',
 
-  onBrokenLinks: 'warn', // Changing to warn to avoid build failures during initial setup if links are tricky
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -29,6 +29,7 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           routeBasePath: '/', // Serve docs at the site root
+          editUrl: 'https://github.com/RayanYousef/CloudDocumentationPersonal/edit/main/website/',
         },
         blog: false, // Disable blog
         theme: {
@@ -54,15 +55,11 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'docsSidebar', // We will name our sidebar this
+            sidebarId: 'docsSidebar',
             position: 'left',
             label: 'Documentation',
           },
-          {
-            href: 'https://github.com/repository', // Placeholder
-            label: 'GitHub',
-            position: 'right',
-          },
+          // GitHub link removed as requested
         ],
       },
       footer: {

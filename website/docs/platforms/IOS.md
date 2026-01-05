@@ -117,7 +117,7 @@ Example content:
 - Profile ID (Provisioning Profile UUID)
 - Profile Type (e.g., Distribution)
 
-![Unity Player Settings - iOS Code Signing Configuration](/img/IOS_Identification.png)
+![Unity Player Settings - iOS Code Signing Configuration](/CloudDocumentationPersonal/img/IOS_Identification.png)
 
 *Configure the highlighted fields in Unity Player Settings for manual code signing*
 

@@ -6,7 +6,7 @@ This section contains the reference for the GitHub Actions workflows.
 
 The main controller workflow that orchestrates the builds.
 
-[Download main-controller.yml](/downloads/workflows/main-controller.yml)
+[Download main-controller.yml](/CloudDocumentationPersonal/downloads/workflows/main-controller.yml)
 
 ```yaml
 name: Build Controller
@@ -61,7 +61,7 @@ jobs:
 
 Workflow to build Android App Bundle and upload to Play Store.
 
-[Download android-aab-store.yml](/downloads/workflows/android-aab-store.yml)
+[Download android-aab-store.yml](/CloudDocumentationPersonal/downloads/workflows/android-aab-store.yml)
 
 ```yaml
 name: ToStore - Automated Build - Android
@@ -207,7 +207,7 @@ jobs:
 
 Workflow to build Android APK and upload to Google Drive.
 
-[Download android-apk-gdrive.yml](/downloads/workflows/android-apk-gdrive.yml)
+[Download android-apk-gdrive.yml](/CloudDocumentationPersonal/downloads/workflows/android-apk-gdrive.yml)
 
 ```yaml
 name: ToDrive - APK Build and Upload - Android
@@ -372,7 +372,7 @@ jobs:
 
 Workflow to build iOS IPA and upload to TestFlight.
 
-[Download ios-ipa-testflight.yml](/downloads/workflows/ios-ipa-testflight.yml)
+[Download ios-ipa-testflight.yml](/CloudDocumentationPersonal/downloads/workflows/ios-ipa-testflight.yml)
 
 ```yaml
 name: ToStore - Automated Build - IOS
