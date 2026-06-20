@@ -1,0 +1,11 @@
+{
+  "label": "Chatbot",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "slug": "/features/chatbot",
+    "title": "Chatbot",
+    "description": "The Chatbot feature and its code files."
+  }
+}

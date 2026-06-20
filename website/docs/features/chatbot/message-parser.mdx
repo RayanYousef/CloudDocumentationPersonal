@@ -1,0 +1,56 @@
+---
+title: MessageParser.cs
+sidebar_position: 2
+description: Tokenizes and validates chatbot input — API, usage, dependencies, and user story.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# `MessageParser.cs`
+
+Tokenizes and validates raw user input before it reaches the
+[Controller](./controller). The tab you picked there stays selected here.
+
+<Tabs groupId="codedoc">
+
+<TabItem value="api" label="API Documentation" default>
+
+```csharp
+public static class MessageParser
+{
+    public static Token[] Tokenize(string raw);
+    public static bool TryValidate(string raw, out string error);
+}
+```
+
+</TabItem>
+
+<TabItem value="howto" label="How To Use">
+
+```csharp
+if (MessageParser.TryValidate(input, out var error))
+    var tokens = MessageParser.Tokenize(input);
+else
+    Console.WriteLine(error);
+```
+
+</TabItem>
+
+<TabItem value="deps" label="Dependencies">
+
+| Dependency | Version | Why |
+| --- | --- | --- |
+| _none_ | — | Pure, dependency-free utility. |
+
+</TabItem>
+
+<TabItem value="story" label="User Story">
+
+> **As a** developer,
+> **I want** malformed input rejected early,
+> **so that** the controller never receives invalid messages.
+
+</TabItem>
+
+</Tabs>
