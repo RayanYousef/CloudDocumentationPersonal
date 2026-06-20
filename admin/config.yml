@@ -1,0 +1,83 @@
+# Sveltia CMS configuration.
+# Docs: https://sveltiacms.app/  — compatible with the Decap/Netlify CMS schema.
+#
+# Auth: use "Sign In with Token" (a GitHub Personal Access Token with write access
+# to this repository). This keeps the whole CMS backend-free on GitHub Pages.
+# See /guide/editing for the walkthrough.
+
+backend:
+  name: github
+  repo: RayanYousef/CloudDocumentationPersonal # <owner>/<repo>
+  branch: main
+  # OAuth (nicer login for teams) needs an external auth server — intentionally
+  # omitted to stay 100% static. Token login works with no server.
+
+# Uploaded media is committed to the repo and served by Docusaurus.
+# public_folder MUST include the site baseUrl, or media links 404 on deploy.
+media_folder: website/static/uploads
+public_folder: /CloudDocumentationPersonal/uploads
+
+# Show the editing UI in the site's locale.
+locale: en
+
+collections:
+  # --- Single pages -------------------------------------------------------
+  - name: pages
+    label: Pages
+    files:
+      - name: intro
+        label: Introduction
+        file: website/docs/intro.md
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: slug, label: Slug, widget: string, required: false }
+          - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+          - { name: description, label: Description, widget: text, required: false }
+          - { name: body, label: Body, widget: markdown }
+
+  # --- Changelogs (plain Markdown) ---------------------------------------
+  - name: changelogs
+    label: Changelogs
+    folder: website/docs/changelogs
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body, widget: markdown }
+
+  # --- User Guide (plain Markdown) ---------------------------------------
+  - name: guide
+    label: User Guide
+    folder: website/docs/guide
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body, widget: markdown }
+
+  # --- Feature: Chatbot (MDX code-file pages) ----------------------------
+  # NOTE: these .mdx pages contain JSX (import lines + the <Tabs> component). The
+  # body uses the `text` widget (a plain editor), NOT `markdown`, so the JSX
+  # round-trips byte-for-byte instead of being reformatted into invalid MDX.
+  # Add one collection like this per feature folder you create under
+  # website/docs/features/ (the CMS cannot auto-discover new folders).
+  - name: feature_chatbot
+    label: 'Feature: Chatbot'
+    folder: website/docs/features/chatbot
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body (raw MDX — contains JSX), widget: text }
