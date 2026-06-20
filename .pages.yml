@@ -1,0 +1,189 @@
+# Pages CMS configuration (https://pagescms.org)
+# Edit this site visually at https://app.pagescms.org — no Markdown knowledge required.
+#
+# Schema notes:
+#   - Prose pages (intro, changelogs, guide) expose a WYSIWYG `body` (type: rich-text).
+#   - MDX pages (chatbot, showcase) contain JSX/imports, so their `body` is a RAW
+#     `code` field that round-trips the file untouched. NEVER make these rich-text.
+
+media:
+  - name: uploads
+    label: Uploads
+    # Repo folder where uploaded files are stored (no leading/trailing slash).
+    input: website/static/uploads
+    # Public URL written into content. Includes the GitHub Pages baseUrl so images
+    # resolve on the deployed site (https://RayanYousef.github.io/CloudDocumentationPersonal/).
+    output: /CloudDocumentationPersonal/uploads
+    extensions: [jpg, jpeg, png, gif, svg, webp]
+    categories: [image]
+    rename: safe
+
+content:
+  # ---- SINGLE-FILE entry: Introduction (prose, WYSIWYG body) ----
+  - name: intro
+    label: Introduction
+    description: The site homepage shown at the root.
+    type: file
+    path: website/docs/intro.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: slug
+        label: Slug (URL path)
+        type: string
+        required: false
+      - name: sidebar_position
+        label: Sidebar position
+        type: number
+        required: false
+      - name: description
+        label: Description
+        type: text
+        required: false
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          format: markdown
+          media: uploads
+
+  # ---- COLLECTION: Changelogs (prose, WYSIWYG body) ----
+  - name: changelogs
+    label: Changelogs
+    description: Release notes — what changed in each version.
+    type: collection
+    path: website/docs/changelogs
+    format: yaml-frontmatter
+    exclude:
+      - "_category_.json"
+    view:
+      primary: title
+      fields: [title, sidebar_position]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: sidebar_position
+        label: Sidebar position
+        type: number
+        required: false
+      - name: description
+        label: Description
+        type: text
+        required: false
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          format: markdown
+          media: uploads
+
+  # ---- COLLECTION: Guide (prose, WYSIWYG body) ----
+  - name: guide
+    label: Guide
+    description: How to author and edit this site.
+    type: collection
+    path: website/docs/guide
+    format: yaml-frontmatter
+    exclude:
+      - "_category_.json"
+    view:
+      primary: title
+      fields: [title, sidebar_position]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: sidebar_position
+        label: Sidebar position
+        type: number
+        required: false
+      - name: description
+        label: Description
+        type: text
+        required: false
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          format: markdown
+          media: uploads
+
+  # ---- COLLECTION: Chatbot feature pages (RAW MDX — JSX/imports) ----
+  # These .mdx files import React components (Tabs, TabItem). The body is a RAW
+  # `code` field so JSX/MDX round-trips verbatim. Do NOT switch to rich-text.
+  - name: chatbot
+    label: Chatbot (raw MDX)
+    description: Chatbot feature code-doc pages. Body is raw MDX — edit carefully.
+    type: collection
+    path: website/docs/features/chatbot
+    format: yaml-frontmatter
+    exclude:
+      - "_category_.json"
+    view:
+      primary: title
+      fields: [title, sidebar_position]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: sidebar_position
+        label: Sidebar position
+        type: number
+        required: false
+      - name: description
+        label: Description
+        type: text
+        required: false
+      - name: body
+        label: Body (raw MDX)
+        type: code
+        options:
+          format: mdx
+
+  # ---- COLLECTION: 3D Showcase pages (RAW MDX — JSX/imports, recursive) ----
+  # 3D test pages import viewer components (ModelViewer, FbxViewer). subfolders: true
+  # makes the collection recurse into showcase/fbx, /geometry-lab, /mechanical-parts.
+  # Body is RAW `code` so JSX/MDX round-trips verbatim. Do NOT switch to rich-text.
+  - name: showcase
+    label: 3D Showcase (raw MDX)
+    description: 3D test pages. Body is raw MDX — edit carefully.
+    type: collection
+    path: website/docs/showcase
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - "_category_.json"
+    view:
+      primary: title
+      fields: [title, sidebar_position]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: sidebar_position
+        label: Sidebar position
+        type: number
+        required: false
+      - name: description
+        label: Description
+        type: text
+        required: false
+      - name: body
+        label: Body (raw MDX — edit carefully)
+        type: code
+        options:
+          format: mdx
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user
