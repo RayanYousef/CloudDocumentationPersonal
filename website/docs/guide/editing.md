@@ -1,17 +1,76 @@
 ---
 title: Editing in the Browser
 sidebar_position: 2
-description: Edit docs in the browser with Sveltia CMS — token login now, optional free GitHub login.
+description: Edit docs in the browser — Pages CMS (recommended, fully visual) or Sveltia CMS.
 ---
 
 # Editing in the Browser
 
-This site ships with **[Sveltia CMS](https://github.com/sveltia/sveltia-cms)** (MIT)
-mounted at **`/admin`**. It runs entirely in your browser and commits your edits
-straight to the GitHub repository — no server to run. It includes a full
-**WYSIWYG Markdown editor**.
+You have two browser-based ways to edit this site, both free and both commit
+straight to the GitHub repository — no server to run:
 
-## Two ways to log in
+- **[Pages CMS](https://pagescms.org)** — **recommended for non-developers.** A
+  fully visual, hosted WYSIWYG editor at **[app.pagescms.org](https://app.pagescms.org)**.
+  No tokens, no setup, no Markdown to learn.
+- **[Sveltia CMS](https://github.com/sveltia/sveltia-cms)** — bundled at **`/admin`**;
+  runs in your browser but needs a Personal Access Token (or a one-time OAuth setup).
+
+## Recommended: Pages CMS (easiest, fully visual)
+
+**[Pages CMS](https://pagescms.org)** is a free, open-source (MIT) CMS for static
+sites. It's the friendliest option here: it's **hosted for you** at
+[app.pagescms.org](https://app.pagescms.org), so there are **no tokens to create**,
+**nothing to install**, and **no Markdown to learn** — you just type, style text
+with toolbar buttons (headings, **bold**, *italic*, lists, links, images), and
+hit **Save**. Each save commits to the repo and the site rebuilds automatically.
+It also supports **multiple editors** out of the box, which makes it friendlier
+than Sveltia's token/OAuth flow below.
+
+This site already includes a `.pages.yml` config at the repo root that tells
+Pages CMS which pages are editable, so everything below works immediately.
+
+### One-time access
+
+1. Go to **[https://app.pagescms.org](https://app.pagescms.org)**.
+2. Click **Sign in with GitHub**.
+3. Grant the **Pages CMS GitHub App** access to the
+   **`RayanYousef/CloudDocumentationPersonal`** repository (you can limit it to
+   just this one repo). This is what lets your saves become commits.
+
+You only do this once. After that, anyone you've given **write access** to the
+repo can sign in and edit.
+
+### Editing a page
+
+1. In Pages CMS, open a **collection** — for example **Guide** or **Changelogs**.
+2. Click an entry to open it. Edit the **Body** visually: use the toolbar for
+   headings, **bold**, *italic*, lists, links, and **images** (drag-and-drop;
+   they upload to `website/static/uploads`). No Markdown syntax required.
+3. Click **Save**. Pages CMS commits the change to the repo and GitHub Actions
+   rebuilds and deploys the site — your edit appears live after the build.
+
+:::tip Prose vs. MDX pages
+The **Introduction**, **Changelogs**, and **Guide** collections give you the full
+visual (rich-text) editor. The **Chatbot (raw MDX)** and **3D Showcase (raw MDX)**
+collections contain React components and `import` lines, so their body opens in a
+**raw code editor** instead — edit those carefully and don't remove the `import`
+lines or JSX tags.
+:::
+
+:::info Free and open-source
+Pages CMS is MIT-licensed and free to use. Access control is GitHub's: anyone with
+**write access** to the repo can edit; remove their repo access to revoke editing.
+:::
+
+## Alternative: Sveltia CMS at `/admin`
+
+The site also ships with **[Sveltia CMS](https://github.com/sveltia/sveltia-cms)**
+(MIT) mounted at **`/admin`**. It runs entirely in your browser and commits your
+edits straight to the GitHub repository — no server to run. It includes a full
+**WYSIWYG Markdown editor**. Use this if you prefer a self-hosted editor; for most
+non-technical editors, **Pages CMS above is simpler**.
+
+### Two ways to log in
 
 Sveltia offers **Sign In with Token** (works today, zero setup) and
 **Sign in with GitHub** (nicer for teams, needs a one-time free setup).
@@ -23,7 +82,7 @@ because this site isn't a Netlify site, you get a real 404. It is **not** a bug.
 Use **Sign In with Token** (Option A), or enable free GitHub login (Option B).
 :::
 
-## Option A — Sign in with Token (works now, no setup)
+### Option A — Sign in with Token (works now, no setup)
 
 1. Create a **fine-grained GitHub Personal Access Token**:
    GitHub → **Settings → Developer settings → Fine-grained tokens → Generate new token**.
@@ -39,7 +98,7 @@ Use **Sign In with Token** (Option A), or enable free GitHub login (Option B).
 
 When the token expires, generate a new one and paste it again.
 
-## Option B — Sign in with GitHub (optional, free, best for teams)
+### Option B — Sign in with GitHub (optional, free, best for teams)
 
 A real "Sign in with GitHub" button needs a server-side token exchange (GitHub
 requires a client *secret* that must never live in browser code). You can host
@@ -71,7 +130,7 @@ One-time, ~30 minutes:
 
 After this, teammates just click **Sign in with GitHub** — no tokens to manage.
 
-## Editing
+### Editing with Sveltia
 
 - Pick a collection (e.g. **Features**), open a page, edit, and **Publish**.
 - Publishing creates a commit on the configured branch; the site rebuilds and
@@ -85,7 +144,7 @@ CMS. When you add a new feature folder, add a matching collection in
 `static/admin/config.yml` (the CMS cannot auto-discover new folders).
 :::
 
-## Who can edit, and "only one editor at a time"
+### Who can edit, and "only one editor at a time"
 
 Access control is **GitHub's**, not the CMS's — Sveltia has no user system of its
 own. Anyone who logs in (token *or* GitHub) and has **write access** to the repo can
