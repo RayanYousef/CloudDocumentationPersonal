@@ -1,0 +1,2 @@
+# Media upload target for Pages CMS (.pages.yml media.input) and Sveltia (config.yml media_folder).
+# Kept in version control so the upload path exists before the first image is uploaded.
