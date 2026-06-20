@@ -13,8 +13,12 @@ const config = {
   organizationName: 'RayanYousef',
   projectName: 'CloudDocumentationPersonal',
 
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -30,6 +34,15 @@ const config = {
           sidebarPath: './sidebars.js',
           routeBasePath: '/', // Serve docs at the site root
           editUrl: 'https://github.com/RayanYousef/CloudDocumentationPersonal/edit/main/website/',
+          // The editable working docs (docs/ = "current") are the DEFAULT version
+          // served at the root, so in-browser CMS edits (which write to docs/)
+          // appear on the live site immediately. 1.0.0 is a frozen released
+          // snapshot, available from the version dropdown at /1.0.0/.
+          lastVersion: 'current',
+          versions: {
+            current: { label: 'Latest' },
+            '1.0.0': { label: '1.0.0' },
+          },
         },
         blog: false, // Disable blog
         theme: {
@@ -54,6 +67,11 @@ const config = {
         },
         items: [
           {
+            type: 'docsVersionDropdown',
+            position: 'left',
+            dropdownActiveClassDisabled: true,
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'docsSidebar',
             position: 'left',
@@ -73,21 +91,21 @@ const config = {
                 to: '/',
               },
               {
-                label: 'Prerequisites',
-                to: '/prerequisites',
+                label: 'Features',
+                to: '/features',
               },
             ],
           },
           {
-            title: 'Platforms',
+            title: 'More',
             items: [
               {
-                label: 'Android',
-                to: '/platforms/Android',
+                label: '3D Models',
+                to: '/models/',
               },
               {
-                label: 'iOS',
-                to: '/platforms/IOS',
+                label: 'Edit in browser',
+                to: '/guide/editing',
               },
             ],
           },

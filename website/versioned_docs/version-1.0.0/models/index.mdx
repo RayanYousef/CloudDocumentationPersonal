@@ -1,0 +1,50 @@
+---
+title: 3D Models
+sidebar_position: 1
+description: Interactive 3D models rendered in the browser from repo-hosted glTF files.
+---
+
+import ModelViewer from '@site/src/components/ModelViewer';
+
+# 3D Models
+
+Models are stored in the repository under `static/models/` and rendered with
+Google's `<model-viewer>`. Drag to orbit, scroll to zoom.
+
+<ModelViewer
+  src="/models/cube.gltf"
+  alt="A sample cube"
+  poster=""
+/>
+
+## Adding your own model
+
+1. Export your model as **glTF (`.gltf`) or GLB (`.glb`)** — the only formats
+   `<model-viewer>` supports.
+2. Drop the file into `website/static/models/`.
+3. Reference it from any page:
+
+```mdx
+import ModelViewer from '@site/src/components/ModelViewer';
+
+<ModelViewer src="/models/your-model.glb" alt="Your model" />
+```
+
+:::note Why a wrapper component?
+`<model-viewer>` is browser-only (WebGL). Docusaurus renders pages on the server
+where there is no `window`, so the viewer is loaded inside `<BrowserOnly>` to keep
+the static build from crashing. See `src/components/ModelViewer/index.js`.
+:::
+
+:::tip Large models & GitHub Pages
+GitHub Pages **does not serve Git-LFS files by default** — it serves the tiny pointer
+file, not the binary. So:
+
+- **Small / few models** → commit directly to `static/models/` (what this site does).
+- **Large or many models** → host on a free CDN (GitHub Releases, jsDelivr, Cloudflare R2)
+  and pass the full URL to `src`.
+- **If you must use Git LFS** → add `lfs: true` to the `actions/checkout` step in
+  `.github/workflows/deploy-docs.yml` so the build resolves real binaries.
+
+Watch the 1 GB published-site cap and the 100 GB/month bandwidth soft limit.
+:::

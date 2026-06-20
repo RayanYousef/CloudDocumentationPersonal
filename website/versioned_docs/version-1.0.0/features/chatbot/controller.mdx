@@ -1,0 +1,84 @@
+---
+title: Controller.cs
+sidebar_position: 1
+description: The Chatbot controller — API, usage, dependencies, and user story.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# `Controller.cs`
+
+The orchestrator for the Chatbot feature. Documentation is split into tabs — your
+selection (e.g. **API Documentation**) follows you across other code-file pages.
+
+<Tabs groupId="codedoc">
+
+<TabItem value="api" label="API Documentation" default>
+
+### `class ChatbotController`
+
+| Member | Signature | Description |
+| --- | --- | --- |
+| `Send` | `Task<Reply> Send(string message)` | Sends a user message and awaits a reply. |
+| `Reset` | `void Reset()` | Clears the conversation context. |
+| `OnReply` | `event Action<Reply>` | Raised whenever a reply is received. |
+
+```csharp
+public sealed class ChatbotController
+{
+    public event Action<Reply> OnReply;
+
+    public Task<Reply> Send(string message);
+    public void Reset();
+}
+```
+
+</TabItem>
+
+<TabItem value="howto" label="How To Use">
+
+### Quick start
+
+```csharp
+var controller = new ChatbotController(apiKey: "…");
+controller.OnReply += reply => Console.WriteLine(reply.Text);
+
+var reply = await controller.Send("Hello!");
+```
+
+1. Construct a `ChatbotController` with your API key.
+2. Subscribe to `OnReply` (optional) or await `Send` directly.
+3. Call `Reset()` to start a new conversation.
+
+</TabItem>
+
+<TabItem value="deps" label="Dependencies">
+
+| Dependency | Version | Why |
+| --- | --- | --- |
+| `Newtonsoft.Json` | `13.x` | Request/response serialization. |
+| `MessageParser` | internal | Tokenizes and validates user input. |
+
+:::note
+`MessageParser` is documented under the same feature — see
+[Message Parser](./message-parser).
+:::
+
+</TabItem>
+
+<TabItem value="story" label="User Story">
+
+> **As a** player,
+> **I want** to ask the in-game assistant questions in natural language,
+> **so that** I can get help without leaving the game.
+
+**Acceptance criteria**
+
+- [x] Replies arrive in under 2 seconds.
+- [x] Conversation context persists until `Reset()`.
+- [ ] Offline fallback message when the network is unavailable.
+
+</TabItem>
+
+</Tabs>

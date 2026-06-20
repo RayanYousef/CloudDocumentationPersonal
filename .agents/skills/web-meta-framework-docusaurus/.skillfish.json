@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "web-meta-framework-docusaurus",
+  "owner": "agents-inc",
+  "repo": "skills",
+  "path": "dist/plugins/web-meta-framework-docusaurus/skills/web-meta-framework-docusaurus",
+  "branch": "main",
+  "sha": "ac3550df10d0a558b10afee8cfc3aef53275edb5",
+  "source": "manual"
+}
