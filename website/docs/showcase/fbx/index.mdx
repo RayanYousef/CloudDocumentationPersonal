@@ -1,0 +1,43 @@
+---
+title: FBX Models
+description: Render .fbx files directly in the browser with three.js.
+---
+
+import FbxViewer from '@site/src/components/FbxViewer';
+
+# FBX Models
+
+`<model-viewer>` only reads **glTF/GLB**, so `.fbx` files are rendered with a
+separate **three.js `FBXLoader`** component (`<FbxViewer>`). It loads the `.fbx`
+directly — no conversion needed — and runs entirely in the browser, so it stays
+free on GitHub Pages.
+
+## Cube (FBX)
+
+<FbxViewer src="/models/fbx/cube.fbx" alt="FBX cube" height={340} />
+
+## Pyramid (FBX)
+
+<FbxViewer src="/models/fbx/pyramid.fbx" alt="FBX pyramid" height={340} />
+
+Dedicated pages: [Cube](./cube) · [Pyramid](./pyramid).
+
+:::info glTF vs FBX — which to use?
+For **new** models prefer **glTF/GLB** with `<ModelViewer>` — it is lighter, web-native,
+and faster. Use `<FbxViewer>` when you specifically need to display an existing
+`.fbx` asset without converting it. Both are free and open source.
+:::
+
+## How to add your own FBX
+
+1. Drop the `.fbx` file in `website/static/models/fbx/`.
+2. On a page, import the viewer and point at it:
+
+   ```mdx
+   import FbxViewer from '@site/src/components/FbxViewer';
+
+   <FbxViewer src="/models/fbx/your-model.fbx" alt="…" />
+   ```
+
+FBX files (especially with textures/animations) can be large — see the
+performance note on the [3D Models](/models/) page about big files on GitHub Pages.

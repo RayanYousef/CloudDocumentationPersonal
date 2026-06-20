@@ -9,8 +9,17 @@ backend:
   name: github
   repo: RayanYousef/CloudDocumentationPersonal # <owner>/<repo>
   branch: main
-  # OAuth (nicer login for teams) needs an external auth server — intentionally
-  # omitted to stay 100% static. Token login works with no server.
+  # --- Login methods ---------------------------------------------------------
+  # "Sign In with Token" (a GitHub PAT) works with NO server — it is the default
+  # and needs nothing below.
+  #
+  # To ALSO enable the "Sign in with GitHub" OAuth button for free, deploy the
+  # sveltia-cms-auth Cloudflare Worker (https://github.com/sveltia/sveltia-cms-auth)
+  # plus a GitHub OAuth App, then UNCOMMENT the line below and set it to your
+  # Worker origin (no trailing path). Full walkthrough: /guide/editing.
+  # Until then, clicking "Sign in with GitHub" falls back to Netlify and returns
+  # 404 "Not Found" — that is expected; use token login instead.
+  # base_url: https://sveltia-cms-auth.<your-subdomain>.workers.dev
 
 # Uploaded media is committed to the repo and served by Docusaurus.
 # public_folder MUST include the site baseUrl, or media links 404 on deploy.
