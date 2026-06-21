@@ -119,8 +119,75 @@ collections:
   # Add one collection like this per feature folder you create under
   # website/docs/features/ (the CMS cannot auto-discover new folders).
   - name: feature_chatbot
-    label: 'Feature: Chatbot'
+    label: '⚠️ Developers only — Feature: Chatbot (code — raw MDX)'
     folder: website/docs/features/chatbot
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body (raw MDX — contains JSX), widget: text }
+
+  # --- 3D Showcase (MDX pages with JSX/imports) ---------------------------
+  # Sveltia CMS does NOT yet support Decap "nested" collections (nested.depth /
+  # meta.path are unimplemented). A folder collection is non-recursive, so we
+  # use one collection per subfolder plus one for the root level.
+  # The body MUST be widget: text (never markdown) so JSX imports and component
+  # tags (<FbxViewer/>, <ModelViewer/>) round-trip byte-for-byte.
+
+  # -- showcase root (website/docs/showcase/index.mdx) ---
+  - name: showcase_root
+    label: '⚠️ Developers only — 3D Showcase: Root (code — raw MDX)'
+    label_singular: 'Showcase page'
+    folder: website/docs/showcase
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body (raw MDX — contains JSX), widget: text }
+
+  # -- showcase/fbx/ (index.mdx, cube.mdx, pyramid.mdx) ---
+  - name: showcase_fbx
+    label: '⚠️ Developers only — 3D Showcase: FBX (code — raw MDX)'
+    label_singular: 'FBX page'
+    folder: website/docs/showcase/fbx
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body (raw MDX — contains JSX), widget: text }
+
+  # -- showcase/geometry-lab/ (index.mdx, sphere.mdx, torus.mdx) ---
+  - name: showcase_geometry_lab
+    label: '⚠️ Developers only — 3D Showcase: Geometry Lab (code — raw MDX)'
+    label_singular: 'Geometry Lab page'
+    folder: website/docs/showcase/geometry-lab
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: sidebar_position, label: Sidebar position, widget: number, required: false, value_type: int }
+      - { name: description, label: Description, widget: text, required: false }
+      - { name: body, label: Body (raw MDX — contains JSX), widget: text }
+
+  # -- showcase/mechanical-parts/ (index.mdx, cone.mdx, cylinder.mdx) ---
+  - name: showcase_mechanical_parts
+    label: '⚠️ Developers only — 3D Showcase: Mechanical Parts (code — raw MDX)'
+    label_singular: 'Mechanical Parts page'
+    folder: website/docs/showcase/mechanical-parts
     extension: mdx
     format: frontmatter
     create: true
