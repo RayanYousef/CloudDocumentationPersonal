@@ -1,0 +1,46 @@
+# =============================================================================
+# Wiki.js -- LOCAL EVALUATION ONLY
+# =============================================================================
+# This compose file exists so you can stand up Wiki.js on your own machine and
+# *feel* its WYSIWYG (Visual / CKEditor5) editor, then compare it to the custom
+# MDXEditor we are building for the Docusaurus site.
+#
+# DO NOT use this for deployment. It is a throwaway dev instance:
+#   - The database password below (wikijsrocks) is a hardcoded throwaway. It is
+#     fine for a local trial and unsafe for anything reachable from the internet.
+#   - There is no TLS, no backups, no secret management.
+#
+# Official images (verified): requarks/wiki:2 + postgres:16-alpine.
+# The Wiki.js app listens on container port 3000.
+# =============================================================================
+
+version: "3"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: wiki
+      POSTGRES_USER: wikijs
+      POSTGRES_PASSWORD: wikijsrocks   # throwaway -- local eval only
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  wiki:
+    image: requarks/wiki:2
+    depends_on:
+      - db
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: wikijs
+      DB_PASS: wikijsrocks            # throwaway -- local eval only
+      DB_NAME: wiki
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  db-data:
