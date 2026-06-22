@@ -123,3 +123,13 @@
 .pathHeading {
   word-break: break-all;
 }
+
+.versionSelect {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  margin-bottom: 0.75rem;
+  background: var(--ifm-background-color);
+  color: inherit;
+}

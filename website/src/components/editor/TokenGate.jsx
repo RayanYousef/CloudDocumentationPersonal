@@ -1,22 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {verifyToken, OWNER, REPO} from './githubApi';
+import {OAUTH_WORKER_ORIGIN} from './editorConfig';
 
 /**
- * Browser-only PAT gate for the docs editor.
+ * Browser-only sign-in gate for the docs editor.
  *
- * The user pastes a GitHub Personal Access Token; we verify it can read the
- * target repo, then persist it in localStorage under 'docsEditorPat'. On mount
- * we re-verify any stored token so a revoked/expired PAT does not silently
- * appear "signed in". On success, calls onAuthed(pat).
+ * Two ways in, both yielding a GitHub token passed to onAuthed(token):
+ *   1. "Sign in with GitHub" (OAuth) — shown only when OAUTH_WORKER_ORIGIN is
+ *      configured. Opens the Cloudflare Worker (oauth-worker/) in a popup and
+ *      listens for the Netlify/Decap/Sveltia-style postMessage handshake. The
+ *      returned access token behaves exactly like a PAT.
+ *   2. Personal Access Token (PAT) — always available as a fallback. The user
+ *      pastes a token; we verify it can read the target repo.
  *
- * Reached only inside <BrowserOnly>, so direct localStorage use is safe.
+ * Tokens are verified, then persisted in localStorage under 'docsEditorPat'. On
+ * mount we re-verify any stored token so a revoked/expired one does not silently
+ * appear "signed in".
+ *
+ * Reached only inside <BrowserOnly>, so direct window/localStorage use is safe.
  */
 const STORAGE_KEY = 'docsEditorPat';
+
+/** Matches the popup handshake message: authorization:github:<status>:<payload> */
+const OAUTH_MESSAGE_RE = /^authorization:github:(success|error):([\s\S]*)$/;
 
 export default function TokenGate({onAuthed}) {
   const [pat, setPat] = useState('');
   const [status, setStatus] = useState('idle'); // idle | checking | error
   const [error, setError] = useState('');
+  const [oauthPending, setOauthPending] = useState(false);
+
+  const oauthEnabled = Boolean(OAUTH_WORKER_ORIGIN);
 
   // Re-verify a previously stored token on mount.
   useEffect(() => {
@@ -41,6 +55,80 @@ export default function TokenGate({onAuthed}) {
       cancelled = true;
     };
   }, [onAuthed]);
+
+  // Listen for the OAuth popup's postMessage handshake while a sign-in is
+  // pending. Ignore messages from origins other than the configured Worker.
+  useEffect(() => {
+    if (!oauthEnabled || !oauthPending) return undefined;
+
+    let cancelled = false;
+    const onMessage = async (event) => {
+      if (event.origin !== OAUTH_WORKER_ORIGIN) return;
+      const data = typeof event.data === 'string' ? event.data : '';
+      const match = data.match(OAUTH_MESSAGE_RE);
+      if (!match) return;
+
+      const [, kind, payload] = match;
+      if (cancelled) return;
+      setOauthPending(false);
+
+      if (kind === 'error') {
+        setStatus('error');
+        setError(payload || 'GitHub sign-in failed.');
+        return;
+      }
+
+      // success: payload is JSON { token, provider }
+      let token = '';
+      try {
+        token = JSON.parse(payload).token;
+      } catch (_) {
+        setStatus('error');
+        setError('GitHub sign-in returned an unreadable response.');
+        return;
+      }
+      if (!token) {
+        setStatus('error');
+        setError('GitHub sign-in returned no token.');
+        return;
+      }
+
+      setStatus('checking');
+      setError('');
+      try {
+        await verifyToken(token);
+        if (cancelled) return;
+        window.localStorage.setItem(STORAGE_KEY, token);
+        onAuthed(token);
+      } catch (err) {
+        if (cancelled) return;
+        setStatus('error');
+        setError(err.message || 'Token verification failed.');
+      }
+    };
+
+    window.addEventListener('message', onMessage);
+    return () => {
+      cancelled = true;
+      window.removeEventListener('message', onMessage);
+    };
+  }, [oauthEnabled, oauthPending, onAuthed]);
+
+  const signInWithGitHub = () => {
+    if (!oauthEnabled) return;
+    setStatus('idle');
+    setError('');
+    setOauthPending(true);
+    const authUrl =
+      `${OAUTH_WORKER_ORIGIN}/auth?provider=github&scope=repo&site_id=` +
+      encodeURIComponent(window.location.host);
+    const popup = window.open(authUrl, 'github-oauth', 'width=600,height=720');
+    if (!popup) {
+      setOauthPending(false);
+      setStatus('error');
+      setError('Popup was blocked. Allow popups for this site and try again.');
+    }
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -68,6 +156,50 @@ export default function TokenGate({onAuthed}) {
   return (
     <div style={{maxWidth: 560, margin: '0 auto', padding: '1.5rem'}}>
       <h1>Docs Editor — Sign in</h1>
+
+      {oauthEnabled ? (
+        <div style={{marginBottom: '1.5rem'}}>
+          <p>
+            Sign in with your GitHub account that has write access to{' '}
+            <strong>
+              {OWNER}/{REPO}
+            </strong>
+            .
+          </p>
+          <button
+            type="button"
+            className="button button--primary button--lg"
+            onClick={signInWithGitHub}
+            disabled={oauthPending || status === 'checking'}
+            style={{width: '100%'}}
+          >
+            {oauthPending ? 'Waiting for GitHub…' : 'Sign in with GitHub'}
+          </button>
+          <p
+            style={{
+              fontSize: '0.85rem',
+              color: 'var(--ifm-color-emphasis-600)',
+              margin: '0.75rem 0 0',
+            }}
+          >
+            Or use a Personal Access Token below.
+          </p>
+          <hr style={{margin: '1.25rem 0'}} />
+        </div>
+      ) : (
+        <p
+          style={{
+            fontSize: '0.9rem',
+            color: 'var(--ifm-color-emphasis-700)',
+            marginBottom: '1rem',
+          }}
+        >
+          Tip: &ldquo;Sign in with GitHub&rdquo; can be enabled with a one-time
+          Cloudflare Worker setup (see <code>oauth-worker/README.md</code>). Until
+          then, sign in with a Personal Access Token below.
+        </p>
+      )}
+
       <p>
         Paste a GitHub Personal Access Token with <code>contents:write</code>{' '}
         access to{' '}

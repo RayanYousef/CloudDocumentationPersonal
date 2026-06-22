@@ -4,12 +4,14 @@ import {listTree, DOCS_PREFIX} from './githubApi';
 /**
  * Browser-only doc file picker.
  *
- * Lists every editable markdown file under website/docs/ (via listTree) and
- * lets the user filter and pick one. Paths are shown relative to website/docs/
- * for readability, but onSelect receives the FULL repo-relative path
- * (e.g. "website/docs/foo/bar.mdx") that the Contents API needs.
+ * Lists every editable markdown file under the active version's `prefix`
+ * (via listTree) and lets the user filter and pick one. Paths are shown
+ * relative to that prefix for readability, but onSelect receives the FULL
+ * repo-relative path (e.g. "website/docs/foo/bar.mdx") that the Contents API
+ * needs. `version` is only used as a re-list trigger when the active version
+ * changes.
  */
-export default function FilePicker({pat, onSelect, selectedPath}) {
+export default function FilePicker({pat, onSelect, selectedPath, prefix = DOCS_PREFIX, version}) {
   const [paths, setPaths] = useState(null); // null = loading
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('');
@@ -18,7 +20,7 @@ export default function FilePicker({pat, onSelect, selectedPath}) {
     let cancelled = false;
     setPaths(null);
     setError('');
-    listTree(pat)
+    listTree(pat, prefix)
       .then((list) => {
         if (!cancelled) setPaths(list);
       })
@@ -28,7 +30,7 @@ export default function FilePicker({pat, onSelect, selectedPath}) {
     return () => {
       cancelled = true;
     };
-  }, [pat]);
+  }, [pat, prefix, version]);
 
   const filtered = useMemo(() => {
     if (!paths) return [];
@@ -37,7 +39,7 @@ export default function FilePicker({pat, onSelect, selectedPath}) {
     return paths.filter((p) => p.toLowerCase().includes(q));
   }, [paths, filter]);
 
-  const rel = (p) => (p.startsWith(DOCS_PREFIX) ? p.slice(DOCS_PREFIX.length) : p);
+  const rel = (p) => (p.startsWith(prefix) ? p.slice(prefix.length) : p);
 
   return (
     <div>

@@ -274,6 +274,49 @@ function TabItemEditor({mdastNode}) {
   );
 }
 
+// --- BrowserOnly editor ----------------------------------------------------
+
+const browserOnlyWrapStyle = {
+  border: '1px dashed var(--ifm-color-emphasis-400)',
+  borderRadius: 'var(--ifm-global-radius)',
+  padding: '0.75rem',
+  margin: '0.5rem 0',
+  background: 'var(--ifm-color-emphasis-100)',
+};
+
+/**
+ * Read-only editor for <BrowserOnly>.
+ *
+ * BrowserOnly's child is a render function ({() => ...}) which MDXEditor cannot
+ * surface as rich text. Editing it would risk dropping or mangling the function
+ * expression on save. Instead we render a clearly-labeled, non-editable
+ * placeholder and DO NOT touch the mdast node, so the original children (the
+ * function expression) round-trip back to identical MDX on save. The page opens
+ * without crashing or silently corrupting.
+ */
+function BrowserOnlyEditor() {
+  return (
+    <div style={browserOnlyWrapStyle} contentEditable={false}>
+      <div
+        style={{
+          fontSize: '0.75rem',
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          letterSpacing: '0.04em',
+          color: 'var(--ifm-color-emphasis-700)',
+          marginBottom: '0.35rem',
+        }}
+      >
+        BrowserOnly
+      </div>
+      <div style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)'}}>
+        Client-only content (a render function). Not editable here — it is
+        preserved unchanged on save. Edit it in Raw MDX mode if needed.
+      </div>
+    </div>
+  );
+}
+
 // --- descriptor list -------------------------------------------------------
 
 export const jsxComponentDescriptors = [
@@ -328,5 +371,16 @@ export const jsxComponentDescriptors = [
     ],
     hasChildren: true,
     Editor: TabItemEditor,
+  },
+  {
+    name: 'BrowserOnly',
+    kind: 'flow',
+    source: '@docusaurus/BrowserOnly',
+    defaultExport: true,
+    props: [{name: 'fallback', type: 'expression'}],
+    // The single child is a render function expression, not rich-text children;
+    // declare no editable children so MDXEditor leaves the node untouched.
+    hasChildren: false,
+    Editor: BrowserOnlyEditor,
   },
 ];

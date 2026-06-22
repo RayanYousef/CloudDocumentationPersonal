@@ -13,8 +13,28 @@ export const OWNER = 'RayanYousef';
 export const REPO = 'CloudDocumentationPersonal';
 export const BRANCH = 'main';
 
-/** Only files under this prefix are editable docs. */
-export const DOCS_PREFIX = 'website/docs/';
+/**
+ * Editable doc versions. Each entry maps a version id to the repo prefix that
+ * holds its markdown:
+ *   - 'current' is the live "Latest" docs under website/docs/.
+ *   - Every frozen snapshot lives under website/versioned_docs/version-<id>/.
+ * Editing a non-'current' version commits straight into the archived snapshot.
+ */
+export const VERSIONS = [
+  {id: 'current', label: 'Latest', prefix: 'website/docs/'},
+  {
+    id: '1.0.0',
+    label: '1.0.0',
+    prefix: 'website/versioned_docs/version-1.0.0/',
+  },
+];
+
+/**
+ * Only files under this prefix are editable docs.
+ * Back-compat export = the 'current' (Latest) prefix; new code should pass an
+ * explicit prefix from VERSIONS instead.
+ */
+export const DOCS_PREFIX = VERSIONS[0].prefix;
 
 const API_ROOT = 'https://api.github.com';
 
@@ -88,11 +108,12 @@ export async function verifyToken(pat) {
 
 /**
  * List editable doc files: the recursive git tree of `main`, filtered to
- * markdown files under website/docs/, excluding _category_.json sidebar config.
+ * markdown files under `prefix`, excluding _category_.json sidebar config.
+ * `prefix` defaults to the 'current' (Latest) docs prefix.
  * Returns an array of repo-relative paths (e.g. "website/docs/foo/bar.mdx"),
  * sorted alphabetically.
  */
-export async function listTree(pat) {
+export async function listTree(pat, prefix = DOCS_PREFIX) {
   const data = await ghFetch(
     pat,
     `/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,
@@ -103,11 +124,58 @@ export async function listTree(pat) {
     .map((entry) => entry.path)
     .filter(
       (p) =>
-        p.startsWith(DOCS_PREFIX) &&
+        p.startsWith(prefix) &&
         (p.endsWith('.md') || p.endsWith('.mdx')) &&
         !p.endsWith('_category_.json'),
     )
     .sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * List assets already committed to the repo, so the editor can reference them
+ * without re-uploading. Reads the recursive git tree of `main` once and buckets
+ * the blobs into:
+ *   - models: 3D files under website/static/models/** with a .glb/.gltf/.fbx ext.
+ *   - images: image files under website/static/uploads/** or website/static/img/**
+ *             with a jpg/jpeg/png/gif/svg/webp ext.
+ * Each array holds repo-relative paths (e.g. "website/static/models/foo.glb"),
+ * sorted alphabetically. Callers strip the "website/static" prefix to get the
+ * bare public src.
+ */
+export async function listAssets(pat) {
+  const data = await ghFetch(
+    pat,
+    `/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,
+  );
+  const tree = (data && data.tree) || [];
+  const paths = tree
+    .filter((entry) => entry.type === 'blob')
+    .map((entry) => entry.path);
+
+  const MODEL_EXTS = ['glb', 'gltf', 'fbx'];
+  const IMAGE_EXTS = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
+  const extOf = (p) => {
+    const i = p.lastIndexOf('.');
+    return i >= 0 ? p.slice(i + 1).toLowerCase() : '';
+  };
+
+  const models = paths
+    .filter(
+      (p) =>
+        p.startsWith('website/static/models/') && MODEL_EXTS.includes(extOf(p)),
+    )
+    .sort((a, b) => a.localeCompare(b));
+
+  const images = paths
+    .filter(
+      (p) =>
+        (p.startsWith('website/static/uploads/') ||
+          p.startsWith('website/static/img/')) &&
+        IMAGE_EXTS.includes(extOf(p)),
+    )
+    .sort((a, b) => a.localeCompare(b));
+
+  return {models, images};
 }
 
 /**
