@@ -1,17 +1,20 @@
 ---
 title: Editing in the Browser
 sidebar_position: 2
-description: Edit docs in the browser — Pages CMS (recommended, fully visual) or Sveltia CMS.
+description: Edit docs in the browser — Pages CMS (recommended, fully visual), the built-in /editor, or Sveltia CMS.
 ---
 
 # Editing in the Browser
 
-You have two browser-based ways to edit this site, both free and both commit
+You have three browser-based ways to edit this site, all free and all commit
 straight to the GitHub repository — no server to run:
 
 - **[Pages CMS](https://pagescms.org)** — **recommended for non-developers.** A
   fully visual, hosted WYSIWYG editor at **[app.pagescms.org](https://app.pagescms.org)**.
   No tokens, no setup, no Markdown to learn.
+- **The built-in editor at `/editor`** — a WYSIWYG editor baked into this site
+  that also understands our custom blocks (**3D models**, **tabs**) and can
+  **insert/upload images and 3D models**. Needs a Personal Access Token for now.
 - **[Sveltia CMS](https://github.com/sveltia/sveltia-cms)** — bundled at **`/admin`**;
   runs in your browser but needs a Personal Access Token (or a one-time OAuth setup).
 
@@ -60,6 +63,47 @@ lines or JSX tags.
 :::info Free and open-source
 Pages CMS is MIT-licensed and free to use. Access control is GitHub's: anyone with
 **write access** to the repo can edit; remove their repo access to revoke editing.
+:::
+
+## Built-in editor at `/editor` (handles 3D + tabs)
+
+This site ships its own WYSIWYG editor at **`/editor`**. Unlike the generic CMSs
+above, it understands **our custom blocks** — it renders **3D models** and
+**tabs** visually while you edit, and it can **upload and insert images and 3D
+models** for you. It commits directly to GitHub from your browser; there is no
+server.
+
+### Logging in
+
+The editor uses a **GitHub Personal Access Token** (the same kind described under
+Sveltia's *Option A* below). Create a fine-grained token scoped to **this
+repository** with **Contents: Read and write**, open **`/editor`**, and paste it.
+The token is stored only in your browser's local storage.
+
+:::info A friendlier "Sign in with GitHub" is planned
+A token-free **Sign in with GitHub** flow (via a free Cloudflare Worker, the same
+pattern as Sveltia's *Option B*) is planned as a follow-up. For now, use a token —
+and only on a trusted device.
+:::
+
+### Editing a page
+
+1. Open **`/editor`** (or `http://localhost:3000/CloudDocumentationPersonal/editor/`
+   in dev) and paste your token.
+2. Pick a file from the list on the left (`.md` / `.mdx` pages under `docs/`).
+3. Edit visually in **Visual** mode — headings, **bold**, *italic*, lists, links,
+   tables, code, plus our **3D model** and **tabs** blocks, which preview live.
+   Use the toolbar buttons to **insert an image** or **insert a 3D model**
+   (uploaded to `website/static/`).
+4. Need something the visual editor can't represent? Switch to **Raw MDX** to edit
+   the whole file as text. The editor also drops into Raw mode automatically if a
+   file can't be parsed, so you're never locked out.
+5. Set a commit message and click **Save & commit**. It commits to `main` via the
+   GitHub API and the site rebuilds automatically.
+
+:::warning Token security
+A PAT in browser storage grants write access to the repo. Only use it on a trusted
+device, scope it to this repository, and revoke it if exposed.
 :::
 
 ## Alternative: Sveltia CMS at `/admin`
