@@ -1,0 +1,125 @@
+/**
+ * Scoped layout styles for the in-browser docs editor.
+ *
+ * CSS Modules: every class here is locally hashed, so these rules cannot leak
+ * into Docusaurus content or the rendered docs. The MDXEditor chrome itself is
+ * styled by '@mdxeditor/editor/style.css' (imported only in the client-only
+ * editorClient.js subtree); this module only governs the surrounding shell.
+ */
+
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+.sidebarHeading {
+  font-size: 1.1rem;
+}
+
+.main {
+  min-width: 0;
+}
+
+.section {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.editorFrame {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 420px;
+  padding: 0.75rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+}
+
+.rawTextarea {
+  min-height: 540px;
+}
+
+.notice {
+  background: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-contrast-foreground);
+  border: 1px solid var(--ifm-color-warning-dark);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.modeBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.input {
+  padding: 0.35rem 0.5rem;
+  width: min(420px, 60%);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+}
+
+.fmKey {
+  display: inline-block;
+  width: 140px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+}
+
+.fmRow {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.commitInput {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  margin-bottom: 0.75rem;
+}
+
+.error {
+  color: var(--ifm-color-danger);
+  margin-top: 1rem;
+}
+
+.success {
+  color: var(--ifm-color-success);
+  margin-top: 1rem;
+}
+
+.pathHeading {
+  word-break: break-all;
+}
