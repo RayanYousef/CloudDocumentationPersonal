@@ -2,7 +2,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import TokenGate from './TokenGate';
 import FilePicker from './FilePicker';
 import BodyEditor from './editorClient';
-import {getFile, putFile, OWNER, REPO, DOCS_PREFIX} from './githubApi';
+import {getFile, putFile, OWNER, REPO, VERSIONS} from './githubApi';
 import {splitFrontmatter, joinFrontmatter} from './frontmatter';
 import styles from './editor.module.css';
 
@@ -28,6 +28,12 @@ const FRONTMATTER_FIELDS = ['title', 'sidebar_position', 'description', 'slug'];
 
 export default function EditorApp() {
   const [pat, setPat] = useState(null);
+
+  // active docs version (drives which prefix the file picker lists / paths use)
+  const [versionId, setVersionId] = useState(VERSIONS[0].id);
+  const activeVersion =
+    VERSIONS.find((v) => v.id === versionId) || VERSIONS[0];
+  const activePrefix = activeVersion.prefix;
 
   // currently loaded file state
   const [path, setPath] = useState(null);
@@ -78,7 +84,7 @@ export default function EditorApp() {
         setFmFields(fields);
         setBody(docBody);
         setRawText(text); // full-file raw, ready if we switch/fall back to raw mode
-        setMessage(`Update ${selectedPath.slice(DOCS_PREFIX.length)}`);
+        setMessage(`Update ${selectedPath.slice(activePrefix.length)}`);
       } catch (err) {
         setError(err.message || 'Failed to load file.');
         setPath(null);
@@ -86,8 +92,25 @@ export default function EditorApp() {
         setLoading(false);
       }
     },
-    [pat],
+    [pat, activePrefix],
   );
+
+  // Switch the active version: clear the loaded file so the picker re-lists for
+  // the new version's prefix and nothing stale (path/sha/body) carries over.
+  const changeVersion = useCallback((nextId) => {
+    setVersionId(nextId);
+    setPath(null);
+    setSha(null);
+    setBody('');
+    setRawText('');
+    setFrontmatterText('');
+    setFmFields({});
+    setMode('wysiwyg');
+    setForcedRaw(false);
+    setError('');
+    setCommitUrl('');
+    setMessage('');
+  }, []);
 
   /**
    * Compose the full file text from whichever mode is active.
@@ -158,7 +181,8 @@ export default function EditorApp() {
     return <TokenGate onAuthed={onAuthed} />;
   }
 
-  const relPath = path ? path.slice(DOCS_PREFIX.length) : '';
+  const relPath = path ? path.slice(activePrefix.length) : '';
+  const isLatest = activeVersion.id === VERSIONS[0].id;
 
   return (
     <div className={styles.layout}>
@@ -166,7 +190,38 @@ export default function EditorApp() {
         <h2 className={styles.sidebarHeading}>
           {OWNER}/{REPO}
         </h2>
-        <FilePicker pat={pat} onSelect={loadFile} selectedPath={path} />
+
+        <label className={styles.label} htmlFor="editor-version">
+          Version
+        </label>
+        <select
+          id="editor-version"
+          className={styles.versionSelect}
+          value={versionId}
+          onChange={(e) => changeVersion(e.target.value)}
+        >
+          {VERSIONS.map((v) => (
+            <option key={v.id} value={v.id}>
+              {v.label}
+            </option>
+          ))}
+        </select>
+
+        {!isLatest && (
+          <div className={styles.notice}>
+            You are editing the archived <strong>{activeVersion.label}</strong>{' '}
+            snapshot. Changes here commit into the frozen version, not the Latest
+            docs.
+          </div>
+        )}
+
+        <FilePicker
+          pat={pat}
+          onSelect={loadFile}
+          selectedPath={path}
+          prefix={activePrefix}
+          version={versionId}
+        />
       </aside>
 
       <main className={styles.main}>

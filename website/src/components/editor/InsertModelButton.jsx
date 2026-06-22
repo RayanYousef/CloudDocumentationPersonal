@@ -108,7 +108,7 @@ export default function InsertModelButton({pat, fileLabel}) {
   return (
     <>
       <ButtonWithTooltip
-        title={busy ? 'Uploading model…' : 'Insert 3D model (.glb, .gltf, .fbx)'}
+        title={busy ? 'Uploading model…' : 'Insert 3D model (.glb, .gltf, .fbx — incl. Unity FBX)'}
         onClick={onClick}
         disabled={busy}
       >

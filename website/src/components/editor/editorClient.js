@@ -54,6 +54,8 @@ import '@mdxeditor/editor/style.css';
 import {jsxComponentDescriptors} from './jsxDescriptors';
 import InsertModelButton from './InsertModelButton';
 import InsertImageButton from './InsertImageButton';
+import InsertFromRepoButton from './InsertFromRepoButton';
+import InsertTabsButton from './InsertTabsButton';
 
 const CODE_LANGUAGES = {
   csharp: 'C#',
@@ -85,6 +87,10 @@ function makeToolbarContents({pat, fileLabel}) {
         <InsertImageButton pat={pat} fileLabel={fileLabel} />
         {/* Upload-and-commit 3D model (.glb/.gltf -> ModelViewer, .fbx -> FbxViewer). */}
         <InsertModelButton pat={pat} fileLabel={fileLabel} />
+        {/* Reference an asset already committed to the repo (no re-upload). */}
+        <InsertFromRepoButton pat={pat} />
+        {/* Insert a <Tabs> block with two <TabItem> children (uses @theme/Tabs). */}
+        <InsertTabsButton />
         <Separator />
         <InsertTable />
         <InsertThematicBreak />

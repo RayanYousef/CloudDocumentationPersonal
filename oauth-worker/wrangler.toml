@@ -1,0 +1,21 @@
+# Cloudflare Worker config for the GitHub OAuth helper used by the docs editor.
+#
+# Deploy with:  wrangler deploy
+# Set secrets (NEVER commit them) with:
+#   wrangler secret put GITHUB_CLIENT_ID
+#   wrangler secret put GITHUB_CLIENT_SECRET
+#
+# See README.md for the full one-time setup.
+
+name = "docs-oauth-worker"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Optional, non-secret config. Uncomment and set to restrict which opener
+# origin may receive the token (comma-separated hostnames). Leave commented to
+# allow any opener ('*').
+# [vars]
+# ALLOWED_DOMAINS = "rayanyousef.github.io"
+
+# GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET are intentionally NOT defined here.
+# Provide them as encrypted secrets via `wrangler secret put` (see README.md).
