@@ -133,3 +133,15 @@
   background: var(--ifm-background-color);
   color: inherit;
 }
+
+[data-theme='dark'] .textarea,
+[data-theme='dark'] .rawTextarea {
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+}
+
+[data-theme='dark'] .input,
+[data-theme='dark'] .commitInput {
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+}

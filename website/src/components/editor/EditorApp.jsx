@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import TokenGate from './TokenGate';
 import FilePicker from './FilePicker';
 import BodyEditor from './editorClient';
@@ -56,6 +56,18 @@ export default function EditorApp() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [commitUrl, setCommitUrl] = useState('');
+
+  const [isDark, setIsDark] = useState(
+    () => document.documentElement.dataset.theme === 'dark',
+  );
+  useEffect(() => {
+    const el = document.documentElement;
+    const obs = new MutationObserver(() => {
+      setIsDark(el.dataset.theme === 'dark');
+    });
+    obs.observe(el, {attributes: true, attributeFilter: ['data-theme']});
+    return () => obs.disconnect();
+  }, []);
 
   const onAuthed = useCallback((token) => {
     setPat(token);
@@ -301,6 +313,7 @@ export default function EditorApp() {
                 <label className={styles.label}>Body</label>
                 <div className={styles.editorFrame}>
                   <BodyEditor
+                    isDark={isDark}
                     key={path}
                     editorRef={mdxRef}
                     markdown={body}
