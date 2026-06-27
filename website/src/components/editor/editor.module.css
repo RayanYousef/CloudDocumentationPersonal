@@ -145,3 +145,24 @@
   background: var(--ifm-background-surface-color);
   color: var(--ifm-font-color-base);
 }
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modalCard {
+  background: var(--ifm-background-color);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  width: min(480px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
+}
