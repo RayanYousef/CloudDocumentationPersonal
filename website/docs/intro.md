@@ -2,31 +2,20 @@
 slug: /
 title: Introduction
 sidebar_position: 1
-description: Product feature catalog — browse features by version, drill into sub-features and code files.
+description: Welcome to this Docusaurus documentation platform with 3D model viewers, in-browser editing, and versioning.
 ---
 
-# Welcome
+# Introduction
 
-This is a **product feature catalog**. Pick a **version** from the dropdown in the
-top-left navbar, then drill down:
+Welcome to this documentation site. This platform is built on [Docusaurus 3](https://docusaurus.io/) and ships with several custom features to make authoring and presenting documentation easier.
 
-```text
-Version (dropdown)
- └─ Features
-     └─ Chatbot                 (a feature)
-         └─ Controller.cs       (a code file)  ──▶ tabs: API · How To Use · Dependencies · User Story
- └─ Changelogs
- └─ Models                      (interactive 3D models)
-```
+## What is included
 
-## How it works
+- **3D model viewers** — embed interactive glTF or FBX models directly in any `.mdx` page using the `ModelViewer` and `FbxViewer` components.
+- **In-browser editor** — visit `/editor` to edit Markdown files directly in the browser without a local development environment.
+- **Versioning** — the version dropdown in the navbar lets readers switch between the latest docs and frozen release snapshots.
+- **CMS integration** — non-technical editors can update content through the Pages CMS or Sveltia CMS at `/admin`.
 
-- **Versions** are release snapshots. Switch versions with the navbar dropdown.
-- **Features → sub-features → code files** map directly to the sidebar folders.
-- Each **code file** page shows tabbed documentation: **API Documentation**,
-  **How To Use**, **Dependencies**, and **User Story**.
-- **3D models** render interactively in the browser (see [Models](./models/)).
-- Content is editable in the browser — see the [User Guide](./guide/editing).
+## Getting started
 
-> The sample content here (Chatbot, etc.) is illustrative — replace it with your
-> real features.
+Content is coming soon. Browse the **Examples** section in the sidebar to see the custom components in action, or visit the **Guide** section to learn how to add and edit pages.
