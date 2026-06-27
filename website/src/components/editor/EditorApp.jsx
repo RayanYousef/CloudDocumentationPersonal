@@ -189,15 +189,19 @@ export default function EditorApp() {
     }
   }, [pat, path, sha, message, composeFullText]);
 
-  if (!pat) {
-    return <TokenGate onAuthed={onAuthed} />;
-  }
-
   const relPath = path ? path.slice(activePrefix.length) : '';
   const isLatest = activeVersion.id === VERSIONS[0].id;
 
   return (
-    <div className={styles.layout}>
+    <>
+      {!pat && (
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalCard}>
+            <TokenGate onAuthed={onAuthed} />
+          </div>
+        </div>
+      )}
+      <div className={styles.layout}>
       <aside className={styles.sidebar}>
         <h2 className={styles.sidebarHeading}>
           {OWNER}/{REPO}
@@ -365,5 +369,6 @@ export default function EditorApp() {
         )}
       </main>
     </div>
+    </>
   );
 }
