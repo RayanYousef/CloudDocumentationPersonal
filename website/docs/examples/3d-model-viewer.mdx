@@ -1,11 +1,11 @@
 ---
 title: 3D Model Viewer
-sidebar_position: 2
+sidebar_position: "2"
 description: Embed interactive 3D models in documentation pages using ModelViewer (glTF) and FbxViewer (FBX).
 ---
+import ModelViewer from '@site/src/components/ModelViewer'
 
-import ModelViewer from '@site/src/components/ModelViewer';
-import FbxViewer from '@site/src/components/FbxViewer';
+import FbxViewer from '@site/src/components/FbxViewer'
 
 # 3D Model Viewer
 
@@ -15,13 +15,13 @@ This site supports two interactive 3D viewer components that you can embed in an
 
 Use `ModelViewer` to embed a `.gltf` file. Models are loaded from `website/static/models/`.
 
-<ModelViewer src="/models/cube.gltf" alt="A cube" />
+<ModelViewer src="/models/cube.gltf" alt="Some Cube " height={200} />
 
 ## FBX model
 
 Use `FbxViewer` to embed a `.fbx` file. Pass the path relative to the site root (including the `/models/` prefix).
 
-<FbxViewer src="/models/fbx/cube.fbx" />
+<FbxViewer src="/models/fbx/cube.fbx" height={200} />
 
 ## Adding your own models
 
