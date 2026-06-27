@@ -69,6 +69,8 @@ const inputStyle = {
   padding: '0.3rem 0.45rem',
   border: '1px solid var(--ifm-color-emphasis-300)',
   borderRadius: 'var(--ifm-global-radius)',
+  background: 'var(--ifm-background-surface-color)',
+  color: 'var(--ifm-font-color-base)',
 };
 const wrapStyle = {
   border: '1px dashed var(--ifm-color-emphasis-400)',
@@ -179,12 +181,16 @@ const tabsWrapStyle = {
   borderRadius: 'var(--ifm-global-radius)',
   padding: '0.5rem 0.75rem',
   margin: '0.75rem 0',
+  background: 'var(--ifm-background-color)',
+  color: 'var(--ifm-font-color-base)',
 };
 const tabItemWrapStyle = {
   border: '1px solid var(--ifm-color-emphasis-200)',
   borderRadius: 'var(--ifm-global-radius)',
   padding: '0.5rem 0.75rem',
   margin: '0.5rem 0',
+  background: 'var(--ifm-background-surface-color)',
+  color: 'var(--ifm-font-color-base)',
 };
 
 function TabsEditor({mdastNode}) {
