@@ -29,3 +29,175 @@
   --ifm-color-primary-lightest: #76E6EB;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* ================================================================
+   ORAMA SEARCH — CYAN THEME ENHANCEMENTS
+   Brand colour: #00C2CB  |  Darkest shade: #00888F
+   Orama uses Shadow DOM; only CSS custom properties inherited
+   through the shadow boundary can theme the internals.
+   All overrides target [id^=orama-ui] — the root element that
+   Orama renders — where every design token is first defined.
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   1. LIGHT MODE — Orama design-token overrides
+      Replaces Orama's default purple (#432d77) with site cyan.
+   ---------------------------------------------------------------- */
+[id^=orama-ui] {
+  /* Accent / brand colour */
+  --text-color-accent:              #00888F;   /* cyan, readable on light bg */
+  --background-color-accent:        #00C2CB;
+  --background-color-tertiary:      #ddf6f7;   /* light cyan tint: kbd bg, hover fills */
+  --border-color-accent:            #00C2CB;
+
+  /* Primary CTA button (e.g. "Ask AI" / submit) */
+  --button-background-color-primary:         #00C2CB;
+  --button-background-color-secondary-hover: #ddf6f7;
+
+  /* Backdrop behind the open modal */
+  --backdrop-background-color-primary: rgba(240, 253, 254, 0.80);
+
+  /* Chat button gradient ring — cyan arc */
+  --chat-button-border-color-gradientOne:    transparent;
+  --chat-button-border-color-gradientTwo:    transparent;
+  --chat-button-border-color-gradientThree:  #00C2CB;
+  --chat-button-border-color-gradientFour:   #00888F;
+  --chat-button-border-color-gradientFive:   transparent;
+  --chat-button-border-color-gradientSix:    transparent;
+  --chat-button-background-color-gradientOne: #00C2CB;
+  --chat-button-background-color-gradientTwo: transparent;
+}
+
+/* ----------------------------------------------------------------
+   2. DARK MODE — Orama design-token overrides
+      Orama adds .theme-dark to its root element; Docusaurus uses
+      [data-theme='dark'] on <html>. We cover both combinations.
+   ---------------------------------------------------------------- */
+[id^=orama-ui].theme-dark,
+[data-theme='dark'] [id^=orama-ui] {
+  --text-color-accent:              #3CD6DD;   /* lighter cyan readable on dark */
+  --background-color-accent:        #00888F;
+  --background-color-tertiary:      #07282a;   /* deep cyan-tinted surface */
+  --background-color-fourth:        #0c3436;
+  --border-color-accent:            #00C2CB;
+
+  /* Primary CTA button */
+  --button-background-color-primary:         #00A5AD;
+  --button-background-color-secondary-hover: #07282a;
+
+  /* Backdrop */
+  --backdrop-background-color-primary: rgba(5, 5, 5, 0.75);
+
+  /* Chat button gradients for dark */
+  --chat-button-border-color-gradientThree:  #00C2CB;
+  --chat-button-border-color-gradientFour:   #00888F;
+  --chat-button-background-color-gradientOne: #00888F;
+  --chat-button-background-color-gradientTwo: transparent;
+}
+
+/* ----------------------------------------------------------------
+   3. NAVBAR SEARCH BUTTON  (.DocSearch-Button)
+      The Orama Docusaurus v3 plugin registers itself as a navbar
+      item with the .DocSearch-Button class (for compatibility).
+      We add a polished pill appearance, cyan border, and a
+      keyboard shortcut hint that uses the brand colour.
+   ---------------------------------------------------------------- */
+.DocSearch-Button {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            6px;
+  border:         1.5px solid rgba(0, 194, 203, 0.40);
+  border-radius:  8px;
+  background:     transparent;
+  padding:        5px 12px;
+  cursor:         pointer;
+  transition:     border-color 0.2s ease,
+                  background   0.2s ease,
+                  box-shadow   0.2s ease;
+  color:          var(--ifm-font-color-base);
+  font-size:      0.875rem;
+}
+
+.DocSearch-Button:hover {
+  border-color: #00C2CB;
+  background:   rgba(0, 194, 203, 0.08);
+  box-shadow:   0 0 0 3px rgba(0, 194, 203, 0.18);
+  outline:      none;
+}
+
+.DocSearch-Button:focus-visible {
+  outline:      2px solid #00C2CB;
+  outline-offset: 2px;
+}
+
+/* Keyboard shortcut pill (Ctrl+K / ⌘K) */
+.DocSearch-Button kbd {
+  background:    rgba(0, 194, 203, 0.14);
+  border-radius: 4px;
+  color:         #00888F;
+  font-size:     0.72rem !important;
+  font-weight:   600;
+  padding:       1px 6px !important;
+  letter-spacing: 0.03em;
+  transition:    background 0.2s ease;
+}
+
+.DocSearch-Button:hover kbd {
+  background: rgba(0, 194, 203, 0.22);
+}
+
+/* Dark mode navbar button */
+[data-theme='dark'] .DocSearch-Button {
+  border-color: rgba(0, 194, 203, 0.28);
+}
+
+[data-theme='dark'] .DocSearch-Button:hover {
+  border-color: #00C2CB;
+  background:   rgba(0, 194, 203, 0.10);
+  box-shadow:   0 0 0 3px rgba(0, 194, 203, 0.14);
+}
+
+[data-theme='dark'] .DocSearch-Button kbd {
+  background: rgba(0, 194, 203, 0.16);
+  color:      #3CD6DD;
+}
+
+[data-theme='dark'] .DocSearch-Button:hover kbd {
+  background: rgba(0, 194, 203, 0.26);
+}
+
+/* ----------------------------------------------------------------
+   4. MODAL OPEN TRANSITION
+      The orama-modal component adds .open to .modal when active.
+      We can target the host element wrapper (outside Shadow DOM)
+      to add a smooth scale-in entrance animation and cyan ring.
+   ---------------------------------------------------------------- */
+orama-search-box,
+orama-chat-box {
+  display: block;
+}
+
+/* Subtle entrance animation on the custom-element host itself */
+orama-search-box[open],
+orama-chat-box[open] {
+  animation: orama-modal-in 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes orama-modal-in {
+  from {
+    opacity:   0;
+    transform: scale(0.97) translateY(-6px);
+  }
+  to {
+    opacity:   1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------------
+   5. KEYBOARD SHORTCUT CHIP  (.kyb-shortcut)
+      This class is rendered inside the orama-search-button Shadow
+      DOM but it inherits --background-color-tertiary, which we
+      already override above to the cyan tint. No extra rule needed
+      for colour; we add a border for more definition in light mode.
+   ---------------------------------------------------------------- */
