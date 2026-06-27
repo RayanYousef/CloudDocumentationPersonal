@@ -68,6 +68,12 @@ export default function EditorApp() {
     obs.observe(el, {attributes: true, attributeFilter: ['data-theme']});
     return () => obs.disconnect();
   }, []);
+  // Radix UI dropdown portals render at document.body, outside the editor's
+  // own dark-theme class. Mirror the dark state onto body so they are themed.
+  useEffect(() => {
+    document.body.classList.toggle('dark-theme', isDark);
+    return () => document.body.classList.remove('dark-theme');
+  }, [isDark]);
 
   const onAuthed = useCallback((token) => {
     setPat(token);
