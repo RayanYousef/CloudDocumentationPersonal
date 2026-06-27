@@ -29,3 +29,54 @@
   --ifm-color-primary-lightest: #76E6EB;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* ── MDXEditor dark mode overrides ── */
+/* CodeMirror unconditionally applies the basicLight theme (backgroundColor: #ffffff)
+   via an EditorView.theme() scoped style block (specificity 0-2-0).
+   !important is required on all background rules to win over those injected styles. */
+
+[data-theme='dark'] .cm-editor {
+  background-color: var(--ifm-background-surface-color) !important;
+  color: var(--ifm-font-color-base) !important;
+}
+
+[data-theme='dark'] .cm-editor .cm-content {
+  background-color: var(--ifm-background-surface-color) !important;
+}
+
+[data-theme='dark'] .cm-scroller {
+  background-color: var(--ifm-background-surface-color) !important;
+}
+
+[data-theme='dark'] .cm-editor .cm-gutters {
+  background-color: var(--ifm-background-surface-color) !important;
+  color: var(--ifm-color-emphasis-600) !important;
+  border-right-color: var(--ifm-color-emphasis-300) !important;
+}
+
+[data-theme='dark'] .cm-editor .cm-activeLine {
+  background-color: var(--ifm-color-emphasis-100) !important;
+}
+
+[data-theme='dark'] .cm-editor .cm-activeLineGutter {
+  background-color: var(--ifm-color-emphasis-100) !important;
+}
+
+[data-theme='dark'] .cm-editor .cm-cursor,
+[data-theme='dark'] .cm-editor .cm-dropCursor {
+  border-left-color: var(--ifm-font-color-base) !important;
+}
+
+/* Fix: NestedLexicalEditor content areas (e.g. TabItem editor boxes) show white in dark mode.
+   MDXEditor's style.css hardcodes --basePageBg: white inside _editorRoot_f3hmk_53 (specificity
+   0-1-0) with no dark override. _nestedEditor_f3hmk_960 then uses background: var(--basePageBg).
+   Selector [data-theme='dark'] .mdxeditor has specificity 0-2-0 and wins, resetting the token.
+   The [contenteditable] rule is belt-and-suspenders for any other regions using that background. */
+[data-theme='dark'] .mdxeditor {
+  --basePageBg: var(--ifm-background-surface-color);
+}
+
+[data-theme='dark'] .mdxeditor [contenteditable='true'] {
+  background-color: var(--ifm-background-surface-color) !important;
+  color: var(--ifm-font-color-base) !important;
+}
