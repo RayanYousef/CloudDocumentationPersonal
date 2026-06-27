@@ -3,8 +3,8 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Unity Cloud Build Docs',
-  tagline: 'Comprehensive guides for Unity cloud build pipelines',
+  title: 'Documentation',
+  tagline: 'A Docusaurus documentation platform',
   favicon: 'img/joy.png',
 
   url: 'https://RayanYousef.github.io',
@@ -60,7 +60,7 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'Unity Cloud Build',
+        title: 'Documentation',
         logo: {
           alt: 'Joy Logo',
           src: 'img/joy.png',
@@ -91,8 +91,8 @@ const config = {
                 to: '/',
               },
               {
-                label: 'Features',
-                to: '/features',
+                label: 'Examples',
+                to: '/examples/markdown-basics',
               },
             ],
           },
@@ -100,17 +100,17 @@ const config = {
             title: 'More',
             items: [
               {
-                label: '3D Models',
-                to: '/models/',
+                label: '3D Model Viewer',
+                to: '/examples/3d-model-viewer',
               },
               {
-                label: 'Edit in browser',
+                label: 'Editing',
                 to: '/guide/editing',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Unity Cloud Build Docs. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Documentation. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
