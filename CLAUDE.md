@@ -62,11 +62,6 @@ Source: `website/src/components/editor/` and the page at `website/src/pages/edit
 - `website/versioned_sidebars/version-X.Y.Z-sidebars.json` holds the matching sidebar config.
 - The current working docs (`website/docs/`) are labeled **Latest** and served at the site root.
 
-## CMS configs
-
-- `.pages.yml` — Pages CMS (https://pagescms.org) configuration. Collections: `intro` (single file, rich-text), `guide` (collection, rich-text), `examples` (collection, raw MDX code body).
-- `website/static/admin/config.yml` — Sveltia CMS configuration with the same collections. Sign in with a GitHub Personal Access Token.
-
 ## Deployment
 
 `.github/workflows/deploy-docs.yml` triggers on pushes to `main` that touch `website/**`. It runs `npm ci` + `npm run build` and publishes `website/build/` to the `gh-pages` branch.
