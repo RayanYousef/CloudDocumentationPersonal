@@ -23,12 +23,20 @@ Welcome to this documentation site. This platform is built on [Docusaurus 3](htt
 
 Content is coming soon. Browse the **Examples** section in the sidebar to see the custom components in action, or visit the **Guide** section to learn how to add and edit pages.
 
-
-
-
-
 <Tabs>
   <TabItem value="tab1" label="Tab 1" default>
+
+
+    <Tabs>
+      <TabItem value="tab1" label="Tab 1" default>
+        Lol
+      </TabItem>
+
+      <TabItem value="tab2" label="Tab 2">
+        Second tab content.
+      </TabItem>
+    </Tabs>
+
     First tab content.
   </TabItem>
 
