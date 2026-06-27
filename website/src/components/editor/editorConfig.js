@@ -14,3 +14,5 @@
  * never a secret — the OAuth client secret lives exclusively in the Worker env.
  */
 export const OAUTH_WORKER_ORIGIN = '';
+
+export const GITHUB_DEVICE_CLIENT_ID = '';

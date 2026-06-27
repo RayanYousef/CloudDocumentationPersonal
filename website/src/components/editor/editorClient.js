@@ -123,10 +123,11 @@ function makeToolbarContents({pat, fileLabel}) {
  * @param {string} props.pat - GitHub PAT, used by the upload-and-insert buttons
  * @param {string} [props.fileLabel] - current file (for commit messages)
  */
-export default function BodyEditor({markdown, onChange, onError, editorRef, pat, fileLabel}) {
+export default function BodyEditor({markdown, onChange, onError, editorRef, pat, fileLabel, isDark}) {
   return (
     <MDXEditor
       ref={editorRef}
+      className={isDark ? 'dark-theme dark-editor' : ''}
       markdown={markdown ?? ''}
       onChange={onChange}
       onError={onError}
