@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "docusaurus",
+  "owner": "a5c-ai",
+  "repo": "babysitter",
+  "path": "library/specializations/technical-documentation/skills/docusaurus",
+  "branch": "main",
+  "sha": "f321a3279b25908a3ded8656d744daf34ed8e6aa",
+  "source": "manual"
+}
