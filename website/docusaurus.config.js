@@ -25,6 +25,16 @@ const config = {
     locales: ['en'],
   },
 
+  // ---------------------------------------------------------------------------
+  // Orama local search — build-time, self-hosted, no external service needed.
+  // @orama/plugin-docusaurus-v3 generates a gzipped index (*.json.gz) during
+  // `npm run build` and injects a search UI component automatically.
+  // Works on GitHub Pages as pure static files; no Algolia account required.
+  // ---------------------------------------------------------------------------
+  plugins: [
+    '@orama/plugin-docusaurus-v3',
+  ],
+
   presets: [
     [
       'classic',
