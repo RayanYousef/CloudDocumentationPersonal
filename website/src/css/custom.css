@@ -6,28 +6,76 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  /* Joy Robot Cyan Theme */
-  --ifm-color-primary: #00C2CB;
-  --ifm-color-primary-dark: #00AEB7;
-  --ifm-color-primary-darker: #00A5AD;
-  --ifm-color-primary-darkest: #00888F;
-  --ifm-color-primary-light: #26D0D8;
-  --ifm-color-primary-lighter: #3CD6DD;
-  --ifm-color-primary-lightest: #76E6EB;
+  /* CZ brand palette */
+  --cz-navy: #131B3F;
+  --cz-navy-deep: #0C1230;
+  --cz-gold: #D9A441;
+  --cz-gold-light: #EFC46A;
+  --cz-cream: #F4EEDF;
+  --cz-teal: #43C8BE;
+  --cz-purple: #8F8AE8;
+  --cz-blue: #5C88D8;
+  --cz-ink: #1B2447;
+
+  /* the brand gradient (the zero ring) */
+  --cz-gradient: linear-gradient(135deg, var(--cz-gold) 0%, var(--cz-teal) 45%, var(--cz-purple) 100%);
+
+  /* Light mode: brand colors on the cream background */
+  --ifm-color-primary: var(--cz-gold);
+  --ifm-color-primary-dark: #c99334;
+  --ifm-color-primary-darker: #be8b31;
+  --ifm-color-primary-darkest: #9c7228;
+  --ifm-color-primary-light: #dead54;
+  --ifm-color-primary-lighter: #e1b25e;
+  --ifm-color-primary-lightest: var(--cz-gold-light);
+  --ifm-background-color: var(--cz-cream);
+  --ifm-background-surface-color: #fbf7ea;
+  --ifm-font-color-base: var(--cz-ink);
+  --ifm-heading-color: var(--cz-navy);
+  --ifm-link-color: var(--cz-blue);
+  --ifm-navbar-link-hover-color: var(--cz-gold);
+  --ifm-footer-background-color: var(--cz-navy-deep);
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Dark mode: the full navy brand treatment */
 [data-theme='dark'] {
-  --ifm-color-primary: #00C2CB;
-  --ifm-color-primary-dark: #00AEB7;
-  --ifm-color-primary-darker: #00A5AD;
-  --ifm-color-primary-darkest: #00888F;
-  --ifm-color-primary-light: #26D0D8;
-  --ifm-color-primary-lighter: #3CD6DD;
-  --ifm-color-primary-lightest: #76E6EB;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: var(--cz-gold);
+  --ifm-color-primary-dark: #c99334;
+  --ifm-color-primary-darker: #be8b31;
+  --ifm-color-primary-darkest: #9c7228;
+  --ifm-color-primary-light: #dead54;
+  --ifm-color-primary-lighter: #e1b25e;
+  --ifm-color-primary-lightest: var(--cz-gold-light);
+  --ifm-background-color: var(--cz-navy);
+  --ifm-background-surface-color: var(--cz-navy-deep);
+  --ifm-font-color-base: var(--cz-cream);
+  --ifm-heading-color: var(--cz-cream);
+  --ifm-link-color: var(--cz-teal);
+  --ifm-navbar-link-hover-color: var(--cz-gold-light);
+  --ifm-footer-background-color: var(--cz-navy-deep);
+  --docusaurus-highlighted-code-line-bg: rgba(244, 238, 223, 0.08);
+}
+
+/* Brand component rules */
+.button-primary,
+.button--primary {
+  background: var(--cz-gold);
+  color: var(--cz-navy-deep);
+}
+
+.badge {
+  background: var(--cz-purple);
+  color: var(--cz-navy-deep);
+}
+
+.hero-title,
+.hero__title {
+  background: var(--cz-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ── MDXEditor dark mode overrides ── */
