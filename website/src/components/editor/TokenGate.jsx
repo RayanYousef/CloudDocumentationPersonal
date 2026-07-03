@@ -1,201 +1,170 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {verifyToken, OWNER, REPO} from './githubApi';
-import {GITHUB_DEVICE_CLIENT_ID} from './editorConfig';
-import {startDeviceFlow, pollForToken} from './deviceFlow';
 
 /**
- * Browser-only sign-in gate — GitHub Device Flow.
+ * Browser-only Personal Access Token (PAT) gate for the docs editor.
  *
- * Flow: idle -> pending (show user_code) -> authed
- * PAT form is temporarily disabled; re-enable by uncommenting the PAT section.
+ * The user pastes a GitHub Personal Access Token; we verify it can read the
+ * target repo, then persist it in localStorage under 'docsEditorPat'. On mount
+ * we re-verify any stored token so a revoked/expired PAT does not silently
+ * appear "signed in". On success, calls onAuthed(pat).
  *
- * One-time setup:
- *   1. Create a GitHub OAuth App with "Device Flow" enabled.
- *   2. Set GITHUB_DEVICE_CLIENT_ID in editorConfig.js (client_id is public — not a secret).
+ * Every request goes directly to api.github.com (which allows CORS) — there is
+ * no server, worker, or OAuth redirect involved; the token never leaves the
+ * browser except in the Authorization header GitHub itself receives.
+ *
+ * Reached only inside <BrowserOnly>, so direct window/localStorage use is safe.
  */
 const STORAGE_KEY = 'docsEditorPat';
 
+/** Where the user creates the fine-grained token this editor needs. */
+const CREATE_TOKEN_URL =
+  'https://github.com/settings/personal-access-tokens/new';
+
 export default function TokenGate({onAuthed}) {
-  const [phase, setPhase] = useState('idle'); // idle | pending | checking | error
-  const [userCode, setUserCode] = useState('');
-  const [verifyUri, setVerifyUri] = useState('https://github.com/login/device');
+  const [pat, setPat] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | checking | error
   const [error, setError] = useState('');
-  const abortRef = useRef(null);
 
-  const deviceEnabled = Boolean(GITHUB_DEVICE_CLIENT_ID);
-
-  // Re-verify a stored token on mount.
+  // Re-verify a previously stored token on mount.
   useEffect(() => {
     let cancelled = false;
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (!stored) return;
-    setPhase('checking');
+    if (!stored) return undefined;
+    setStatus('checking');
     verifyToken(stored)
-      .then(() => { if (!cancelled) onAuthed(stored); })
-      .catch(() => {
+      .then(() => {
+        if (!cancelled) onAuthed(stored);
+      })
+      .catch((err) => {
         if (cancelled) return;
+        // Stored token is bad — drop it and let the user re-enter.
         window.localStorage.removeItem(STORAGE_KEY);
-        setPhase('idle');
+        setStatus('error');
+        setError(
+          `Saved token is no longer valid (${err.message}). Please enter a new one.`,
+        );
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [onAuthed]);
 
-  // Cleanup polling on unmount.
-  useEffect(() => () => abortRef.current?.abort(), []);
-
-  const startLogin = async () => {
-    if (!deviceEnabled) return;
+  const submit = async (e) => {
+    e.preventDefault();
+    const trimmed = pat.trim();
+    if (!trimmed) return;
+    setStatus('checking');
     setError('');
-    setPhase('pending');
-
     try {
-      const flow = await startDeviceFlow(GITHUB_DEVICE_CLIENT_ID);
-      setUserCode(flow.user_code);
-      setVerifyUri(flow.verification_uri || 'https://github.com/login/device');
-
-      const controller = new AbortController();
-      abortRef.current = controller;
-
-      const token = await pollForToken(
-        GITHUB_DEVICE_CLIENT_ID,
-        flow.device_code,
-        flow.interval,
-        controller.signal,
-      );
-
-      setPhase('checking');
-      await verifyToken(token);
-      window.localStorage.setItem(STORAGE_KEY, token);
-      onAuthed(token);
+      await verifyToken(trimmed);
+      window.localStorage.setItem(STORAGE_KEY, trimmed);
+      onAuthed(trimmed);
     } catch (err) {
-      if (err.message === 'Cancelled') return;
-      setPhase('error');
-      setError(err.message || 'Sign-in failed.');
+      setStatus('error');
+      setError(err.message || 'Token verification failed.');
     }
   };
 
-  const cancel = () => {
-    abortRef.current?.abort();
-    setPhase('idle');
+  const clear = () => {
+    window.localStorage.removeItem(STORAGE_KEY);
+    setPat('');
+    setStatus('idle');
     setError('');
   };
 
-  if (phase === 'checking') {
+  if (status === 'checking' && !pat) {
+    // A stored token is being re-verified on mount — no form to show yet.
     return (
-      <div style={{maxWidth: 480, margin: '4rem auto', textAlign: 'center', padding: '1.5rem'}}>
+      <div style={{maxWidth: 560, margin: '4rem auto', textAlign: 'center', padding: '1.5rem'}}>
         <p style={{color: 'var(--ifm-color-emphasis-700)'}}>Verifying…</p>
       </div>
     );
   }
 
   return (
-    <div style={{maxWidth: 480, margin: '4rem auto', padding: '1.5rem'}}>
-      <h1>Docs Editor</h1>
+    <div style={{maxWidth: 560, margin: '0 auto', padding: '1.5rem'}}>
+      <h1>Docs Editor — Sign in</h1>
 
-      {!deviceEnabled && (
-        <div style={{
+      <p>
+        Paste a GitHub Personal Access Token with write access to{' '}
+        <strong>
+          {OWNER}/{REPO}
+        </strong>
+        . The token is stored only in this browser&apos;s{' '}
+        <code>localStorage</code> and is sent directly to GitHub.
+      </p>
+
+      <p style={{fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-700)'}}>
+        Create a{' '}
+        <a href={CREATE_TOKEN_URL} target="_blank" rel="noreferrer">
+          fine-grained personal access token
+        </a>{' '}
+        scoped to the{' '}
+        <strong>
+          {OWNER}/{REPO}
+        </strong>{' '}
+        repository, with the <strong>Contents</strong> permission set to{' '}
+        <strong>Read and write</strong>. Nothing else is needed.
+      </p>
+
+      <div
+        style={{
           background: 'var(--ifm-color-warning-contrast-background)',
           color: 'var(--ifm-color-warning-contrast-foreground)',
           border: '1px solid var(--ifm-color-warning)',
           borderRadius: 'var(--ifm-global-radius)',
           padding: '0.75rem 1rem',
-          marginBottom: '1.5rem',
+          margin: '1rem 0',
           fontSize: '0.9rem',
-        }}>
-          ⚠️ Set <code>GITHUB_DEVICE_CLIENT_ID</code> in{' '}
-          <code>editorConfig.js</code> to enable sign-in (see{' '}
-          <code>oauth-worker/README.md</code> step 1 for creating the OAuth App,
-          then enable "Device Flow" in its settings).
-        </div>
-      )}
+        }}
+      >
+        ⚠️ <strong>Only use this on a trusted device.</strong> Anyone with access
+        to this browser profile can read the saved token and commit to the repo.
+        Use the <em>Clear saved token</em> button when you are done on a shared
+        machine.
+      </div>
 
-      {phase === 'idle' && (
-        <>
-          <p style={{color: 'var(--ifm-color-emphasis-700)', marginBottom: '1.5rem'}}>
-            Sign in with your GitHub account that has write access to{' '}
-            <strong>{OWNER}/{REPO}</strong>.
-          </p>
-          <button
-            type="button"
-            className="button button--primary button--lg"
-            style={{width: '100%'}}
-            onClick={startLogin}
-            disabled={!deviceEnabled}
-          >
-            Sign in with GitHub
-          </button>
-        </>
-      )}
-
-      {phase === 'pending' && (
-        <div>
-          <p style={{marginBottom: '0.5rem'}}>
-            1.{' '}
-            <a href={verifyUri} target="_blank" rel="noreferrer">
-              Open {verifyUri}
-            </a>{' '}
-            in your browser.
-          </p>
-          <p style={{marginBottom: '1.25rem'}}>
-            2. Enter this code:
-          </p>
-          <div style={{
+      <form onSubmit={submit}>
+        <input
+          type="password"
+          value={pat}
+          onChange={(e) => setPat(e.target.value)}
+          placeholder="github_pat_… or ghp_…"
+          autoComplete="off"
+          spellCheck={false}
+          style={{
+            width: '100%',
+            padding: '0.6rem 0.75rem',
             fontFamily: 'var(--ifm-font-family-monospace)',
-            fontSize: '2rem',
-            fontWeight: 700,
-            letterSpacing: '0.2em',
-            textAlign: 'center',
-            padding: '1rem',
-            background: 'var(--ifm-color-emphasis-100)',
+            border: '1px solid var(--ifm-color-emphasis-300)',
             borderRadius: 'var(--ifm-global-radius)',
-            marginBottom: '1.5rem',
-            userSelect: 'all',
-          }}>
-            {userCode}
-          </div>
-          <p style={{
-            color: 'var(--ifm-color-emphasis-600)',
-            fontSize: '0.9rem',
-            textAlign: 'center',
-            marginBottom: '1.25rem',
-          }}>
-            Waiting for you to approve on GitHub…
-          </p>
+            marginBottom: '0.75rem',
+          }}
+        />
+        <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+          <button
+            type="submit"
+            className="button button--primary"
+            disabled={status === 'checking' || !pat.trim()}
+          >
+            {status === 'checking' ? 'Verifying…' : 'Verify & continue'}
+          </button>
           <button
             type="button"
             className="button button--secondary button--outline"
-            style={{width: '100%'}}
-            onClick={cancel}
+            onClick={clear}
           >
-            Cancel
+            Clear saved token
           </button>
         </div>
-      )}
+      </form>
 
-      {phase === 'error' && (
-        <div>
-          <p style={{color: 'var(--ifm-color-danger)', marginBottom: '1rem'}}>{error}</p>
-          <button
-            type="button"
-            className="button button--primary button--lg"
-            style={{width: '100%'}}
-            onClick={startLogin}
-            disabled={!deviceEnabled}
-          >
-            Try again
-          </button>
-        </div>
+      {status === 'error' && error && (
+        <p style={{color: 'var(--ifm-color-danger)', marginTop: '1rem'}}>
+          {error}
+        </p>
       )}
-
-      {/* PAT form temporarily disabled — uncomment to re-enable:
-      <hr style={{margin: '2rem 0'}} />
-      <details>
-        <summary style={{cursor: 'pointer', color: 'var(--ifm-color-emphasis-600)', fontSize: '0.9rem'}}>
-          Use a Personal Access Token instead
-        </summary>
-        ...PAT form here...
-      </details>
-      */}
     </div>
   );
 }

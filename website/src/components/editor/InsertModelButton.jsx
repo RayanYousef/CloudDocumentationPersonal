@@ -26,7 +26,6 @@ import {
   fileExtension,
   sanitizeFileName,
   uploadBinaryAsset,
-  formatBytes,
 } from './uploadHelpers';
 
 const MODEL_ACCEPT = '.glb,.gltf,.fbx';
@@ -124,5 +123,3 @@ export default function InsertModelButton({pat, fileLabel}) {
     </>
   );
 }
-
-export {formatBytes};

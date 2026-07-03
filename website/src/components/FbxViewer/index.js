@@ -1,16 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-
-const boxStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textAlign: 'center',
-  padding: '1rem',
-  border: '1px solid var(--ifm-color-emphasis-300)',
-  borderRadius: 'var(--ifm-global-radius)',
-};
+import {viewerFallback} from '../viewerShared';
 
 const overlay = {
   position: 'absolute',
@@ -135,7 +126,16 @@ function Scene({src, height}) {
         if (o.isMesh) {
           if (o.geometry && o.geometry.dispose) o.geometry.dispose();
           const mats = Array.isArray(o.material) ? o.material : [o.material];
-          mats.forEach((m) => { if (m && m.dispose) m.dispose(); });
+          mats.forEach((m) => {
+            if (!m) return;
+            // material.dispose() frees the program but NOT its textures — walk
+            // every property (map, normalMap, specularMap, envMap, …) and dispose
+            // anything that is a texture to avoid leaking GPU memory.
+            Object.values(m).forEach((v) => {
+              if (v && v.isTexture && v.dispose) v.dispose();
+            });
+            if (m.dispose) m.dispose();
+          });
         }
       });
       renderer.dispose();
@@ -169,9 +169,7 @@ function Scene({src, height}) {
 export default function FbxViewer({src, height = 480}) {
   const resolvedSrc = useBaseUrl(src);
   return (
-    <BrowserOnly
-      fallback={<div style={{height, ...boxStyle}}>Loading 3D viewer…</div>}
-    >
+    <BrowserOnly fallback={viewerFallback(height)}>
       {() => <Scene src={resolvedSrc} height={height} />}
     </BrowserOnly>
   );

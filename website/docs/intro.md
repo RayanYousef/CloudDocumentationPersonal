@@ -17,7 +17,7 @@ Welcome to this documentation site. This platform is built on [Docusaurus 3](htt
 * **3D model viewers** — embed interactive glTF or FBX models directly in any `.mdx` page using the `ModelViewer` and `FbxViewer` components.
 * **In-browser editor** — visit `/editor` to edit Markdown files directly in the browser without a local development environment.
 * **Versioning** — the version dropdown in the navbar lets readers switch between the latest docs and frozen release snapshots.
-* **CMS integration** — non-technical editors can update content through the Pages CMS or Sveltia CMS at `/admin`.
+* **No local setup required** — the `/editor` page also supports uploading images and 3D models and browsing existing repo assets, so non-technical editors can update content without cloning the repository or installing anything locally.
 
 ## Getting started
 
