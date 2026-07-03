@@ -35,7 +35,35 @@ const config = {
   // Works on GitHub Pages as pure static files; no Algolia account required.
   // ---------------------------------------------------------------------------
   plugins: [
-    '@orama/plugin-docusaurus-v3',
+    [
+      '@orama/plugin-docusaurus-v3',
+      {
+        searchbox: {
+          themeConfig: {
+            colors: {
+              light: {
+                '--background-color-primary':        '#F4EEDF',
+                '--background-color-secondary':      '#EFE7D2',
+                '--background-color-accent':         '#6357C9',
+                '--button-background-color-primary': '#6357C9',
+                '--text-color-primary':              '#131B3F',
+                '--text-color-secondary':            '#55608A',
+                '--border-color-accent':             '#6357C9',
+              },
+              dark: {
+                '--background-color-primary':        '#131B3F',
+                '--background-color-secondary':      '#0C1230',
+                '--background-color-accent':         '#8F8AE8',
+                '--button-background-color-primary': '#8F8AE8',
+                '--text-color-primary':              '#F4EEDF',
+                '--text-color-secondary':            '#9FB1E0',
+                '--border-color-accent':             '#8F8AE8',
+              },
+            },
+          },
+        },
+      },
+    ],
   ],
 
   presets: [
@@ -70,7 +98,9 @@ const config = {
     ({
       // No social-card image: add your own to static/img/ and set `image` here.
       colorMode: {
-        respectPrefersColorScheme: true,
+        defaultMode: 'dark',
+        disableSwitch: false,
+        respectPrefersColorScheme: false,
       },
       navbar: {
         title: 'Documentation',
