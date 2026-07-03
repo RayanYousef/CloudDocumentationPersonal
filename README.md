@@ -20,7 +20,7 @@ Requires Node >= 20.
 ## Custom features
 
 - **3D model viewers** (`ModelViewer` for glTF, `FbxViewer` for FBX) — embed interactive models in `.mdx` pages; assets live in `website/static/models/`.
-- **In-browser editor** — a WYSIWYG editor at `/editor` backed by MDXEditor and GitHub OAuth.
+- **In-browser editor** — a WYSIWYG editor at `/editor` backed by MDXEditor, committing via the GitHub API with a Personal Access Token you paste in the browser.
 - **Versioning** — frozen release snapshots selectable from the navbar version dropdown.
 - **CMS** — Pages CMS (`/.pages.yml`) and Sveltia CMS (`/admin`) for non-technical editors.
 

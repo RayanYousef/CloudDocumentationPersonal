@@ -1,16 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-
-const boxStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textAlign: 'center',
-  padding: '1rem',
-  border: '1px solid var(--ifm-color-emphasis-300)',
-  borderRadius: 'var(--ifm-global-radius)',
-};
+import {boxStyle, viewerFallback} from '../viewerShared';
 
 // Inner component: rendered ONLY inside <BrowserOnly>, so hooks and the custom
 // element run client-side only. Surfaces load errors instead of a blank box.
@@ -82,9 +73,7 @@ export default function ModelViewer({
 }) {
   const resolvedSrc = useBaseUrl(src);
   return (
-    <BrowserOnly
-      fallback={<div style={{height, ...boxStyle}}>Loading 3D viewer…</div>}
-    >
+    <BrowserOnly fallback={viewerFallback(height)}>
       {() => {
         // Browser-only side effect: registers the <model-viewer> custom element.
         require('@google/model-viewer');

@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A **Docusaurus 3.x documentation site** in `website/`. The site is deployed to GitHub Pages via a GitHub Actions workflow. Real content goes in `website/docs/`; everything else is site infrastructure.
 
+## Project identity (single source of truth)
+
+All project-identity values (`siteUrl`, `baseUrl`, `organizationName`, `projectName`, `deployBranch`, `title`, `tagline`) live in **`website/site.config.js`**. Both `docusaurus.config.js` and the in-browser editor (`src/components/editor/githubApi.js`) derive from it — never hardcode these values elsewhere. To reuse this repo as a base for a new project, edit that one file; see **`SETUP.md`** at the repo root for the full checklist.
+
 ## Commands
 
 All commands run from the `website/` directory:

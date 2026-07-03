@@ -1,17 +1,20 @@
 // @ts-check
 import { themes as prismThemes } from 'prism-react-renderer';
+// Project identity (name, URL, repo, deploy branch) lives in ONE place.
+// Edit website/site.config.js — never hardcode those values here. See SETUP.md.
+import siteConfig from './site.config.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Documentation',
-  tagline: 'A Docusaurus documentation platform',
+  title: siteConfig.title,
+  tagline: siteConfig.tagline,
   favicon: 'img/favicon.png',
 
-  url: 'https://RayanYousef.github.io',
-  baseUrl: '/CloudDocumentationPersonal/',
+  url: siteConfig.siteUrl,
+  baseUrl: siteConfig.baseUrl,
 
-  organizationName: 'RayanYousef',
-  projectName: 'CloudDocumentationPersonal',
+  organizationName: siteConfig.organizationName,
+  projectName: siteConfig.projectName,
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -43,7 +46,7 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           routeBasePath: '/', // Serve docs at the site root
-          editUrl: 'https://github.com/RayanYousef/CloudDocumentationPersonal/edit/main/website/',
+          editUrl: `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}/edit/${siteConfig.deployBranch}/website/`,
           // The editable working docs (docs/ = "current") are the DEFAULT version
           // served at the root, so in-browser CMS edits (which write to docs/)
           // appear on the live site immediately. 1.0.0 is a frozen released
@@ -65,7 +68,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/docusaurus-social-card.jpg',
+      // No social-card image: add your own to static/img/ and set `image` here.
       colorMode: {
         respectPrefersColorScheme: true,
       },

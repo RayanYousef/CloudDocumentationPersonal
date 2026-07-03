@@ -9,9 +9,15 @@
  * every request is made client-side against the GitHub Contents / Git Data APIs.
  */
 
-export const OWNER = 'RayanYousef';
-export const REPO = 'CloudDocumentationPersonal';
-export const BRANCH = 'main';
+// Project identity comes from the single source of truth (website/site.config.js).
+import siteConfig from '../../../site.config.js';
+// Frozen doc versions come from the same file Docusaurus itself reads, so the
+// editor's version list can never drift from the built site.
+import versions from '../../../versions.json';
+
+export const OWNER = siteConfig.organizationName;
+export const REPO = siteConfig.projectName;
+export const BRANCH = siteConfig.deployBranch;
 
 /**
  * Editable doc versions. Each entry maps a version id to the repo prefix that
@@ -19,14 +25,17 @@ export const BRANCH = 'main';
  *   - 'current' is the live "Latest" docs under website/docs/.
  *   - Every frozen snapshot lives under website/versioned_docs/version-<id>/.
  * Editing a non-'current' version commits straight into the archived snapshot.
+ *
+ * Derived from versions.json (["1.0.0", ...]) so this list stays in lockstep
+ * with the versions Docusaurus builds — no hand-maintained duplicate to drift.
  */
 export const VERSIONS = [
   {id: 'current', label: 'Latest', prefix: 'website/docs/'},
-  {
-    id: '1.0.0',
-    label: '1.0.0',
-    prefix: 'website/versioned_docs/version-1.0.0/',
-  },
+  ...versions.map((v) => ({
+    id: v,
+    label: v,
+    prefix: `website/versioned_docs/version-${v}/`,
+  })),
 ];
 
 /**
@@ -96,6 +105,46 @@ async function ghFetch(pat, path, options = {}) {
   return res.json();
 }
 
+// --- shared recursive-tree fetch ------------------------------------------
+// listTree and listAssets both need the FULL recursive git tree of BRANCH.
+// Fetching it once each is wasteful, so we share a single in-flight request and
+// briefly cache the (blob-path) result. The TTL is a short backstop; any write
+// (putRaw) also invalidates it, so newly committed files/assets show up right
+// away. The tree is a property of the repo, not the token, so we don't key on
+// the PAT.
+
+const TREE_TTL_MS = 15000;
+let treeCache = null; // { at: number, promise: Promise<string[]> } | null
+
+/** Drop the cached tree so the next list refetches (call after any write). */
+function invalidateTreeCache() {
+  treeCache = null;
+}
+
+/** Fetch the recursive git tree of BRANCH, returning blob paths only. Shared/cached. */
+function fetchTreeBlobs(pat) {
+  const now = Date.now();
+  if (treeCache && now - treeCache.at < TREE_TTL_MS) {
+    return treeCache.promise;
+  }
+  const promise = ghFetch(
+    pat,
+    `/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,
+  ).then((data) => {
+    const tree = (data && data.tree) || [];
+    return tree
+      .filter((entry) => entry.type === 'blob')
+      .map((entry) => entry.path);
+  });
+  treeCache = {at: now, promise};
+  // On failure, drop the cache so the next call retries instead of replaying
+  // the same rejected promise for the whole TTL window.
+  promise.catch(() => {
+    if (treeCache && treeCache.promise === promise) treeCache = null;
+  });
+  return promise;
+}
+
 // --- public API -----------------------------------------------------------
 
 /**
@@ -114,14 +163,8 @@ export async function verifyToken(pat) {
  * sorted alphabetically.
  */
 export async function listTree(pat, prefix = DOCS_PREFIX) {
-  const data = await ghFetch(
-    pat,
-    `/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,
-  );
-  const tree = (data && data.tree) || [];
-  return tree
-    .filter((entry) => entry.type === 'blob')
-    .map((entry) => entry.path)
+  const paths = await fetchTreeBlobs(pat);
+  return paths
     .filter(
       (p) =>
         p.startsWith(prefix) &&
@@ -143,14 +186,7 @@ export async function listTree(pat, prefix = DOCS_PREFIX) {
  * bare public src.
  */
 export async function listAssets(pat) {
-  const data = await ghFetch(
-    pat,
-    `/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,
-  );
-  const tree = (data && data.tree) || [];
-  const paths = tree
-    .filter((entry) => entry.type === 'blob')
-    .map((entry) => entry.path);
+  const paths = await fetchTreeBlobs(pat);
 
   const MODEL_EXTS = ['glb', 'gltf', 'fbx'];
   const IMAGE_EXTS = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
@@ -247,10 +283,13 @@ async function putRaw(pat, {path, base64, sha, message}) {
   if (sha) body.sha = sha;
 
   try {
-    return await ghFetch(pat, `/repos/${OWNER}/${REPO}/contents/${encodePath(path)}`, {
+    const res = await ghFetch(pat, `/repos/${OWNER}/${REPO}/contents/${encodePath(path)}`, {
       method: 'PUT',
       body: JSON.stringify(body),
     });
+    // The write changed the tree; drop the shared cache so the next list is fresh.
+    invalidateTreeCache();
+    return res;
   } catch (err) {
     if (err.status === 409) {
       const conflict = new Error(

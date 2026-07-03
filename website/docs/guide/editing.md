@@ -25,7 +25,7 @@ Clone the repository, edit or add `.md` files under `website/docs/`, and push to
 
 The in-browser editor lets you create and edit documentation pages directly in your browser — no local setup required. It commits changes via the GitHub API.
 
-**Access:** navigate to `/editor` on the live site (`/CloudDocumentationPersonal/editor`).
+**Access:** navigate to the [`/editor`](/editor) page on the live site.
 
 #### Authentication
 
