@@ -90,7 +90,12 @@ const config = {
             position: 'left',
             label: 'Documentation',
           },
-          // GitHub link removed as requested
+          {
+            href: `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`,
+            position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
+          },
         ],
       },
       footer: {
@@ -119,6 +124,10 @@ const config = {
               {
                 label: 'Editing',
                 to: '/guide/editing',
+              },
+              {
+                label: 'GitHub Repository',
+                href: `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`,
               },
             ],
           },
