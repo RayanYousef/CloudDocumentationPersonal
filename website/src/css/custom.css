@@ -6,51 +6,67 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  /* "papyrus" brand palette */
-  --pz-bg: #F4EEDF;
-  --pz-surface: #EFE7D2;
-  --pz-text: #131B3F;
-  --pz-muted: #5C88D8;
-  --pz-primary: #43C8BE;
-  --pz-reward: #D9A441;
-  --pz-flair: #8F8AE8;
-  --pz-outline: #1B2447;
-  --pz-gradient: linear-gradient(135deg, #43C8BE 0%, #5C88D8 50%, #8F8AE8 100%);
+  /* Arcade brand — LIGHT (derived: same hues, contrast-safe) */
+  --bg: #F4EEDF;
+  --surface: #EFE7D2;
+  --text: #131B3F;
+  --primary: #6357C9;      /* accessible violet — 4.86:1 on --bg */
+  --interactive: #217770;  /* accessible teal  — 4.61:1 on --bg */
+  --treasure: #D9A441;
+  --info: #5C88D8;         /* decorative/gradient only — not body text on cream */
+  --outline: #D3D8E4;
+  --gradient: linear-gradient(135deg, #8F8AE8 0%, #5C88D8 50%, #43C8BE 100%);
 
-  /* Light mode: the papyrus look (cream + teal) */
-  --ifm-color-primary: #43C8BE;
-  --ifm-color-primary-dark: #33b4aa;
-  --ifm-color-primary-darker: #30aaa1;
-  --ifm-color-primary-darkest: #288c84;
-  --ifm-color-primary-light: #56cec5;
-  --ifm-color-primary-lighter: #60d1c8;
-  --ifm-color-primary-lightest: #83dcd5;
-  --ifm-background-color: var(--pz-bg);
-  --ifm-background-surface-color: var(--pz-surface);
-  --ifm-font-color-base: var(--pz-text);
-  --ifm-heading-color: var(--pz-text);
-  --ifm-link-color: var(--pz-muted);
-  --ifm-navbar-link-hover-color: #288c84;
+  --ifm-color-primary: #6357C9;
+  --ifm-color-primary-dark: #4F41C2;
+  --ifm-color-primary-darker: #493CB9;
+  --ifm-color-primary-darkest: #3C3199;
+  --ifm-color-primary-light: #776DD0;
+  --ifm-color-primary-lighter: #8178D3;
+  --ifm-color-primary-lightest: #A098DE;
+
+  --ifm-background-color: var(--bg);
+  --ifm-background-surface-color: var(--surface);
+  --ifm-font-color-base: var(--text);
+  --ifm-heading-color: var(--text);
+  --ifm-link-color: var(--interactive);
+  --ifm-link-hover-color: #164E49;
+  --ifm-navbar-link-hover-color: var(--primary);
+  --ifm-menu-color-active: var(--primary);
+  --ifm-toc-border-color: var(--outline);
   --ifm-footer-background-color: #0C1230;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode: same brand on navy */
+/* Dark mode: the exact arcade palette (bg/surface swapped vs the old theme) */
 [data-theme='dark'] {
-  --ifm-color-primary: #43C8BE;
-  --ifm-color-primary-dark: #33b4aa;
-  --ifm-color-primary-darker: #30aaa1;
-  --ifm-color-primary-darkest: #288c84;
-  --ifm-color-primary-light: #56cec5;
-  --ifm-color-primary-lighter: #60d1c8;
-  --ifm-color-primary-lightest: #83dcd5;
-  --ifm-background-color: #131B3F;
-  --ifm-background-surface-color: #0C1230;
-  --ifm-font-color-base: #F4EEDF;
-  --ifm-heading-color: #F4EEDF;
-  --ifm-link-color: var(--pz-primary);
-  --ifm-navbar-link-hover-color: #83dcd5;
+  --bg: #0C1230;
+  --surface: #131B3F;
+  --text: #F4EEDF;
+  --primary: #8F8AE8;
+  --interactive: #43C8BE;
+  --treasure: #D9A441;
+  --info: #5C88D8;
+  --outline: #1B2447;
+  --gradient: linear-gradient(135deg, #8F8AE8 0%, #5C88D8 50%, #43C8BE 100%);
+
+  --ifm-color-primary: #8F8AE8;
+  --ifm-color-primary-dark: #716BE2;
+  --ifm-color-primary-darker: #635CDF;
+  --ifm-color-primary-darkest: #362DD6;
+  --ifm-color-primary-light: #ADA9EE;
+  --ifm-color-primary-lighter: #BBB8F1;
+  --ifm-color-primary-lightest: #E8E7FA;
+
+  --ifm-background-color: var(--bg);
+  --ifm-background-surface-color: var(--surface);
+  --ifm-font-color-base: var(--text);
+  --ifm-heading-color: var(--text);
+  --ifm-link-color: var(--interactive);
+  --ifm-link-hover-color: #83DCD5;
+  --ifm-navbar-link-hover-color: #83DCD5;
+  --ifm-toc-border-color: var(--outline);
   --ifm-footer-background-color: #0C1230;
   --docusaurus-highlighted-code-line-bg: rgba(244, 238, 223, 0.08);
 }
@@ -58,21 +74,25 @@
 /* Brand component rules */
 .button-primary,
 .button--primary {
-  background: var(--pz-primary);
-  color: #F4EEDF;
+  background: var(--primary);
+  color: var(--bg);
 }
 
 .xp-badge {
-  background: var(--pz-reward);
+  background: var(--treasure);
   color: #131B3F;
 }
 
 .hero-title,
 .hero__title {
-  background: var(--pz-gradient);
+  background: var(--gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.level-up {
+  color: var(--treasure);
 }
 
 /* Navbar logo: display the square brand mark as a circle */
@@ -151,7 +171,7 @@
   width: 24px;
   height: 24px;
   display: flex;
-  background-color: var(--pz-text);
+  background-color: var(--text);
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E");
   -webkit-mask-repeat: no-repeat;
@@ -159,8 +179,4 @@
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   transition: background-color var(--ifm-transition-fast);
-}
-
-[data-theme='dark'] .header-github-link::before {
-  background-color: var(--pz-bg);
 }
