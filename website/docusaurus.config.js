@@ -5,6 +5,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config = {
   title: 'Documentation',
   tagline: 'A Docusaurus documentation platform',
+  favicon: 'img/favicon.png',
 
   url: 'https://RayanYousef.github.io',
   baseUrl: '/CloudDocumentationPersonal/',
@@ -70,6 +71,10 @@ const config = {
       },
       navbar: {
         title: 'Documentation',
+        logo: {
+          alt: 'Documentation logo',
+          src: 'img/logo.png',
+        },
         items: [
           {
             type: 'docsVersionDropdown',
