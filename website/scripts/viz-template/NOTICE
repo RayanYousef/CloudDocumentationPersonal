@@ -1,0 +1,44 @@
+This directory vendors template files from Google's OKF (Open Knowledge Format)
+reference agent viewer.
+
+Copyright Google LLC
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. The full license text is in ./LICENSE.
+
+Source:
+  https://github.com/GoogleCloudPlatform/knowledge-catalog
+  Path: okf/src/reference_agent/viewer
+  Branch: main
+  Fetched: 2026-07-04
+
+Vendored files:
+  - viz.html  (okf/src/reference_agent/viewer/templates/viz.html)
+  - viz.css   (okf/src/reference_agent/viewer/static/viz.css)
+  - viz.js    (okf/src/reference_agent/viewer/static/viz.js)
+  - LICENSE   (okf/LICENSE.md)
+
+Local modifications:
+  - viz.html: the two CDN <script> tags (cytoscape from cdn.jsdelivr.net and
+    marked from cdn.jsdelivr.net) were replaced, in the same position and
+    order, with inline placeholder tokens:
+        <script>/*__CYTOSCAPE_JS__*/</script>
+        <script>/*__MARKED_JS__*/</script>
+    so the libraries can be inlined at build time instead of fetched from a
+    CDN. The pre-existing placeholder tokens /*__VIZ_CSS__*/, /*__VIZ_JS__*/,
+    __BUNDLE_NAME__, and __BUNDLE_DATA__ were left untouched.
+  - viz.js: no patch was needed. Markdown rendering already calls
+    marked.parse(body, { breaks: false, gfm: true }), which is compatible
+    with marked v13 UMD, so no marked(...) -> marked.parse(...) rewrite was
+    applied.
+  - These templates are consumed by a Node.js port, okf-graph.mjs, which
+    also fixes bundle-absolute-link edge extraction and adds .mdx support
+    (both differences from the upstream Python reference agent).
