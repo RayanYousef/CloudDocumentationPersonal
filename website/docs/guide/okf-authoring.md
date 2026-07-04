@@ -1,9 +1,9 @@
 ---
 type: Guide
 title: Authoring OKF concepts
-description: The maintenance contract for humans and agents editing this Open Knowledge Format concept bundle.
+description: The maintenance contract for humans and agents editing this Open Knowledge Format concept bundle - frontmatter keys, the flat one-liner rule, relative cross-links, and re-indexing discipline.
 sidebar_position: 2
-tags: [okf, authoring, knowledge-bundle]
+tags: [okf, authoring, frontmatter, knowledge-bundle, taxonomy, cross-links]
 resource: website/docs/
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

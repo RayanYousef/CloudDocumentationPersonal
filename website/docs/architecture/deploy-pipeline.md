@@ -1,9 +1,9 @@
 ---
 type: Workflow
 title: Deploy pipeline
-description: The GitHub Actions workflow that builds the site and publishes it to GitHub Pages on every push to main.
+description: The GitHub Actions workflow that runs npm ci and npm run build, then publishes website/build to the gh-pages branch via peaceiris/actions-gh-pages on every push to main touching website/**.
 sidebar_position: 4
-tags: [ci, github-actions, deployment]
+tags: [ci, github-actions, github-pages, gh-pages, deployment, prebuild]
 resource: .github/workflows/deploy-docs.yml
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

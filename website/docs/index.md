@@ -14,4 +14,4 @@ description: Map of this documentation bundle - start here to navigate every con
 
 # Concepts
 
-* [Introduction](intro.mdx) - Welcome to this Docusaurus documentation platform with 3D model viewers, in-browser editing, and versioning.
+* [Introduction](intro.mdx) - Overview of this Docusaurus 3 documentation platform and its custom features - embeddable 3D model viewers, an in-browser editor, and versioned release snapshots.

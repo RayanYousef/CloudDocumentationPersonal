@@ -3,7 +3,7 @@ type: Component
 title: In-browser editor
 description: The /editor page — a client-only Docusaurus route that edits docs and commits them straight to GitHub through the REST Contents API, using round-trip-safe frontmatter line surgery.
 sidebar_position: 1
-tags: [editor, github-api, frontmatter]
+tags: [in-browser-editor, github-api, frontmatter, browser-only, pat-auth, line-surgery]
 resource: website/src/components/editor/
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

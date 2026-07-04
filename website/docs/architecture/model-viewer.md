@@ -3,7 +3,7 @@ type: Component
 title: ModelViewer (glTF)
 description: An SSR-safe React wrapper around Google's <model-viewer> web component for embedding interactive glTF/GLB models in docs, with baseUrl-resolved src and an error fallback.
 sidebar_position: 2
-tags: [3d, gltf, model-viewer]
+tags: [gltf, model-viewer, web-component, browser-only, baseurl, webgl]
 resource: website/src/components/ModelViewer/index.js
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

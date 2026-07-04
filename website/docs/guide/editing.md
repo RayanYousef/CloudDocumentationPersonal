@@ -2,8 +2,8 @@
 type: Guide
 title: Editing this site
 sidebar_position: 1
-description: How to add and edit documentation pages on this site.
-tags: [editing, editor, workflow]
+description: How to add and edit pages on this site, either by committing Markdown directly or using the in-browser /editor with its WYSIWYG and raw-MDX modes, PAT authentication, and image/3D-model asset uploads.
+tags: [editing, in-browser-editor, wysiwyg, github-pat, asset-upload, markdown]
 resource: website/docs/guide/editing.md
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

@@ -2,8 +2,8 @@
 type: Reference
 title: Markdown Basics
 sidebar_position: 1
-description: A short demonstration of standard Markdown features supported by this site.
-tags: [markdown, authoring]
+description: A reference demonstrating the Markdown features supported on this site - text formatting, ordered and unordered lists, syntax-highlighted fenced code blocks, and admonition callouts.
+tags: [markdown, admonitions, code-blocks, syntax-highlighting, authoring]
 resource: website/docs/examples/markdown-basics.md
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

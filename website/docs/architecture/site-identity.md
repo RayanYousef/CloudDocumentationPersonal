@@ -1,9 +1,9 @@
 ---
 type: Configuration
 title: Site identity (site.config.js)
-description: The single source of truth for the site's URLs, GitHub repo, deploy branch, and branding.
+description: The single CommonJS source of truth (website/site.config.js) for the site's URLs, GitHub org/repo, deploy branch, and branding, consumed by both the Docusaurus build and the in-browser editor.
 sidebar_position: 5
-tags: [configuration, identity, template]
+tags: [configuration, site-config, single-source-of-truth, commonjs, baseurl, template]
 resource: website/site.config.js
 timestamp: '2026-07-04T00:00:00+00:00'
 ---

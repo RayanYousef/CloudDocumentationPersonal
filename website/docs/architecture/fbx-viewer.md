@@ -3,7 +3,7 @@ type: Component
 title: FbxViewer (FBX)
 description: A browser-only three.js renderer for .fbx models, using FBXLoader and OrbitControls with automatic framing and full GPU resource disposal on unmount.
 sidebar_position: 3
-tags: [3d, fbx, three-js]
+tags: [fbx, three-js, fbxloader, orbitcontrols, webgl, resource-disposal]
 resource: website/src/components/FbxViewer/index.js
 timestamp: '2026-07-04T00:00:00+00:00'
 ---
