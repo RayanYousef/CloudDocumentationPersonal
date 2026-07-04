@@ -1,7 +1,11 @@
 ---
+type: Guide
 title: Editing this site
 sidebar_position: 1
 description: How to add and edit documentation pages on this site.
+tags: [editing, editor, workflow]
+resource: website/docs/guide/editing.md
+timestamp: '2026-07-04T00:00:00+00:00'
 ---
 
 # Editing this site
@@ -122,3 +126,8 @@ Put image files in `website/static/img/` and reference them with absolute paths:
 ## Pages with React components
 
 If a page needs to import a React component (such as `ModelViewer` or `FbxViewer`), use the `.mdx` extension instead of `.md`. MDX pages support standard Markdown plus JSX.
+
+## Related
+
+* [In-browser editor architecture](../architecture/in-browser-editor.md) — how the `/editor` page and its GitHub API integration work.
+* [Site identity](../architecture/site-identity.md) — where project-identity values live and how to change them.

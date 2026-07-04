@@ -1,7 +1,11 @@
 ---
+type: Reference
 title: Markdown Basics
 sidebar_position: 1
 description: A short demonstration of standard Markdown features supported by this site.
+tags: [markdown, authoring]
+resource: website/docs/examples/markdown-basics.md
+timestamp: '2026-07-04T00:00:00+00:00'
 ---
 
 # Markdown Basics
@@ -53,3 +57,8 @@ Keep your pages focused on a single topic. Use the sidebar hierarchy to group re
 Standard Markdown is supported everywhere. Pages that need React components (like 3D viewers) must use the `.mdx` extension.
 
 :::
+
+## Related
+
+* [Editing this site](../guide/editing.md) — how to add and edit pages using these Markdown features.
+* [OKF authoring](../guide/okf-authoring.md) — conventions for structured, machine-readable docs.
