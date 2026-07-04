@@ -84,6 +84,7 @@ const config = {
             current: { label: 'Latest' },
             '1.0.0': { label: '1.0.0' },
           },
+          onInlineTags: 'ignore', // OKF frontmatter tags would otherwise emit warnings
         },
         blog: false, // Disable blog
         theme: {
@@ -119,6 +120,12 @@ const config = {
             sidebarId: 'docsSidebar',
             position: 'left',
             label: 'Documentation',
+          },
+          {
+            href: siteConfig.baseUrl + 'graph/viz.html',
+            label: 'Knowledge Graph',
+            position: 'left',
+            target: '_blank',
           },
           {
             href: `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`,

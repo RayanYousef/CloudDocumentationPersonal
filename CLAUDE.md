@@ -75,3 +75,19 @@ Site config: `url=https://RayanYousef.github.io`, `baseUrl=/CloudDocumentationPe
 ## Images
 
 Put images in `website/static/img/` and reference them with absolute paths: `/img/your-image.png`.
+
+## Knowledge bundle (OKF)
+
+`website/docs/` is an OKF v0.1 bundle — a documentation set with structured frontmatter designed to be navigated by an agent, not just a human.
+
+**Consuming:** start at `website/docs/index.md` (the map), follow links, judge relevance from each page's frontmatter (`type`/`description`/`tags`) **before** reading bodies, and read only what the task needs.
+
+**Maintaining:**
+- Read-before-write; never delete existing headings/content when enriching a page.
+- Every frontmatter key stays a flat one-liner (this is the in-browser editor's round-trip contract).
+- Required key: `type` (taxonomy: Component, Guide, Reference, Example, Workflow, Configuration).
+- Bump `timestamp` on edit.
+- Add a newest-first dated entry to `website/docs/log.md` (**Update** / **Creation** / **Deprecation**).
+- Cross-link with relative `.md`/`.mdx` links only.
+- Run `npm run okf:index` after adding/removing pages.
+- The brain graph (`static/graph/viz.html`) regenerates automatically via `prebuild`/`prestart`.
