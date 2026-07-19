@@ -50,6 +50,12 @@ The docs tree (`website/docs/`) is an OKF (Open Knowledge Format) knowledge
 bundle with a built-in "brain": a graph visualization derived from frontmatter
 and links. To keep it working in a cloned project, follow three conventions.
 
+> **The repo ships the full OKF skill** at `.agents/skills/okf/SKILL.md` — a
+> self-contained reference covering the entire format. Point your AI tool's
+> skills directory at it (or copy/symlink it into your personal skills folder,
+> e.g. `~/.agents/skills/okf/` for Claude Code or Cursor) and it teaches the
+> agent the whole format.
+
 ### Frontmatter on every new doc
 
 Every page carries merged frontmatter — the usual Docusaurus fields plus OKF
