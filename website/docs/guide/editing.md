@@ -2,6 +2,12 @@
 title: Editing this site
 sidebar_position: 1
 description: How to add and edit documentation pages on this site.
+type: guide
+tags:
+  - editing
+  - editor
+  - authoring
+timestamp: "2026-07-19T00:00:00+00:00"
 ---
 
 # Editing this site

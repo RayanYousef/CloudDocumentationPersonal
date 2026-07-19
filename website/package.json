@@ -21,6 +21,7 @@
     "@mdxeditor/editor": "^4.0.4",
     "@orama/plugin-docusaurus-v3": "^3.1.18",
     "clsx": "^2.0.0",
+    "cytoscape": "^3.34.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
