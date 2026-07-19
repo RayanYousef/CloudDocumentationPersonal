@@ -33,6 +33,16 @@ Requires Node >= 20 (Docusaurus 3.9, React 19). There are no tests or linters co
 - Front matter (`title`, `sidebar_position`, `description`) orders pages within a category.
 - Pages that import React components must use the `.mdx` extension.
 
+## OKF authoring conventions
+
+`website/docs/` is an OKF (Open Knowledge Format) bundle. When creating or editing docs:
+
+- **Frontmatter contract** — alongside the Docusaurus fields (`title`, `sidebar_position`, `description`), every doc carries OKF fields: `type` (**required**; vocabulary: `index`, `guide`, `example`, `log`, `note` — extensible, unknown types are legal), `tags` (a YAML list, never a comma string), and `timestamp` (quoted ISO 8601, refreshed on every meaningful edit).
+- **Per-folder index** — every docs folder gets an `index.md`/`.mdx` with `type: index` (its landing page, usually `<DocCardList />`) plus a `_category_.json`. The homepage `index.mdx` owns `slug: /`.
+- **Changelog** — after any meaningful docs change, append a bullet to `website/docs/log.md` under a `## YYYY-MM-DD` heading, newest first (add today's heading at the top if missing).
+- **Viz is derived — never hand-edit it.** The graph (`website/plugins/okf-graph/` plugin, `OkfGraph` component, per-page Viz button, `/viz` page) regenerates from docs frontmatter and links on every build. To change the graph, change the docs.
+- This `CLAUDE.md` file itself never gets YAML frontmatter — it is agent instructions, not a knowledge concept.
+
 ## Custom components
 
 Components live in `website/src/components/`.

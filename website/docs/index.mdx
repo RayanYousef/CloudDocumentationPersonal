@@ -1,18 +1,36 @@
 ---
 slug: /
 title: Introduction
-sidebar_position: "1"
+sidebar_position: 1
 description: Welcome to this Docusaurus documentation platform with 3D model viewers, in-browser editing, and versioning.
+type: index
+okf_version: "0.1"
+tags:
+  - okf
+  - docusaurus
+  - template
+timestamp: "2026-07-19T00:00:00+00:00"
 ---
-import Tabs from '@theme/Tabs'
-
-import TabItem from '@theme/TabItem'
 
 import siteConfig from '@site/site.config';
+
+import Link from '@docusaurus/Link';
+
+import DocCardList from '@theme/DocCardList';
+
+import {useDocsSidebar} from '@docusaurus/plugin-content-docs/client';
+
+export const TopLevelCategoryCards = () => {
+  const sidebar = useDocsSidebar();
+  const items = (sidebar?.items ?? []).filter((item) => item.type === 'category');
+  return <DocCardList items={items} />;
+};
 
 # Introduction
 
 Welcome to this documentation site. This platform is built on [Docusaurus 3](https://docusaurus.io/) and ships with several custom features to make authoring and presenting documentation easier.
+
+<p><Link className="button button--primary button--lg" to="/viz">Explore the knowledge graph</Link></p>
 
 :::info Source on GitHub
 This site is built from the <a href={`https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`}>GitHub repository</a> — browse the source, open issues, or fork it as a base for your own docs.
@@ -27,26 +45,6 @@ This site is built from the <a href={`https://github.com/${siteConfig.organizati
 
 ## Getting started
 
-Content is coming soon. Browse the **Examples** section in the sidebar to see the custom components in action, or visit the **Guide** section to learn how to add and edit pages.
+Browse the sections below to see the custom components in action and to learn how to add and edit pages.
 
-<Tabs>
-  <TabItem value="tab1" label="Tab 1" default>
-
-
-    <Tabs>
-      <TabItem value="tab1" label="Tab 1" default>
-        Lol
-      </TabItem>
-
-      <TabItem value="tab2" label="Tab 2">
-        Second tab content.
-      </TabItem>
-    </Tabs>
-
-    First tab content.
-  </TabItem>
-
-  <TabItem value="tab2" label="Tab 2">
-    Second tab content.
-  </TabItem>
-</Tabs>
+<TopLevelCategoryCards />

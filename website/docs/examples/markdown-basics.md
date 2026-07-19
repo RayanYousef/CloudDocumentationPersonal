@@ -2,6 +2,11 @@
 title: Markdown Basics
 sidebar_position: 1
 description: A short demonstration of standard Markdown features supported by this site.
+type: example
+tags:
+  - markdown
+  - authoring
+timestamp: "2026-07-19T00:00:00+00:00"
 ---
 
 # Markdown Basics

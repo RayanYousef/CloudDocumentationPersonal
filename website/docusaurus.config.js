@@ -64,6 +64,9 @@ const config = {
         },
       },
     ],
+    // OKF knowledge-graph data: scans website/docs/ at build time and exposes
+    // {global, folders} graph data via usePluginData('okf-graph').
+    './plugins/okf-graph',
   ],
 
   presets: [
@@ -119,6 +122,11 @@ const config = {
             sidebarId: 'docsSidebar',
             position: 'left',
             label: 'Documentation',
+          },
+          {
+            to: '/viz',
+            label: 'Viz',
+            position: 'left',
           },
           {
             href: `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`,
