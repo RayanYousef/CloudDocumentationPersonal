@@ -125,7 +125,7 @@ const config = {
           },
           {
             to: '/viz',
-            label: 'Viz',
+            label: 'Knowledge Graph',
             position: 'left',
           },
           {

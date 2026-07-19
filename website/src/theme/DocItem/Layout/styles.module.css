@@ -1,5 +1,5 @@
 /**
- * Viz button + modal for the DocItem/Layout wrapper.
+ * Knowledge Graph button + modal for the DocItem/Layout wrapper.
  *
  * Colors come from the arcade palette custom properties defined in
  * src/css/custom.css (--primary, --surface, --bg, --text, --outline). Those
@@ -18,23 +18,26 @@
 .vizBtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   font-family: inherit;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.4;
-  padding: 0.25rem 0.75rem;
+  padding: 0.3rem 0.85rem;
   border-radius: 999px;
   border: 1px solid var(--primary, #6357c9);
-  color: var(--primary, #6357c9);
-  background: transparent;
+  color: var(--bg, #f4eedf);
+  background: var(--primary, #6357c9);
+  box-shadow: 0 1px 3px rgba(12, 18, 48, 0.25);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease,
+    background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .vizBtn:hover:not(:disabled) {
-  background: var(--primary, #6357c9);
-  color: var(--bg, #f4eedf);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(12, 18, 48, 0.3);
+  filter: brightness(1.08);
 }
 
 .vizBtn:focus-visible {
@@ -46,6 +49,7 @@
   border-color: var(--ifm-color-emphasis-300, #d3d8e4);
   color: var(--ifm-color-emphasis-500, #66708a);
   background: transparent;
+  box-shadow: none;
   cursor: not-allowed;
   opacity: 0.7;
 }
