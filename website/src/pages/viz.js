@@ -27,7 +27,7 @@ export default function VizPage() {
 
   return (
     <Layout
-      title="Viz"
+      title="Knowledge Graph"
       description={`Interactive knowledge graph of the ${siteConfig.title} site — every doc, its hierarchy, and its cross-links.`}>
       <main
         style={{

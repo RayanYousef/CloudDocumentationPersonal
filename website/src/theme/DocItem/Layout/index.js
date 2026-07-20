@@ -6,8 +6,8 @@ import OkfGraph from '@site/src/components/OkfGraph';
 import styles from './styles.module.css';
 
 /**
- * DocItem/Layout wrapper — adds a per-page "Viz" button that opens the current
- * folder's scoped OKF graph in a modal.
+ * DocItem/Layout wrapper — adds a per-page "Knowledge Graph" button that opens
+ * the current folder's scoped OKF graph in a modal.
  *
  * Folder resolution (current docs only):
  *   - `useDoc().metadata.sourceDirName` is the doc's containing folder as a
@@ -95,7 +95,7 @@ function VizModal({title, ariaLabel, graph, onClose}) {
             type="button"
             className={styles.closeBtn}
             onClick={onClose}
-            aria-label="Close visualization"
+            aria-label="Close knowledge graph"
           >
             &#215;
           </button>
@@ -142,7 +142,7 @@ function VizButton() {
   }, []);
 
   const label = hasGraph ? folderLabel(folder, graph) : null;
-  const modalTitle = label ? `${label} — viz` : null;
+  const modalTitle = label ? `${label} — knowledge graph` : null;
 
   return (
     <>
@@ -153,7 +153,11 @@ function VizButton() {
           className={styles.vizBtn}
           onClick={hasGraph ? handleOpen : undefined}
           disabled={!hasGraph}
-          title={hasGraph ? 'Visualize this section' : 'No viz available for this section'}
+          title={
+            hasGraph
+              ? "Open this section's knowledge graph"
+              : 'No knowledge graph for this section'
+          }
           aria-haspopup="dialog"
           aria-expanded={hasGraph ? open : undefined}
         >
@@ -175,13 +179,13 @@ function VizButton() {
               fill="none"
             />
           </svg>
-          Viz
+          Knowledge Graph
         </button>
       </div>
       {open && hasGraph ? (
         <VizModal
           title={modalTitle}
-          ariaLabel={modalTitle || 'Section visualization'}
+          ariaLabel={modalTitle || 'Section knowledge graph'}
           graph={graph}
           onClose={handleClose}
         />
