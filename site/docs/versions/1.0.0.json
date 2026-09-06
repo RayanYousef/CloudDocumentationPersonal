@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "frozenAt": "2026-09-07T00:00:00Z",
+  "pins": {
+    "RayanYousef/CloudDocumentationPersonal": "9c52fd7232043d5eb3e24cb7ef5e53acc4c4b9b7"
+  },
+  "refs": {
+    "RayanYousef/CloudDocumentationPersonal": "main"
+  }
+}
