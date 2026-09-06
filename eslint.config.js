@@ -27,7 +27,9 @@ export default tseslint.config(
         { type: 'editor', pattern: 'services/editor/**' },
         { type: 'site-composition', pattern: 'site/src/platform/**', mode: 'full' },
         { type: 'site', pattern: 'site/**' },
-        { type: 'root', pattern: ['scripts/**', 'platform.config.js', 'eslint.config.js', 'vitest.workspace.ts'], mode: 'full' },
+        // platform.config.js is the one root file the site (and its composition root) may read (spec 4.7).
+        { type: 'platform-config', pattern: 'platform.config.js', mode: 'full' },
+        { type: 'root', pattern: ['scripts/**', 'eslint.config.js', 'vitest.workspace.ts'], mode: 'full' },
       ],
       'boundaries/ignore': ['**/*.test.*', '**/e2e/**'],
       'import/resolver': { typescript: { project: ['./tsconfig.base.json', './*/*/tsconfig.json'] } },
@@ -44,9 +46,9 @@ export default tseslint.config(
           { from: ['content'], allow: ['content', 'contracts', 'okf-core'] },
           { from: ['editor'], allow: ['editor', 'editor-composition', 'contracts', 'okf-core', 'viewers'] },
           { from: ['editor-composition'], allow: ['editor', 'editor-composition', 'contracts', 'okf-core', 'viewers', 'auth', 'content'] },
-          { from: ['site'], allow: ['site', 'site-composition', 'contracts', 'viewers'] },
-          { from: ['site-composition'], allow: ['site', 'site-composition', 'contracts', 'okf-core', 'viewers', 'auth', 'content'] },
-          { from: ['root'], allow: ['root', 'contracts', 'okf-core', 'content'] },
+          { from: ['site'], allow: ['site', 'site-composition', 'contracts', 'viewers', 'platform-config'] },
+          { from: ['site-composition'], allow: ['site', 'site-composition', 'contracts', 'okf-core', 'viewers', 'auth', 'content', 'platform-config'] },
+          { from: ['root'], allow: ['root', 'platform-config', 'contracts', 'okf-core', 'content'] },
         ],
       }],
       // Rule 2: package-name imports (@platform/*) follow the same table.

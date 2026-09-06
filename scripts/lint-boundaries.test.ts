@@ -28,4 +28,8 @@ describe('import boundaries', () => {
     const rules = await lint('services/auth/src/good.ts');
     expect(rules.filter((r) => r.startsWith('boundaries/'))).toEqual([]);
   });
+  it('accepts the site reading the root platform.config.js', async () => {
+    const rules = await lint('site/docusaurus.config.js');
+    expect(rules.filter((r) => r.startsWith('boundaries/'))).toEqual([]);
+  });
 });
