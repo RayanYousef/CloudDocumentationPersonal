@@ -1,0 +1,10 @@
+{
+  "name": "@platform/auth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "scripts": { "build": "tsc -b", "test": "vitest run" },
+  "dependencies": { "@platform/contracts": "*" },
+  "devDependencies": { "typescript": "^5.7.2", "vitest": "^3.0.0" }
+}
