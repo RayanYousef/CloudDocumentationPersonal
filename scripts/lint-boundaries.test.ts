@@ -22,7 +22,9 @@ async function lint(file: string) {
 describe('import boundaries', () => {
   it('rejects a service importing another service', async () => {
     const rules = await lint('services/auth/src/bad.ts');
-    expect(rules).toContain('boundaries/external');
+    // Fires boundaries/external when @platform/content is unbuilt (unresolvable) and
+    // boundaries/element-types once services/content/dist exists (resolves to a local element).
+    expect(rules.filter((r) => r.startsWith('boundaries/'))).not.toEqual([]);
   });
   it('accepts a service importing contracts', async () => {
     const rules = await lint('services/auth/src/good.ts');
