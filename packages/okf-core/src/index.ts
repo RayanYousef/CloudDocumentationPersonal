@@ -1,3 +1,7 @@
 export * from './frontmatter.js';
 export * from './model.js';
 export * from './validate.js';
+export * from './index-block.js';
+export * from './manifest.js';
+export * from './codemap.js';
+export * from './generate.js';
