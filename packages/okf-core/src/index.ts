@@ -5,3 +5,5 @@ export * from './index-block.js';
 export * from './manifest.js';
 export * from './codemap.js';
 export * from './generate.js';
+export * from './log.js';
+export * from './rewrite.js';

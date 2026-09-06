@@ -1,3 +1,4 @@
+import { validateLog } from './log.js';
 import { parseFrontmatter } from './frontmatter.js';
 import {
   BLOB_RE, INDEX_KEYS, ROOT_INDEX_KEYS, type BundleModel, type Problem, type RepoRef,
@@ -63,5 +64,6 @@ export function validateBundle(model: BundleModel, files: Record<string, string>
     }
     checkLinks(ix.path, ix.pre + ix.post, files, out);
   }
+  if (files['log.md'] !== undefined) out.push(...validateLog(files['log.md']));
   return out;
 }
