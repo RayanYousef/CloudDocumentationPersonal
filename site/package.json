@@ -19,6 +19,8 @@
     "@mdx-js/react": "^3.0.0",
     "@orama/plugin-docusaurus-v3": "^3.1.18",
     "@platform/contracts": "*",
+    "@platform/content": "*",
+    "@platform/okf-core": "*",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",

@@ -3,6 +3,8 @@
 import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readBundle } from '@platform/okf-core/node';
+import { buildSearchIndex } from '@platform/content';
 
 const exists = (p) => access(p).then(() => true, () => false);
 
@@ -20,6 +22,8 @@ export async function buildPlatformArtifacts(siteDir) {
   for (const [id, dir] of bundles) {
     const manifest = path.join(dir, 'manifest.json');
     if (await exists(manifest)) await put(`manifest-${id}.json`, await readFile(manifest, 'utf8'));
+    const files = await readBundle(dir);
+    await put(`search-index-${id}.json`, JSON.stringify(await buildSearchIndex(files)));
   }
   return written;
 }

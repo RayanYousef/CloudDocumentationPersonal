@@ -26,6 +26,8 @@ export default tseslint.config(
         { type: 'editor-composition', pattern: 'services/editor/src/composition/**', mode: 'full' },
         { type: 'editor', pattern: 'services/editor/**' },
         { type: 'site-composition', pattern: 'site/src/platform/**', mode: 'full' },
+        // Build-time Node scripts (prebuild artifacts) may use okf-core and content like the root scripts do.
+        { type: 'site-scripts', pattern: 'site/scripts/**', mode: 'full' },
         { type: 'site', pattern: 'site/**' },
         // platform.config.js is the one root file the site (and its composition root) may read (spec 4.7).
         { type: 'platform-config', pattern: 'platform.config.js', mode: 'full' },
@@ -48,6 +50,7 @@ export default tseslint.config(
           { from: ['editor-composition'], allow: ['editor', 'editor-composition', 'contracts', 'okf-core', 'viewers', 'auth', 'content'] },
           { from: ['site'], allow: ['site', 'site-composition', 'contracts', 'viewers', 'platform-config'] },
           { from: ['site-composition'], allow: ['site', 'site-composition', 'contracts', 'okf-core', 'viewers', 'auth', 'content', 'platform-config'] },
+          { from: ['site-scripts'], allow: ['site-scripts', 'contracts', 'okf-core', 'content', 'platform-config'] },
           { from: ['root'], allow: ['root', 'platform-config', 'contracts', 'okf-core', 'content'] },
         ],
       }],
