@@ -26,3 +26,13 @@ Renaming a socket is a breaking change and needs a note in the change log.
 ## Import settings
 
 Scale factor 1, no animation import, mesh compression off for LOD0 only. Read/Write is disabled; nothing at runtime needs the vertex data on the CPU.
+
+## Preview
+
+The mesh below is fetched from the sample code repository at the pinned ref, so a frozen version always shows the model that shipped.
+
+<FbxViewer repo="RayanYousef/CloudDocumentationPersonal" ref="main" path="examples/unity-project/Assets/Models/Airship.fbx" alt="Airship" height={400} />
+
+A glTF asset committed to the site itself is referenced by `src` instead:
+
+<ModelViewer src="/models/cube.gltf" alt="Sample cube" height={320} />

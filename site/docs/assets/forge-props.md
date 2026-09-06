@@ -28,3 +28,7 @@ The rest are decoration and use a static-batched prefab.
 ## Authoring rules
 
 Pivot at the floor contact point, forward along +Z, unit scale. Collision is a hand-made convex mesh named `<Prop>_Col` inside the same FBX; do not rely on auto-generated colliders because the props are placed by the [Airship Model](airship-model.md) hold socket at runtime and must stack cleanly.
+
+## Preview
+
+<FbxViewer repo="RayanYousef/CloudDocumentationPersonal" ref="main" path="examples/unity-project/Assets/Models/Chest.fbx" alt="Chest" height={360} />

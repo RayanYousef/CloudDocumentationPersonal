@@ -1,0 +1,1 @@
+{ "extends": "@docusaurus/tsconfig", "compilerOptions": { "baseUrl": ".", "strict": true, "jsx": "react-jsx" }, "include": ["src", "docusaurus.config.js"] }
