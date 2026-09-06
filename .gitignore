@@ -12,3 +12,4 @@ build/
 site/static/platform/
 services/editor/test-results/
 services/editor/playwright-report/
+*.tsbuildinfo
