@@ -1,2 +1,21 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normalize every text file to LF in the repo AND in the working tree, regardless of
+# core.autocrlf. A CRLF checkout on Windows made `okf check` report stale generated
+# content and broke vite-node on .mjs files.
+* text=auto eol=lf
+
+# Binary assets: never normalized or diffed as text.
+*.fbx binary
+*.glb binary
+*.bin binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.zip binary
