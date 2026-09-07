@@ -1,0 +1,24 @@
+name: Validate docs and platform
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build packages and services
+        run: npm run build -w @platform/contracts -w @platform/okf-core -w @platform/viewers -w @platform/auth -w @platform/content
+      - name: OKF validate (Latest + frozen versions, stale check)
+        run: npm run okf:check
+      - name: Lint (import boundaries)
+        run: npm run lint
+      - name: Unit and contract tests
+        run: npm test

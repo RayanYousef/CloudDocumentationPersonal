@@ -8,11 +8,16 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist/**', '**/build/**', '**/node_modules/**', '**/.docusaurus/**',
-      'site/static/platform/**', 'scripts/lint-fixtures/**', 'okf-example/**',
+      'site/static/platform/**', 'scripts/lint-fixtures/**', 'okf-example/**', '.ignored/**',
     ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    // Plain-JS Node entry points (root scripts, site prebuild, okf bin, e2e helper) use Node globals.
+    files: ['scripts/**/*.mjs', 'site/scripts/**/*.mjs', 'packages/*/bin/*.js', 'services/editor/e2e/*.mjs'],
+    languageOptions: { globals: { process: 'readonly', console: 'readonly' } },
+  },
   {
     files: ['**/*.{ts,tsx,js,jsx,mjs}'],
     plugins: { boundaries },
