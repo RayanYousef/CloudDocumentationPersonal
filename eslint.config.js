@@ -14,8 +14,8 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    // Plain-JS Node entry points (root scripts, site prebuild, okf bin, e2e helper) use Node globals.
-    files: ['scripts/**/*.mjs', 'site/scripts/**/*.mjs', 'packages/*/bin/*.js', 'services/editor/e2e/*.mjs'],
+    // Plain-JS Node entry points (root scripts, site prebuild, okf bin, e2e helper, skill scripts) use Node globals.
+    files: ['scripts/**/*.mjs', 'site/scripts/**/*.mjs', 'packages/*/bin/*.js', 'services/editor/e2e/*.mjs', '.agents/skills/docs-platform/scripts/*.mjs'],
     languageOptions: { globals: { process: 'readonly', console: 'readonly' } },
   },
   {

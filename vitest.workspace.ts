@@ -3,4 +3,5 @@ export default [
   'services/*/vitest.config.ts',
   'site/vitest.config.ts',
   'scripts/vitest.config.ts',
+  '.agents/skills/docs-platform/vitest.config.ts',
 ];
