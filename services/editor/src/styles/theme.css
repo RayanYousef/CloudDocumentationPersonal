@@ -17,5 +17,5 @@ label.row { display: grid; grid-template-columns: 140px 1fr; align-items: center
 .filelist button.active { background: var(--primary); color: #0C1230; }
 .editorFrame { border: 1px solid var(--outline); border-radius: var(--ifm-global-radius); background: var(--surface); }
 .mdxeditor-docs-body { min-height: 50vh; padding: 0.5rem 1rem; }
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+.modal { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
 .modal > div { background: var(--surface); padding: 1.5rem; border-radius: 8px; width: min(560px, 90vw); }
