@@ -4,7 +4,7 @@ export function FrontmatterForm({ fields, typesInUse, onChange, disabled }: { fi
   const set = <K extends keyof FrontmatterFields>(k: K, v: FrontmatterFields[K]) => onChange({ ...fields, [k]: v });
   const types = fields.type && !typesInUse.includes(fields.type) ? [...typesInUse, fields.type] : typesInUse;
   return (
-    <section>
+    <section className="frontmatter">
       <h3>Frontmatter</h3>
       <label className="row"><span>title</span><input value={fields.title} disabled={disabled} onChange={(e) => set('title', e.target.value)} /></label>
       <label className="row"><span>description</span><input value={fields.description} disabled={disabled} placeholder="One sentence: when should someone open this page?" onChange={(e) => set('description', e.target.value)} /></label>

@@ -1,0 +1,167 @@
+/*
+ * Arcade palette for the editor, as --ed-* tokens.
+ * Dark is the default (the site's default color mode too). Light applies when <html data-theme="light">
+ * is set, or when no data-theme attribute is present and the OS prefers light.
+ * Every color in arcade.css and codeMirror.ts goes through these tokens; nothing else defines a color.
+ */
+:root {
+  color-scheme: dark;
+
+  /* surfaces, darkest to lightest */
+  --ed-field: #080D24;        /* text inputs: darker than whatever surrounds them */
+  --ed-page: #0C1230;         /* main pane, dialog overlay, code blocks */
+  --ed-sidebar: #10173A;
+  --ed-band: #121A42;         /* toolbar, frontmatter panel */
+  --ed-paper: #161F4B;        /* the writing surface */
+  --ed-raised: #1E2858;       /* popovers, menus, dialogs, nested editors */
+  --ed-raised-hover: #29346E;
+
+  --ed-line: #26305F;
+  --ed-line-strong: #3B4886;
+
+  --ed-text: #F4EEDF;
+  --ed-text-muted: #A9B6DC;
+  --ed-text-faint: #7683B5;   /* placeholders, disabled icons */
+
+  --ed-primary: #8F8AE8;
+  --ed-primary-hover: #A6A2EE;
+  --ed-on-primary: #0C1230;
+  --ed-primary-soft: #2B2F6E; /* selected rows, highlighted menu items */
+
+  --ed-link: #43C8BE;
+  --ed-link-hover: #83DCD5;
+  --ed-focus: #43C8BE;
+
+  --ed-danger: #C6303A;
+  --ed-danger-hover: #DA3E48;
+  --ed-on-danger: #F4EEDF;
+  --ed-danger-soft: #3A1D22;
+  --ed-ok: #43C8BE;
+  --ed-treasure: #D9A441;
+  --ed-info: #5C88D8;
+
+  --ed-shadow: 0 10px 28px rgba(3, 6, 20, 0.6);
+  --ed-radius: 6px;
+  --ed-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ed-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* code blocks */
+  --ed-code-bg: #0C1230;
+  --ed-code-gutter: #7683B5;
+  --ed-code-selection: #2B3A7A;
+  --ed-code-cursor: #F4EEDF;
+  --ed-code-active-line: rgba(143, 138, 232, 0.08);
+  --ed-code-keyword: #C9A6FF;
+  --ed-code-string: #83DCD5;
+  --ed-code-number: #F0C36B;
+  --ed-code-comment: #8A96C4;
+  --ed-code-name: #9FC4FF;
+  --ed-code-type: #F4A0C6;
+  --ed-code-punct: #C9D2F0;
+
+  /* admonitions (background / border) */
+  --ed-adm-note-bg: #1E2650;    --ed-adm-note-line: #8F8AE8;
+  --ed-adm-tip-bg: #0E3A3F;     --ed-adm-tip-line: #43C8BE;
+  --ed-adm-info-bg: #14304F;    --ed-adm-info-line: #5C88D8;
+  --ed-adm-caution-bg: #3F2F12; --ed-adm-caution-line: #D9A441;
+  --ed-adm-danger-bg: #3F1A1E;  --ed-adm-danger-line: #E5484D;
+
+  /* aliases kept for components that still read the site's Infima names */
+  --ifm-color-emphasis-300: var(--ed-line-strong);
+  --ifm-global-radius: var(--ed-radius);
+  --ifm-font-family-monospace: var(--ed-mono);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --ed-field: #FFFDF7;
+  --ed-page: #F4EEDF;
+  --ed-sidebar: #ECE4CD;
+  --ed-band: #E8E0C8;
+  --ed-paper: #FBF8F0;
+  --ed-raised: #FFFFFF;
+  --ed-raised-hover: #EEEAFB;
+  --ed-line: #D9D2BE;
+  --ed-line-strong: #B5B0A2;
+  --ed-text: #131B3F;
+  --ed-text-muted: #4E5878;
+  --ed-text-faint: #7B84A6;
+  --ed-primary: #6357C9;
+  --ed-primary-hover: #4F41C2;
+  --ed-on-primary: #F4EEDF;
+  --ed-primary-soft: #E6E3F8;
+  --ed-link: #217770;
+  --ed-link-hover: #164E49;
+  --ed-focus: #217770;
+  --ed-danger: #B3262E;
+  --ed-danger-hover: #9C1F26;
+  --ed-on-danger: #FFFFFF;
+  --ed-danger-soft: #FBE5E6;
+  --ed-ok: #217770;
+  --ed-shadow: 0 10px 28px rgba(19, 27, 63, 0.18);
+  --ed-code-bg: #EEE7D3;
+  --ed-code-gutter: #7B84A6;
+  --ed-code-selection: #D9D6F5;
+  --ed-code-cursor: #131B3F;
+  --ed-code-active-line: rgba(99, 87, 201, 0.07);
+  --ed-code-keyword: #6F3FBF;
+  --ed-code-string: #1C6F69;
+  --ed-code-number: #9A6300;
+  --ed-code-comment: #6B7390;
+  --ed-code-name: #1F4FA8;
+  --ed-code-type: #B0347A;
+  --ed-code-punct: #131B3F;
+  --ed-adm-note-bg: #E8E6F8;    --ed-adm-note-line: #6357C9;
+  --ed-adm-tip-bg: #DDF3F0;     --ed-adm-tip-line: #217770;
+  --ed-adm-info-bg: #E1EAFA;    --ed-adm-info-line: #5C88D8;
+  --ed-adm-caution-bg: #FBF0D6; --ed-adm-caution-line: #D9A441;
+  --ed-adm-danger-bg: #FBE5E6;  --ed-adm-danger-line: #B3262E;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --ed-field: #FFFDF7;
+    --ed-page: #F4EEDF;
+    --ed-sidebar: #ECE4CD;
+    --ed-band: #E8E0C8;
+    --ed-paper: #FBF8F0;
+    --ed-raised: #FFFFFF;
+    --ed-raised-hover: #EEEAFB;
+    --ed-line: #D9D2BE;
+    --ed-line-strong: #B5B0A2;
+    --ed-text: #131B3F;
+    --ed-text-muted: #4E5878;
+    --ed-text-faint: #7B84A6;
+    --ed-primary: #6357C9;
+    --ed-primary-hover: #4F41C2;
+    --ed-on-primary: #F4EEDF;
+    --ed-primary-soft: #E6E3F8;
+    --ed-link: #217770;
+    --ed-link-hover: #164E49;
+    --ed-focus: #217770;
+    --ed-danger: #B3262E;
+    --ed-danger-hover: #9C1F26;
+    --ed-on-danger: #FFFFFF;
+    --ed-danger-soft: #FBE5E6;
+    --ed-ok: #217770;
+    --ed-shadow: 0 10px 28px rgba(19, 27, 63, 0.18);
+    --ed-code-bg: #EEE7D3;
+    --ed-code-gutter: #7B84A6;
+    --ed-code-selection: #D9D6F5;
+    --ed-code-cursor: #131B3F;
+    --ed-code-active-line: rgba(99, 87, 201, 0.07);
+    --ed-code-keyword: #6F3FBF;
+    --ed-code-string: #1C6F69;
+    --ed-code-number: #9A6300;
+    --ed-code-comment: #6B7390;
+    --ed-code-name: #1F4FA8;
+    --ed-code-type: #B0347A;
+    --ed-code-punct: #131B3F;
+    --ed-adm-note-bg: #E8E6F8;    --ed-adm-note-line: #6357C9;
+    --ed-adm-tip-bg: #DDF3F0;     --ed-adm-tip-line: #217770;
+    --ed-adm-info-bg: #E1EAFA;    --ed-adm-info-line: #5C88D8;
+    --ed-adm-caution-bg: #FBF0D6; --ed-adm-caution-line: #D9A441;
+    --ed-adm-danger-bg: #FBE5E6;  --ed-adm-danger-line: #B3262E;
+  }
+}

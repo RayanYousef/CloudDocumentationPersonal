@@ -12,6 +12,7 @@ import { InsertModelButton } from '../mdx/toolbar/InsertModelButton.js';
 import { InsertImageButton } from '../mdx/toolbar/InsertImageButton.js';
 import { InsertFromRepoButton } from '../mdx/toolbar/InsertFromRepoButton.js';
 import { InsertTabsButton } from '../mdx/toolbar/InsertTabsButton.js';
+import { EDITOR_THEME_CLASS, arcadeCodeMirror } from '../theme/index.js';
 
 const CODE_LANGUAGES = { csharp: 'C#', yaml: 'YAML', bash: 'Bash', json: 'JSON', text: 'Plain text' };
 
@@ -20,7 +21,7 @@ export function BodyEditor({ markdown, editorRef, fileLabel, components, readOnl
   return (
     <MDXEditor
       ref={editorRef}
-      className="dark-theme dark-editor"
+      className={EDITOR_THEME_CLASS}
       markdown={markdown}
       readOnly={readOnly}
       onError={onError}
@@ -28,7 +29,7 @@ export function BodyEditor({ markdown, editorRef, fileLabel, components, readOnl
       contentEditableClassName="mdxeditor-docs-body"
       plugins={[
         headingsPlugin(), listsPlugin(), quotePlugin(), thematicBreakPlugin(), linkPlugin(), linkDialogPlugin(), imagePlugin(), tablePlugin(),
-        codeBlockPlugin({ defaultCodeBlockLanguage: 'text' }), codeMirrorPlugin({ codeBlockLanguages: CODE_LANGUAGES }),
+        codeBlockPlugin({ defaultCodeBlockLanguage: 'text' }), codeMirrorPlugin({ codeBlockLanguages: CODE_LANGUAGES, codeMirrorExtensions: arcadeCodeMirror }),
         directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
         jsxPlugin({ jsxComponentDescriptors: descriptors }),
         markdownShortcutPlugin(),
