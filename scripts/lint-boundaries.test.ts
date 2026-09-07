@@ -19,19 +19,23 @@ async function lint(file: string) {
   return result?.messages.map((m) => m.ruleId ?? '') ?? [];
 }
 
+// Each run boots ESLint with the typescript resolver over the whole config; that can take
+// well over Vitest's default 5 s on a cold cache (fresh clone, CI), so allow 30 s per test.
+const TIMEOUT_MS = 30_000;
+
 describe('import boundaries', () => {
   it('rejects a service importing another service', async () => {
     const rules = await lint('services/auth/src/bad.ts');
     // Fires boundaries/external when @platform/content is unbuilt (unresolvable) and
     // boundaries/element-types once services/content/dist exists (resolves to a local element).
     expect(rules.filter((r) => r.startsWith('boundaries/'))).not.toEqual([]);
-  });
+  }, TIMEOUT_MS);
   it('accepts a service importing contracts', async () => {
     const rules = await lint('services/auth/src/good.ts');
     expect(rules.filter((r) => r.startsWith('boundaries/'))).toEqual([]);
-  });
+  }, TIMEOUT_MS);
   it('accepts the site reading the root platform.config.js', async () => {
     const rules = await lint('site/docusaurus.config.js');
     expect(rules.filter((r) => r.startsWith('boundaries/'))).toEqual([]);
-  });
+  }, TIMEOUT_MS);
 });
