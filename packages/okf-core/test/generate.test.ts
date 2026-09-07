@@ -43,6 +43,17 @@ describe('checkBundle', () => {
     const rules = checkBundle(files, opts).problems.map((p) => `${p.rule}:${p.file}`).sort();
     expect(rules).toEqual(['stale:code-maps/acme--game.md', 'stale:manifest.json', 'stale:systems/index.md']);
   });
+  it('does not report a bundle checked out with CRLF line endings as stale', () => {
+    const crlf = Object.fromEntries(Object.entries(MINI_BUNDLE).map(([k, v]) => [k, v.replace(/\r?\n/g, '\r\n')]));
+    expect(Object.values(crlf).every((v) => v.includes('\r\n'))).toBe(true);
+    expect(checkBundle(crlf, opts).problems).toEqual([]);
+    expect(generateBundle(crlf, opts).writes).toEqual({});
+  });
+  it('still reports real changes when the bundle uses CRLF line endings', () => {
+    const crlf = Object.fromEntries(Object.entries({ ...MINI_BUNDLE, 'systems/combat.md': NEW_PAGE_TEXT }).map(([k, v]) => [k, v.replace(/\r?\n/g, '\r\n')]));
+    const rules = checkBundle(crlf, opts).problems.map((p) => `${p.rule}:${p.file}`).sort();
+    expect(rules).toEqual(['stale:code-maps/acme--game.md', 'stale:manifest.json', 'stale:systems/index.md']);
+  });
 });
 
 describe('renderIndexBlock', () => {
