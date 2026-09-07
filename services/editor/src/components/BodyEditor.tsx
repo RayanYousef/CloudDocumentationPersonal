@@ -15,7 +15,7 @@ import { InsertTabsButton } from '../mdx/toolbar/InsertTabsButton.js';
 
 const CODE_LANGUAGES = { csharp: 'C#', yaml: 'YAML', bash: 'Bash', json: 'JSON', text: 'Plain text' };
 
-export function BodyEditor({ markdown, editorRef, fileLabel, components, readOnly, onError }: { markdown: string; editorRef: Ref<MDXEditorMethods>; fileLabel: string; components: ComponentsManifest; readOnly: boolean; onError(e: { error: string; source: string }): void }) {
+export function BodyEditor({ markdown, editorRef, fileLabel, components, readOnly, onError, onChange }: { markdown: string; editorRef: Ref<MDXEditorMethods>; fileLabel: string; components: ComponentsManifest; readOnly: boolean; onError(e: { error: string; source: string }): void; onChange?(markdown: string, initialMarkdownNormalize: boolean): void }) {
   const descriptors = useMemo(() => toJsxDescriptors(components, previews), [components]);
   return (
     <MDXEditor
@@ -24,6 +24,7 @@ export function BodyEditor({ markdown, editorRef, fileLabel, components, readOnl
       markdown={markdown}
       readOnly={readOnly}
       onError={onError}
+      onChange={onChange}
       contentEditableClassName="mdxeditor-docs-body"
       plugins={[
         headingsPlugin(), listsPlugin(), quotePlugin(), thematicBreakPlugin(), linkPlugin(), linkDialogPlugin(), imagePlugin(), tablePlugin(),

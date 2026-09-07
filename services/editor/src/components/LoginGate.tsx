@@ -1,13 +1,14 @@
 import { useState, type FormEvent } from 'react';
 import type { Credentials, Identity, Session } from '@platform/contracts';
 import type { Platform } from '../composition/createPlatform.js';
+import { Modal } from './Modal.js';
 
-export function LoginGate({ platform, onAuthed }: { platform: Platform; onAuthed: (session: Session, identity: Identity, remember: boolean) => void }) {
+export function LoginGate({ platform, onAuthed, initialError = '' }: { platform: Platform; onAuthed: (session: Session, identity: Identity, remember: boolean) => void; initialError?: string }) {
   const [token, setToken] = useState('');
   const [name, setName] = useState('');
   const [remember, setRemember] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(initialError);
   const isMock = platform.auth.id === 'mock';
   const repo = `${platform.config.organizationName}/${platform.config.projectName}`;
 
@@ -24,8 +25,7 @@ export function LoginGate({ platform, onAuthed }: { platform: Platform; onAuthed
   };
 
   return (
-    <div className="modal"><div>
-      <h1>Docs Editor - Sign in</h1>
+    <Modal title="Docs Editor - Sign in">
       {isMock ? (
         <p>Development sign-in: choose a display name.</p>
       ) : (
@@ -41,7 +41,7 @@ export function LoginGate({ platform, onAuthed }: { platform: Platform; onAuthed
         {remember && <div className="notice">Anyone using this browser profile can read the saved token and commit as you. Do not enable this on a shared machine; use "Forget token" when done.</div>}
         <button className="btn" type="submit" disabled={busy || (isMock ? !name.trim() : !token.trim())}>{busy ? 'Verifying...' : 'Sign in'}</button>
       </form>
-      {error && <p className="problems">{error}</p>}
-    </div></div>
+      {error && <p className="problems" role="alert">{error}</p>}
+    </Modal>
   );
 }

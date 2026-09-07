@@ -1,4 +1,4 @@
-import { parseDocument, Document } from 'yaml';
+import { parseDocument, isSeq, Document } from 'yaml';
 
 export interface FrontmatterFields { title: string; description: string; type: string; tags: string[]; resource: string; sidebar_position: number | null }
 
@@ -31,6 +31,12 @@ export function applyFields(text: string, fields: Partial<FrontmatterFields>): s
   for (const [k, v] of Object.entries(fields)) {
     if (v === undefined) continue;
     if (v === null || (Array.isArray(v) && v.length === 0 && k === 'tags' && !doc.has(k))) { if (doc.has(k)) doc.delete(k); continue; }
+    if (Array.isArray(v)) {
+      // Keep the list style the author used: `tags: [a, b]` stays a flow list instead of becoming a block list.
+      const prev = doc.get(k, true);
+      doc.set(k, doc.createNode(v, { flow: isSeq(prev) ? prev.flow === true : true }));
+      continue;
+    }
     doc.set(k, v);
   }
   // lineWidth: 0 disables folding: okf-core's parseYamlSubset reads only the first physical line of a scalar,

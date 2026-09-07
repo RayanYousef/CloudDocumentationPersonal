@@ -10,10 +10,10 @@ export function FrontmatterForm({ fields, typesInUse, onChange, disabled }: { fi
       <label className="row"><span>description</span><input value={fields.description} disabled={disabled} placeholder="One sentence: when should someone open this page?" onChange={(e) => set('description', e.target.value)} /></label>
       <label className="row"><span>type</span>
         <span style={{ display: 'flex', gap: '0.5rem' }}>
-          <select value={types.includes(fields.type) ? fields.type : ''} disabled={disabled} onChange={(e) => set('type', e.target.value)}>
+          <select aria-label="type" value={types.includes(fields.type) ? fields.type : ''} disabled={disabled} onChange={(e) => set('type', e.target.value)}>
             <option value="">(choose)</option>{types.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
-          <input placeholder="new type" disabled={disabled} value={types.includes(fields.type) ? '' : fields.type} onChange={(e) => set('type', e.target.value)} />
+          <input aria-label="new type" placeholder="new type" disabled={disabled} value={types.includes(fields.type) ? '' : fields.type} onChange={(e) => set('type', e.target.value)} />
         </span>
       </label>
       <label className="row"><span>tags</span><input value={fields.tags.join(', ')} disabled={disabled} placeholder="comma, separated" onChange={(e) => set('tags', e.target.value.split(',').map((t) => t.trim()).filter(Boolean))} /></label>

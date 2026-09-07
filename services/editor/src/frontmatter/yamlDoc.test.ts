@@ -50,3 +50,27 @@ describe('yamlDoc long scalars', () => {
     expect(readFields(splitDocument(out).head).description).toBe(long);
   });
 });
+
+describe('yamlDoc list style and quoting', () => {
+  it('keeps a flow tag list as a flow list', () => {
+    const out = applyFields(doc, { tags: ['a', 'b'] });
+    expect(splitDocument(out).head).toMatch(/^tags: \[ ?a, ?b ?\]$/m);
+  });
+  it('keeps a block tag list as a block list', () => {
+    const block = '---\ntitle: T\ntags:\n  - a\n---\n\nBody.\n';
+    const out = applyFields(block, { tags: ['c', 'd'] });
+    expect(splitDocument(out).head).toBe('title: T\ntags:\n  - c\n  - d');
+  });
+  it('un-quotes a sidebar_position that an older editor wrote as a string', () => {
+    const quoted = '---\ntitle: T\nsidebar_position: "3"\n---\n\nBody.\n';
+    const out = applyFields(quoted, { sidebar_position: 4 });
+    expect(splitDocument(out).head).toContain('sidebar_position: 4');
+    expect(out).not.toContain('"4"');
+  });
+  it('quotes a description that needs it so okf-core still reads one physical line', () => {
+    const out = applyFields(doc, { description: 'Has a colon: here and # a hash' });
+    const line = splitDocument(out).head.split('\n').find((l) => l.startsWith('description:'))!;
+    expect(line).toBe('description: "Has a colon: here and # a hash"');
+    expect(readFields(splitDocument(out).head).description).toBe('Has a colon: here and # a hash');
+  });
+});
