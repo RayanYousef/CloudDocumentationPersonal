@@ -1,0 +1,163 @@
+[
+  {
+    "route": "/assets/airship-model",
+    "file": "assets/airship-model.md",
+    "title": "Airship Model",
+    "description": "Documents the player airship mesh, its LOD and texture budgets, and the socket naming that gameplay code relies on for turrets and sails.",
+    "type": "asset",
+    "tags": [
+      "art",
+      "model",
+      "airship",
+      "lod"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Models",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Models/Airship.fbx"
+    ]
+  },
+  {
+    "route": "/assets/forge-props",
+    "file": "assets/forge-props.md",
+    "title": "Forge Props",
+    "description": "Lists the forge and workshop prop models (anvils, chests, crucibles) with their budgets and which ones are interactable containers.",
+    "type": "asset",
+    "tags": [
+      "art",
+      "model",
+      "props",
+      "forge"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Models",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Models/Chest.fbx"
+    ]
+  },
+  {
+    "route": "/decisions/2026-08-ecs-vs-monobehaviour",
+    "file": "decisions/2026-08-ecs-vs-monobehaviour.md",
+    "title": "ECS vs MonoBehaviour",
+    "description": "Records why the gameplay layer stays on plain C# services plus MonoBehaviour views for 1.0 instead of migrating to Unity ECS.",
+    "type": "decision",
+    "tags": [
+      "architecture",
+      "ecs",
+      "decision",
+      "performance"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Bootstrap.cs",
+    "sources": []
+  },
+  {
+    "route": "/decisions/2026-09-save-format-json",
+    "file": "decisions/2026-09-save-format-json.md",
+    "title": "Save Format: JSON over Binary",
+    "description": "Records the choice of gzipped JSON for save files instead of a custom binary format, and the size and compatibility trade-offs accepted.",
+    "type": "decision",
+    "tags": [
+      "save",
+      "serialization",
+      "decision",
+      "format"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Persistence/SaveService.cs",
+    "sources": []
+  },
+  {
+    "route": "/getting-started",
+    "file": "getting-started.md",
+    "title": "Getting Started",
+    "description": "Read this first if you need to clone, open and run the Skyforge Unity project locally for the first time.",
+    "type": "guide",
+    "tags": [
+      "onboarding",
+      "setup",
+      "unity"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/README.md",
+    "sources": []
+  },
+  {
+    "route": "/systems/combat",
+    "file": "systems/combat.md",
+    "title": "Combat",
+    "description": "Describes the damage pipeline, hit resolution and critical rolls used whenever an airship, turret or crew member takes damage.",
+    "type": "system",
+    "tags": [
+      "combat",
+      "damage",
+      "gameplay"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Combat",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Combat/DamagePipeline.cs"
+    ]
+  },
+  {
+    "route": "/systems/inventory",
+    "file": "systems/inventory.md",
+    "title": "Inventory",
+    "description": "Explains how items are stacked, stored and moved between containers, and which service API you call to change a player's inventory.",
+    "type": "system",
+    "tags": [
+      "inventory",
+      "items",
+      "gameplay",
+      "service"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Inventory",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Inventory/InventoryService.cs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Inventory/ItemStack.cs"
+    ]
+  },
+  {
+    "route": "/systems/networking/lag-compensation",
+    "file": "systems/networking/lag-compensation.md",
+    "title": "Lag Compensation",
+    "description": "Reference for how the host rewinds hit checks for late client input, including the rewind cap and the tunables exposed to designers.",
+    "type": "reference",
+    "tags": [
+      "networking",
+      "latency",
+      "combat",
+      "tuning"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Net/LagCompensator.cs",
+    "sources": []
+  },
+  {
+    "route": "/systems/networking/sync-model",
+    "file": "systems/networking/sync-model.md",
+    "title": "Sync Model",
+    "description": "Explains the host-authoritative replication model, what state is replicated at which rate, and how client intents become confirmed changes.",
+    "type": "system",
+    "tags": [
+      "networking",
+      "replication",
+      "authority"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Net",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Net/ReplicationService.cs"
+    ]
+  },
+  {
+    "route": "/systems/save-system",
+    "file": "systems/save-system.md",
+    "title": "Save System",
+    "description": "Covers how game state is serialised to disk, the save slot layout, and how older save files are migrated when the schema changes.",
+    "type": "system",
+    "tags": [
+      "save",
+      "persistence",
+      "serialization",
+      "migration"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Persistence",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Persistence/SaveService.cs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/examples/unity-project/Assets/Scripts/Persistence/Migrations"
+    ]
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "name": "@platform/site",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "prestart": "node scripts/build-platform-artifacts.mjs",
+    "start": "docusaurus start",
+    "prebuild": "node scripts/build-platform-artifacts.mjs",
+    "build": "docusaurus build",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.1",
+    "@docusaurus/preset-classic": "^3.10.1",
+    "@mdx-js/react": "^3.0.0",
+    "@orama/plugin-docusaurus-v3": "^3.1.18",
+    "@platform/content": "*",
+    "@platform/contracts": "*",
+    "@platform/okf-core": "*",
+    "@platform/viewers": "*",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10.1",
+    "@docusaurus/tsconfig": "^3.10.1",
+    "@docusaurus/types": "^3.10.1",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0"
+  }
+}

@@ -3,3 +3,14 @@
 
 # Log files (e.g. website/serve_changes.log from `npm run serve`)
 *.log
+
+# Monorepo build output and generated site artifacts
+node_modules/
+dist/
+build/
+.docusaurus/
+site/static/platform/
+services/editor/test-results/
+services/editor/playwright-report/
+*.tsbuildinfo
+services/editor/e2e/.repo-path

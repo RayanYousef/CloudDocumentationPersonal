@@ -1,0 +1,14 @@
+{
+  "name": "@platform/okf-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": { "okf": "./bin/okf.js" },
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./node": { "types": "./dist/node/index.d.ts", "default": "./dist/node/index.js" }
+  },
+  "scripts": { "build": "tsc -b", "test": "vitest run" },
+  "dependencies": {},
+  "devDependencies": { "@platform/contracts": "*", "typescript": "^5.7.2", "vitest": "^3.0.0" }
+}

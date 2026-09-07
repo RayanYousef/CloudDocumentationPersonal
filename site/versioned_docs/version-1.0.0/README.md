@@ -1,0 +1,1 @@
+Partial illustration only: a frozen copy of the 1.0.0 docs would contain every page, but this folder keeps just `systems/inventory.md` to show how `resource` and `sources` switch from `main` to the commit sha pinned in `docs/versions/1.0.0.json`.
