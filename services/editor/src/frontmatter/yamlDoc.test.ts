@@ -37,3 +37,16 @@ describe('yamlDoc', () => {
     expect(readFields(splitDocument(out).head).tags).toEqual(['a', 'b']);
   });
 });
+
+describe('yamlDoc long scalars', () => {
+  const long = 'Explains how item stacks are stored, merged and moved, and which service API mutates a container.';
+  it('keeps a description longer than 80 columns on a single physical line', () => {
+    const out = applyFields(doc, { description: long });
+    const lines = splitDocument(out).head.split('\n');
+    const descLines = lines.filter((l) => l.startsWith('description:'));
+    expect(descLines).toEqual([`description: ${long}`]);
+    const next = lines[lines.indexOf(descLines[0]!) + 1]!;
+    expect(next.startsWith('type:')).toBe(true);
+    expect(readFields(splitDocument(out).head).description).toBe(long);
+  });
+});

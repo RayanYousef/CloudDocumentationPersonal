@@ -33,6 +33,8 @@ export function applyFields(text: string, fields: Partial<FrontmatterFields>): s
     if (v === null || (Array.isArray(v) && v.length === 0 && k === 'tags' && !doc.has(k))) { if (doc.has(k)) doc.delete(k); continue; }
     doc.set(k, v);
   }
-  const yaml = doc.toString().replace(/\n$/, '');
+  // lineWidth: 0 disables folding: okf-core's parseYamlSubset reads only the first physical line of a scalar,
+  // so a folded description would silently truncate index.md / manifest.json / log.md.
+  const yaml = doc.toString({ lineWidth: 0 }).replace(/\n$/, '');
   return `---\n${yaml}\n---\n${body}`;
 }
