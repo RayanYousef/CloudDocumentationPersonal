@@ -13,3 +13,4 @@ site/static/platform/
 services/editor/test-results/
 services/editor/playwright-report/
 *.tsbuildinfo
+services/editor/e2e/.repo-path
