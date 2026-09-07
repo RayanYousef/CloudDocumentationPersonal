@@ -1,0 +1,10 @@
+{
+  "components": [
+    { "name": "ModelViewer", "kind": "flow", "hasChildren": false, "preview": "model-viewer",
+      "props": [{ "name": "src", "type": "string" }, { "name": "repo", "type": "string" }, { "name": "ref", "type": "string" }, { "name": "path", "type": "string" }, { "name": "alt", "type": "string" }, { "name": "height", "type": "number" }] },
+    { "name": "FbxViewer", "kind": "flow", "hasChildren": false, "preview": "fbx-viewer",
+      "props": [{ "name": "src", "type": "string" }, { "name": "repo", "type": "string" }, { "name": "ref", "type": "string" }, { "name": "path", "type": "string" }, { "name": "alt", "type": "string" }, { "name": "height", "type": "number" }] },
+    { "name": "Tabs", "kind": "flow", "hasChildren": true, "preview": "tabs", "props": [{ "name": "groupId", "type": "string" }] },
+    { "name": "TabItem", "kind": "flow", "hasChildren": true, "preview": "tab-item", "props": [{ "name": "value", "type": "string" }, { "name": "label", "type": "string" }, { "name": "default", "type": "boolean" }] }
+  ]
+}
