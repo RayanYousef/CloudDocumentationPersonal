@@ -8,7 +8,7 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist/**', '**/build/**', '**/node_modules/**', '**/.docusaurus/**',
-      'site/static/platform/**', 'scripts/lint-fixtures/**', 'okf-example/**', '.ignored/**',
+      'site/static/platform/**', 'scripts/lint-fixtures/**', '.ignored/**',
     ],
   },
   js.configs.recommended,
