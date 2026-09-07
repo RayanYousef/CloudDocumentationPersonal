@@ -78,6 +78,412 @@
     "sources": []
   },
   {
+    "route": "/platform/agent-skill",
+    "file": "platform/agent-skill.md",
+    "title": "Agent skill",
+    "description": "Explains the docs-platform agent skill (the only agent entry point), its user-level registry that maps a code repository to its docs bundle, the navigation walk it prescribes and its relationship to the ray-okf-core format skill; open it when setting up an agent to work on this documentation or when a repo is \"not registered\".",
+    "type": "system",
+    "tags": [
+      "platform",
+      "agents",
+      "skill",
+      "registry",
+      "navigation"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.agents/skills/docs-platform",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.agents/skills/docs-platform/SKILL.md",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.agents/skills/docs-platform/references/registry.md",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.agents/skills/docs-platform/references/navigation.md",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.agents/skills/docs-platform/references/authoring.md",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.agents/skills/docs-platform/scripts/resolve-bundle.mjs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/docs/AGENTS.md"
+    ]
+  },
+  {
+    "route": "/platform/architecture",
+    "file": "platform/architecture.md",
+    "title": "Architecture",
+    "description": "Explains which packages and services make up the platform, which may import which, and the exact sequence of calls behind a login, a save, a version publish and a 3D asset fetch; read this before touching more than one workspace.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "architecture",
+      "boundaries",
+      "data-flow",
+      "monorepo"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/docs/design/2026-09-06-documentation-platform-design.md",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/eslint.config.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/package.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/platform.config.js"
+    ]
+  },
+  {
+    "route": "/platform/auth",
+    "file": "platform/auth.md",
+    "title": "Auth service",
+    "description": "Explains how the GitHub token provider decides who may edit (repository push permission), how the mock provider serves tests, and where sessions live in the browser; open it when a login fails or when you need the provider behaviour a new AuthProvider has to match.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "auth",
+      "github",
+      "session",
+      "security"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/src/GithubTokenProvider.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/src/MockAuthProvider.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/test/GithubTokenProvider.test.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/session/SessionStore.ts"
+    ]
+  },
+  {
+    "route": "/platform/content",
+    "file": "platform/content.md",
+    "title": "Content service",
+    "description": "Describes the three ContentBackend implementations (local folder, GitHub-in-browser, HTTP bridge), the shared write and publish pipelines, the LFS-aware asset fetch and the Orama search; open it when a save, publish or asset load misbehaves or when you are writing a new backend.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "content",
+      "github",
+      "git-data",
+      "publish",
+      "assets",
+      "search"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/writePipeline.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/publishPipeline.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/layout.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/local/LocalFolderBackend.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/github/GithubBrowserBackend.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/github/gitData.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/http/HttpContentBackend.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/http/serveContentBackend.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/assets/getAsset.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/search/index.ts"
+    ]
+  },
+  {
+    "route": "/platform/contracts",
+    "file": "platform/contracts.md",
+    "title": "Contracts",
+    "description": "Lists every interface, type and error code in @platform/contracts and the two contract test suites that any new auth provider or content backend must pass; open it when you need the exact signature a service has to implement.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "contracts",
+      "typescript",
+      "testing",
+      "auth",
+      "content"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/auth.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/content.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/platform-config.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/components-manifest.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/testing/authProviderContract.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/testing/contentBackendContract.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/testing/fixtures/miniBundle.ts"
+    ]
+  },
+  {
+    "route": "/platform/decisions",
+    "file": "platform/decisions.md",
+    "title": "Platform decisions",
+    "description": "Summarises the twenty design decisions recorded in section 7 of the specification (viewers package, TS contracts over OpenAPI, in-memory okf-core, composition roots, sample repo layout, frozen 1.0.0, code maps, two search indexes, and more) with the reason for each; read it before reopening any of them.",
+    "type": "decision",
+    "tags": [
+      "platform",
+      "decisions",
+      "adr",
+      "design"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/docs/design/2026-09-06-documentation-platform-design.md",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/eslint.config.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/platform.config.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/versions.json"
+    ]
+  },
+  {
+    "route": "/platform/editor",
+    "file": "platform/editor.md",
+    "title": "Editor service",
+    "description": "Describes the in-browser editor (Vite + React + MDXEditor): how it is composed from platform.config.js, what each screen and dialog does, how frontmatter edits preserve YAML, and how it is built and deployed under /editor/; open it when changing editor behaviour or debugging a save from the UI.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "editor",
+      "vite",
+      "react",
+      "mdxeditor",
+      "frontmatter"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/composition/createPlatform.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/App.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/components/FrontmatterForm.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/frontmatter/yamlDoc.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/mdx/descriptors.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/mdx/componentsManifest.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/session/SessionStore.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/vite.config.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/e2e/editor.spec.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/copy-editor.mjs"
+    ]
+  },
+  {
+    "route": "/platform/extending/add-auth-provider",
+    "file": "platform/extending/add-auth-provider.md",
+    "title": "Add an auth provider",
+    "description": "Step-by-step recipe for a new AuthProvider (for example the Phase 2 password provider): the interface and credentials union to extend, the contract suite to pass, where the editor's composition root selects it and which config field switches it on.",
+    "type": "guide",
+    "tags": [
+      "platform",
+      "extending",
+      "auth",
+      "provider",
+      "contract-test"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/src",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/auth.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/platform-config.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/testing/authProviderContract.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/test/MockAuthProvider.test.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/composition/createPlatform.ts"
+    ]
+  },
+  {
+    "route": "/platform/extending/add-content-backend",
+    "file": "platform/extending/add-content-backend.md",
+    "title": "Add a content backend",
+    "description": "Step-by-step recipe for a new ContentBackend (for example a server-side backend or a different git host): the operations to implement, the shared pipelines to reuse, the contract suite that proves substitutability, and where the editor and site composition roots pick it.",
+    "type": "guide",
+    "tags": [
+      "platform",
+      "extending",
+      "content",
+      "backend",
+      "contract-test"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/content.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/testing/contentBackendContract.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/writePipeline.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/publishPipeline.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/test/localHarness.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/composition/createPlatform.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/platform/createContentBackend.ts"
+    ]
+  },
+  {
+    "route": "/platform/extending/add-deploy-target",
+    "file": "platform/extending/add-deploy-target.md",
+    "title": "Add a deploy target",
+    "description": "Recipe for hosting the site somewhere other than GitHub Pages (another static host, Docker, a Node process): what site:build produces, which config fields fix the URLs, how the editor and Phase 2 server are mounted, and the workflow to add without touching deploy-pages.yml.",
+    "type": "guide",
+    "tags": [
+      "platform",
+      "extending",
+      "deploy",
+      "github-actions",
+      "docker",
+      "hosting"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.github/workflows/deploy-pages.yml",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/package.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/platform.config.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/copy-editor.mjs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/vite.config.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/http/serveContentBackend.ts"
+    ]
+  },
+  {
+    "route": "/platform/extending/add-service-module",
+    "file": "platform/extending/add-service-module.md",
+    "title": "Add a new service module",
+    "description": "General recipe for a brand-new workspace under services/ or packages/ (for example the Phase 2 gate or the Hono shell): package layout, tsconfig and Vitest wiring, the ESLint boundary element to declare, and which scripts and workflows must know about it.",
+    "type": "guide",
+    "tags": [
+      "platform",
+      "extending",
+      "workspace",
+      "boundaries",
+      "eslint",
+      "monorepo"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/eslint.config.js",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/package.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/tsconfig.base.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/vitest.workspace.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/package.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/lint-boundaries.test.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.github/workflows/okf-validate.yml"
+    ]
+  },
+  {
+    "route": "/platform/extending/add-site-plugin-or-viewer",
+    "file": "platform/extending/add-site-plugin-or-viewer.md",
+    "title": "Add a site plugin or viewer component",
+    "description": "Recipe for a new MDX component (a viewer for another asset format, or any block the editor should insert) and for a Docusaurus plugin: where the rendering core lives, how the site registers it globally, how components.json exposes it to the editor, and which lint elements are involved.",
+    "type": "guide",
+    "tags": [
+      "platform",
+      "extending",
+      "viewers",
+      "mdx",
+      "docusaurus",
+      "components"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/viewers/src/index.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/components/ModelViewer/index.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/theme/MDXComponents.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/components.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/contracts/src/components-manifest.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/editor/src/mdx/descriptors.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/docusaurus.config.js"
+    ]
+  },
+  {
+    "route": "/platform/okf-core",
+    "file": "platform/okf-core.md",
+    "title": "OKF Core package",
+    "description": "Describes the zero-dependency generator and validator that turns page frontmatter into index blocks, manifest.json, code maps and log entries, including its public API, validator rules and the browser/Node split; open it when a validation report or a stale-content error needs explaining.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "okf",
+      "generator",
+      "validator",
+      "manifest",
+      "code-maps"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/generate.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/validate.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/codemap.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/log.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/model.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/node/cli.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/okf.mjs"
+    ]
+  },
+  {
+    "route": "/platform/roadmap",
+    "file": "platform/roadmap.md",
+    "title": "Roadmap",
+    "description": "Lists what Phase 2 adds (password provider from GitHub secrets, server-side content service behind a Hono shell, a gate for private viewing, Docker or Node deployment, the push-triggered documentation updater) and the editor's known minor issues; open it to see what is planned versus shipped before proposing a change.",
+    "type": "reference",
+    "tags": [
+      "platform",
+      "roadmap",
+      "phase-2",
+      "hono",
+      "gate",
+      "docker",
+      "updater"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/docs/design/2026-09-06-documentation-platform-design.md",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/content/src/http/serveContentBackend.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/services/auth/src/GithubTokenProvider.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/okf-core/src/codemap.ts"
+    ]
+  },
+  {
+    "route": "/platform/site",
+    "file": "platform/site.md",
+    "title": "Site",
+    "description": "Describes the Docusaurus site: how docusaurus.config.js derives everything from platform.config.js, which files are excluded from rendering, what the prebuild writes to static/platform, how versions and the composition root work; open it when the rendered site differs from the docs folder or when wiring a new site feature.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "site",
+      "docusaurus",
+      "versioning",
+      "search",
+      "build"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/docusaurus.config.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/sidebars.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/scripts/build-platform-artifacts.mjs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/platform/createContentBackend.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/theme/MDXComponents.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/css/custom.css",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/versions.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/docs/AGENTS.md"
+    ]
+  },
+  {
+    "route": "/platform/viewers",
+    "file": "platform/viewers.md",
+    "title": "Viewers package",
+    "description": "Explains the two React 3D rendering cores (glTF/GLB through model-viewer, FBX through three.js), why they live in their own package, and how the site wraps them with BrowserOnly and asset resolution; open it when a model does not render or when adding a new viewer.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "viewers",
+      "3d",
+      "three",
+      "model-viewer",
+      "react"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/viewers",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/viewers/src/ModelViewerCore.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/packages/viewers/src/FbxViewerCore.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/components/ModelViewer/index.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/components/FbxViewer/index.tsx",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/platform/useAssetUrl.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/src/theme/MDXComponents.js",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/site/components.json"
+    ]
+  },
+  {
+    "route": "/platform/workflows",
+    "file": "platform/workflows.md",
+    "title": "Workflows and scripts",
+    "description": "Lists the GitHub Actions workflows (validate on every push, deploy Pages on main) and the root npm scripts with what each one runs; open it when CI fails, when reproducing CI locally, or when adding a build step or deploy target.",
+    "type": "system",
+    "tags": [
+      "platform",
+      "ci",
+      "github-actions",
+      "deploy",
+      "scripts",
+      "testing"
+    ],
+    "resource": "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.github/workflows",
+    "sources": [
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.github/workflows/okf-validate.yml",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/.github/workflows/deploy-pages.yml",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/package.json",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/okf.mjs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/copy-editor.mjs",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/scripts/lint-boundaries.test.ts",
+      "https://github.com/RayanYousef/CloudDocumentationPersonal/blob/main/vitest.workspace.ts"
+    ]
+  },
+  {
     "route": "/systems/combat",
     "file": "systems/combat.md",
     "title": "Combat",
