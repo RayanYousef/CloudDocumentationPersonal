@@ -179,8 +179,10 @@ export function App({ platform }: { platform: Platform }) {
           {selected && !isIndex && fields && (<>
             <h1 style={{ fontFamily: 'monospace', fontSize: '1.1rem' }}>{selected}</h1>
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
-              <button className={`btn ${mode === 'visual' ? '' : 'secondary'}`} disabled={mode === 'visual'} onClick={() => { const { head } = splitDocument(rawText); setText(rawText); setFields(readFields(head)); setMode('visual'); }}>Visual</button>
-              <button className={`btn ${mode === 'raw' ? '' : 'secondary'}`} disabled={mode === 'raw'} onClick={() => { setRawText(compose()); setMode('raw'); }}>Raw MDX</button>
+              <div className="segmented" role="group" aria-label="Editing mode">
+                <button className={`btn ${mode === 'visual' ? '' : 'secondary'}`} aria-pressed={mode === 'visual'} disabled={mode === 'visual'} onClick={() => { const { head } = splitDocument(rawText); setText(rawText); setFields(readFields(head)); setMode('visual'); }}>Visual</button>
+                <button className={`btn ${mode === 'raw' ? '' : 'secondary'}`} aria-pressed={mode === 'raw'} disabled={mode === 'raw'} onClick={() => { setRawText(compose()); setMode('raw'); }}>Raw MDX</button>
+              </div>
               <span style={{ flex: 1 }} />
               <button className="btn secondary" disabled={frozen || busy} onClick={rename}>Rename</button>
               <button className="btn danger" disabled={frozen || busy} onClick={remove}>Delete</button>
